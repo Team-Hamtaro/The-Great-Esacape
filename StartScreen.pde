@@ -13,7 +13,7 @@ class StartScreen {
 	PImage startScreenImage;
 
 	/**
-	 *  Default constructor. Here load the the background image.
+	 *  Default constructor. Here we load the the background image.
 	 */
 	public StartScreen(){
 		startScreenImage = loadImage("loading.png");
