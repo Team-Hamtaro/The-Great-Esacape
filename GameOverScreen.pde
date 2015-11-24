@@ -6,8 +6,10 @@ class GameOverScreen {
     PImage currentImage;
     String gameOverMessage = "";
     
-    // Init loads the images
-    void init(){
+    /**
+     *  Default constructor. Here we load the the background image.
+     */
+    public GameOverScreen(){
         currentImage = loadImage("loading.png");
     }
 

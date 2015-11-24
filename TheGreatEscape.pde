@@ -20,7 +20,7 @@ final color DEFAULT_BACKGROUND = color(120, 120, 120);
 /** @type {Number} Camera coordinates. */
 float cameraX = 0, cameraY = 0;
 
-GameOverScreen gameOverScreen = new GameOverScreen();
+GameOverScreen gameOverScreen;
 StartScreen startScreen;
 World theWorld;
 GameState gameState;
@@ -42,8 +42,6 @@ void setup() {
 
   startScreen = new StartScreen();
   gameOverScreen = new GameOverScreen();
-  gameOverScreen.init();
-
   theWorld = new World();
 
   gameState = GameState.START_SCREEN;
