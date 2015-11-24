@@ -23,7 +23,7 @@ class GameOverScreen {
         
     void update() {
         // If space is pressed, go to the start screen
-        if (keysPressed[ENTER] || keysPressed[' ']) gameState = GameState.START_SCREEN;
+        if (keysPressed[ENTER] /*|| keysPressed[' ']*/) gameState = GameState.START_SCREEN;
     }
 
     // update and draw the gameover screen
@@ -49,6 +49,6 @@ class GameOverScreen {
         noStroke();
         fill(255);
         text("You had " + points + " points", width/2, height/2 + 120);
-        text("-=Press Space=-", width/2, height/2 + 140);
+        text("-=Press Enter=-", width/2, height/2 + 140);
     }
 }

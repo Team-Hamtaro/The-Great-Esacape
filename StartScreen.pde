@@ -23,7 +23,7 @@ class StartScreen {
 	 *  Check for keypresses and starts the game.
 	 */
 	void update() {
-		if (keysPressed[ENTER] || keysPressed[' ']) {
+		if (/*keysPressed[ENTER] ||*/ keysPressed[' ']) {
 			println("Start Game");
 			startGame();
 		}
