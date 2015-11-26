@@ -54,6 +54,14 @@ class Saw {
     
     oscillate();
   }
+
+  //Checks if the Saw is underneath the screen
+  boolean outOfScreen() {
+    if (y > height) {
+      return true;
+    }
+    return false;
+  }
 }
 
 
