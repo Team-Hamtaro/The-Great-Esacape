@@ -184,9 +184,15 @@ class World {
     }
 
 
-    for (int i = 0; i < 100; i++) {
-      if (tiles.size() > 500) {
+    for (int i = 0; i < tiles.size(); i++) {
+      if (tiles.get(i).outOfScreen()) {
         tiles.remove(i);
+      }
+    }
+
+    for (int i = 0; i < saws.size(); i++) {
+      if (saws.get(i).outOfScreen()) {
+        saws.remove(i);
       }
     }
 
