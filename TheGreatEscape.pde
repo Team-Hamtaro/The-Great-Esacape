@@ -21,6 +21,7 @@ final color DEFAULT_BACKGROUND = color(120, 120, 120);
 float cameraX = 0, cameraY = 0;
 
 GameOverScreen gameOverScreen;
+PauseScreen pauseScreen;
 StartScreen startScreen;
 World theWorld;
 GameState gameState;
@@ -41,6 +42,7 @@ void setup() {
   frameRate(60); 
 
   startScreen = new StartScreen();
+  pauseScreen = new PauseScreen();
   gameOverScreen = new GameOverScreen();
   theWorld = new World();
 
@@ -57,9 +59,18 @@ void draw() {
   switch (gameState) {
   case START_SCREEN: 
     startScreen.updateAndDraw(); 
+    theWorld.reload();
     break;
   case PLAYING: 
     theWorld.draw();
+    if (keyPressed) {
+      if (key == 'p' || key == 'P') {
+        pauseScreen.pauseGame();
+      }
+    }
+    break;
+  case GAME_PAUSED:
+    pauseScreen.updateAndDraw();
     break;
   case GAME_OVER_LOST:
     gameOverScreen.setLose(); 
