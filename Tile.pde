@@ -36,4 +36,12 @@ class Tile {
   void draw() {
     image(tileImg, x, y);
   }
+
+  //Checks if the tile is underneath the screen
+  boolean outOfScreen() {
+    if (y > height) {
+      return true;
+    }
+    return false;
+  }
 }
