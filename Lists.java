@@ -4,6 +4,7 @@
 enum GameState {
   START_SCREEN,
   PLAYING,
+  GAME_PAUSED,
   GAME_OVER_LOST,
   GAME_OVER_WON
 }
