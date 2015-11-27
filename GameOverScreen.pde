@@ -61,9 +61,9 @@ class GameOverScreen {
       update();
 
       int wButton, hButton, xPlay, xBack, yButton;
-      wButton = 300;
-      hButton = 150;
-      xPlay = width / 4;
+      wButton = 256;
+      hButton = 128;
+      xPlay = wButton;
       xBack = width - 2 * wButton;
       yButton = height / 3;
 

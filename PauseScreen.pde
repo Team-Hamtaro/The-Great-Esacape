@@ -48,11 +48,11 @@ class PauseScreen {
 
     	//The variables for the width, height, x and y positions of the buttons
     	int wButton, hButton, xResume, xBack, yButton;
-      wButton = 300;
-      hButton = 150;
-      xResume = width / 4;
+      wButton = 256;
+      hButton = 128;
+      xResume = wButton;
       xBack = width - 2 * wButton;
-      yButton = height / 2 - hButton / 2;
+      yButton = height/2;
 
       if (selectedButton[0]) {
         tint(255, 255);

@@ -71,9 +71,9 @@ class StartScreen {
 
 		//Variables for the width, height, x and y positions of the buttons
 		int  wButton, hButton, xPlay, xQuit, yButton;
-    	wButton = 300;
-    	hButton = 150;
-    	xPlay = width/4;
+    	wButton = 256;
+    	hButton = 128;
+    	xPlay = wButton;
     	xQuit = width - 2 * wButton; 
     	yButton = height/2;
 
