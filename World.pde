@@ -1,6 +1,7 @@
 //import java.util.AbstractCollection;
 
 class World {
+  
 
   ArrayList<Tile> tiles = new ArrayList<Tile>();
   ArrayList<Saw> saws = new ArrayList<Saw>();
@@ -17,6 +18,7 @@ class World {
 
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
+  static final float START_LAVA_SPEED = 1.6;
 
   final int TOTAL_CHUNKS = 7; //Change to equal the total amount of chunks, excluding 'startChunk'
 
@@ -50,6 +52,11 @@ class World {
     saws.removeAll (saws); // Remove al saws
     tiles.removeAll(tiles); // Remove all tiles
     loadNewChunk = height;
+    lavaSpeed = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
+    
+    // Resets the dead event start position, so it will play again if you die.
+    deadEventStart = true;
+    aboveTheLavaAgain = false;
 
     /** Iterate through Columns */
     for (int x = 0; x < GRID_UNITS_WIDE; x++) {
@@ -184,13 +191,13 @@ class World {
     }
 
 
-    for (int i = 0; i < tiles.size(); i++) {
+    for (int i = 0; i < tiles.size (); i++) {
       if (tiles.get(i).outOfScreen()) {
         tiles.remove(i);
       }
     }
 
-    for (int i = 0; i < saws.size(); i++) {
+    for (int i = 0; i < saws.size (); i++) {
       if (saws.get(i).outOfScreen()) {
         saws.remove(i);
       }
@@ -206,57 +213,62 @@ class World {
       boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x, saw.y, saw.RADIUS * 2);
       System.out.println(sawOverlap);
       if (sawOverlap == true) {
-        gameState = GameState.GAME_OVER_LOST;
-        reload();
+        player.alive = false;
         break;
       }
     }
 
 
     // collision detection between player and all the tiles
-    for (Tile tile : tiles) {
-      if (abs(tile.x - player.x) < 50 && abs(tile.y - player.y) < 50) { // only checks is a tile is close to the player
-        // Collision detection and response typically happens after all game objects are updated
-        // calculate overlap in x direction between player and tile
-        float xOverlap = calculate1DOverlap(player.x, tile.x, player.w, tile.w);
+    if (player.alive) {
+      for (Tile tile : tiles) {
+        if (abs(tile.x - player.x) < 50 && abs(tile.y - player.y) < 50) { // only checks is a tile is close to the player
+          // Collision detection and response typically happens after all game objects are updated
+          // calculate overlap in x direction between player and tile
+          float xOverlap = calculate1DOverlap(player.x, tile.x, player.w, tile.w);
 
-        float playeryAndSpeed = player.y  + (player.vy * player.speed);
-        // calculate overlap in y direction between player + speed and tile 
-        float yOverlap = calculate1DOverlap(playeryAndSpeed, tile.y, player.h, tile.h);
+          float playeryAndSpeed = player.y  + (player.vy * player.speed);
+          // calculate overlap in y direction between player + speed and tile 
+          float yOverlap = calculate1DOverlap(playeryAndSpeed, tile.y, player.h, tile.h);
 
 
-        // used for checking if the block is a sideTile. without this the player will glitch in the ground!
-        if (player.y + player.SIZE > tile.y + (tile.h/3) && player.y < tile.y + tile.h - (tile.h/3)) {
-          tile.sideTile = true;
-        } else {
-          tile.sideTile = false;
-        }
+          // used for checking if the block is a sideTile. without this the player will glitch in the ground!
+          if (player.y + player.SIZE > tile.y + (tile.h/3) && player.y < tile.y + tile.h - (tile.h/3)) {
+            tile.sideTile = true;
+          } else {
+            tile.sideTile = false;
+          }
 
-        // Determine whether there is a collision
-        if (abs(xOverlap) > 0 && abs(yOverlap)>0) {
-          // Determine wchich overlap is the largest
-          if (abs(xOverlap) > abs(yOverlap)) {
-            // adjust player y - position based on overlap 
-            if (yOverlap < 0) { // block under the player
-              player.y += yOverlap + (player.vy * player.speed) ; 
-              player.canJump = true; // making able to jump again.
-              player.fallingSpeed = 0.01; // set the falling speed to zero.
-              player.vy = 0;
-            }
-            if (yOverlap > 0 + (player.vy * player.speed)) { // block is above the player
+          // Determine whether there is a collision
+          if (abs(xOverlap) > 0 && abs(yOverlap)>0) {
+            // Determine wchich overlap is the largest
+            if (abs(xOverlap) > abs(yOverlap)) {
+              // adjust player y - position based on overlap 
+              if (yOverlap < 0) { // block under the player
+                player.y += yOverlap + (player.vy * player.speed) ; 
+                player.canJump = true; // making able to jump again.
+                player.fallingSpeed = 0.01; // set the falling speed to zero.
+                player.vy = 0;
+              }
+              if (yOverlap > 0 + (player.vy * player.speed)) { // block is above the player
 
-              //player.vy = - player.vy; // player vy becomes negative vx when you hit a block above.
-              player.y += yOverlap; // player will bounce of.
-            }
-          } else {     // block is left or right
-            player.x += xOverlap; // adjust player x - position based on overlap
-            if (tile.sideTile) {
-              player.vx = -player.vx; // player vx becomes negative vx when you hit a block left or right
+                //player.vy = - player.vy; // player vy becomes negative vx when you hit a block above.
+                player.y += yOverlap; // player will bounce of.
+              }
+            } else {     // block is left or right
+              player.x += xOverlap; // adjust player x - position based on overlap
+              if (tile.sideTile) {
+                player.vx = -player.vx; // player vx becomes negative vx when you hit a block left or right
+              }
             }
           }
         }
       }
     }
+  else { 
+    deadEvent();
+    }
+    
     player.draw();
     lava.draw();
 
@@ -267,12 +279,12 @@ class World {
     }
 
     if (player.y >= lava.h + 32) {
-      gameState = GameState.GAME_OVER_LOST;
-      reload();
+      player.alive = false;
     }
   }
 }
 
 
 // P0 = player.y
+
 

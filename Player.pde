@@ -3,16 +3,17 @@
  *
  */
 class Player extends Tile {
-
+  
   float fallingSpeed = 0.01;
   float speed = 5;
   boolean canJump = true;
+  boolean alive = true;
   final int SIZE = 30;
   final float DAMPING_X = 0.9;
   final float DAMPING_Y = 0.9;
   final float JUMP = 5;
   final float MAXSPEED = 3;
-  int scaleX = -1;
+  
 
     PImage playerIdle = loadImage("player_idle_1.png");
     PImage playerIdleMirror = loadImage("player_idle_1_mirror.png");
@@ -43,16 +44,16 @@ class Player extends Tile {
 
     // Velocity is changed when arrow keys are pressed 
     if (abs(vx) < MAXSPEED) {
-      if (keysPressed[LEFT]) {
+      if (keysPressed[LEFT] || keysPressed[65]) {
         vx -= 0.15;
       } 
-      if (keysPressed[RIGHT]) {
+      if (keysPressed[RIGHT] || keysPressed[68]) {
         vx += 0.15;
       }
     } 
 
     // vy is increased when the up key is pressed and canJump is true
-    if (keysPressed[UP] && canJump) {
+    if ((keysPressed[UP] || keysPressed[87])&& canJump) {
       vy -= JUMP; 
       jumpSound.play(); //play the jump sound
       jumpSound.cue(0); //sets the sound to 0 (time)
@@ -64,9 +65,11 @@ class Player extends Tile {
     y += vy * speed;
 
     // increased the falling speed and ajust the vy on the falling speed
+    
     vy += fallingSpeed;
     fallingSpeed += 0.01;
-
+ 
+    
     // when the player is falling he cant jump
     if (fallingSpeed > 0.03) canJump = false;
 
@@ -83,8 +86,9 @@ class Player extends Tile {
   }
   //Call the draw method to draw the player
   void draw() {
-
     update();
   }
 }
+
+
 
