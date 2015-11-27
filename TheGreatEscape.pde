@@ -58,14 +58,13 @@ void draw() {
   // Determine what level or screen to update and draw, based on the game state
   switch (gameState) {
   case START_SCREEN: 
-    startScreen.updateAndDraw(); 
-    theWorld.reload();
+    startScreen.updateAndDraw();
     break;
   case PLAYING: 
     theWorld.draw();
     if (keyPressed) {
       if (key == 'p' || key == 'P') {
-        pauseScreen.pauseGame();
+        gameState = GameState.GAME_PAUSED;
       }
     }
     break;

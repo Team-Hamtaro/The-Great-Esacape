@@ -12,6 +12,10 @@ class StartScreen {
  	PImage playButton;
   	PImage quitButton;
 
+    boolean[] selectedButton = {true, false};
+
+    int timer = 0;
+
 	/**
 	 *  Default constructor. Here we load the the background image.
 	 */
@@ -28,10 +32,43 @@ class StartScreen {
 		gameState = GameState.PLAYING;
 	}
 
+    void update() {
+        timer++;
+      if (keyPressed) {
+        if (keyCode == LEFT) {
+          if (selectedButton[1]) {
+            selectedButton[0] = true;
+            selectedButton[1] = false;
+          }
+        }
+
+        if (keyCode == RIGHT) {
+          if (selectedButton[0]) {
+            selectedButton[0] = false;
+            selectedButton[1] = true;
+          }
+        }
+
+        if (timer > 10) {
+        if (key == ENTER) {
+          if (selectedButton[0]) {
+            startGame();
+            timer = 0;
+          }
+          else if (selectedButton[1]) {
+            exit();
+          }
+        }
+    }
+      }
+    }
+
 	/**
 	 *  Update and draw startscreen.
 	 */
 	void updateAndDraw() {
+        update();
+
 		//Variables for the width, height, x and y positions of the buttons
 		int  wButton, hButton, xPlay, xQuit, yButton;
     	wButton = 300;
@@ -40,29 +77,26 @@ class StartScreen {
     	xQuit = width - 2 * wButton; 
     	yButton = height/2;
 
-    	//Variables for the mouse position
-    	int mX = mouseX, mY = mouseY;
-
-    	//If the mouse is over the 'Play' button and the left mouse button is pressed the game will start
-    	if (mX > xPlay && mX < xPlay + wButton && mY > yButton && mY < yButton + hButton) {
-      		if (mousePressed && mouseButton == LEFT) {
-        		startGame();
-        		println("Start Game");
-      		}
-    	}
-    
-    	//If the mouse is over the 'Quit' button and the left mouse button is pressed the game will be closed
-    	if (mX > xQuit && mX < xQuit + wButton && mY > yButton && mY < yButton + hButton) {
-      		if (mousePressed && mouseButton == LEFT) {
-        		exit();
-        		println("Quit Game");
-      		}
-    	}
-
     	//Draws the background and the 'Play' and 'Quit' buttons
     	image(startBG, 0, 0);
-    	image(playButton, xPlay, yButton, wButton, hButton);
-    	image(quitButton, xQuit, yButton, wButton, hButton);
+    	
+        if (selectedButton[0]) {
+            tint(255, 255);
+        } else { 
+            tint(50, 255); 
+        }
+
+        image(playButton, xPlay, yButton, wButton, hButton);
+
+        if (selectedButton[1]) {
+            tint(255, 255);
+        } else { 
+            tint(50, 255); 
+        }
+
+        image(quitButton, xQuit, yButton, wButton, hButton);
+
+        tint(255, 255);
     
     	//Draws the title of the game
     	fill(255);

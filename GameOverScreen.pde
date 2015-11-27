@@ -7,7 +7,9 @@ class GameOverScreen {
    PImage playButton;
    PImage backButton;
    String gameOverMessage = "";
-    
+
+   boolean[] selectedButton = {true, false};
+
     /**
      *  Default constructor. Here we load the the background image.
      */
@@ -26,34 +28,65 @@ class GameOverScreen {
    void setLose(){
       gameOverMessage = "Game Over!! Try Again!";
    }
+
+    void update() {
+      if (keyPressed) {
+        if (keyCode == LEFT) {
+          if (selectedButton[1]) {
+            selectedButton[0] = true;
+            selectedButton[1] = false;
+          }
+        }
+
+        if (keyCode == RIGHT) {
+          if (selectedButton[0]) {
+            selectedButton[0] = false;
+            selectedButton[1] = true;
+          }
+        }
+
+        if (key == ENTER) {
+          if (selectedButton[0]) {
+            gameState = GameState.PLAYING;
+          }
+          else if (selectedButton[1]) {
+            gameState = GameState.START_SCREEN;
+          }
+        }
+      }
+    }
     
    // update and draw the gameover screen
    void updateAndDraw() {
+      update();
+
       int wButton, hButton, xPlay, xBack, yButton;
       wButton = 300;
       hButton = 150;
       xPlay = width / 4;
       xBack = width - 2 * wButton;
       yButton = height / 3;
-        
-      int mX = mouseX, mY = mouseY;
-        
-      if (mX > xPlay && mX < xPlay + wButton && mY > yButton && mY < yButton + hButton) {
-        	if (mousePressed && mouseButton == LEFT) {
-         	gameState = GameState.PLAYING;
-         }
-      }
-        
-      if (mX > xBack && mX < xBack + wButton && mY > yButton && mY < yButton + hButton) {
-         if (mousePressed && mouseButton == LEFT) {
-         	gameState = GameState.START_SCREEN;
-         }
-      }
 
       // Draw the background image
       image(gameOverBG, 0, 0);
+      
+      if (selectedButton[0]) {
+        tint(255, 255);
+      } else { 
+        tint(50, 255); 
+      }
+      
       image(playButton, xPlay, yButton, wButton, hButton);
+      
+      if (selectedButton[1]) {
+        tint(255, 255);
+      } else { 
+        tint(100, 255); 
+      }
+      
       image(backButton, xBack, yButton, wButton, hButton);
+
+      tint(255, 255);
         
       // draw gameover text
       fill(255);

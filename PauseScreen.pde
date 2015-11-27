@@ -3,6 +3,8 @@ class PauseScreen {
   	PImage resumeButton;
   	PImage backButton;
 
+    boolean[] selectedButton = {true, false};
+
   	//Initializes the images for the pause menu.
   	public PauseScreen() {
     	pauseBG = loadImage("loading.png");
@@ -10,58 +12,64 @@ class PauseScreen {
     	backButton = loadImage("button_big_back.png");
   	}
 
-  	//Pauses the game
-  	void pauseGame() {
-    	gameState = GameState.GAME_PAUSED;
-  	}
+    void update() {
+      if (keyPressed) {
+        if (keyCode == LEFT) {
+          if (selectedButton[1]) {
+            selectedButton[0] = true;
+            selectedButton[1] = false;
+          }
+        }
 
-  	//Unpauses the game
-  	void unpauseGame() {
-    	gameState = GameState.PLAYING;
-  	}
+        if (keyCode == RIGHT) {
+          if (selectedButton[0]) {
+            selectedButton[0] = false;
+            selectedButton[1] = true;
+          }
+        }
+
+        if (key == ENTER) {
+          if (selectedButton[0]) {
+            gameState = GameState.PLAYING;
+          }
+          else if (selectedButton[1]) {
+            gameState = GameState.START_SCREEN;
+            theWorld.reload();
+          }
+        }
+      }
+    }
 
   	void updateAndDraw() {
+      update();
+
     	//Draws the background 
     	image(pauseBG, 0, 0);
 
     	//The variables for the width, height, x and y positions of the buttons
-    	int wButton, hButton, xButton, yResume, yBack;
-    	wButton = 300;
-    	hButton = 150;
-    	xButton = width / 2 - wButton / 2;
-    	yResume = height / 3 - hButton / 2;
-    	yBack = (height / 3) * 2 - hButton / 2;
+    	int wButton, hButton, xResume, xBack, yButton;
+      wButton = 300;
+      hButton = 150;
+      xResume = width / 4;
+      xBack = width - 2 * wButton;
+      yButton = height / 2 - hButton / 2;
 
-    	//Draws the 'Resume' and the 'Back to Menu' button.
-    	image(resumeButton, xButton, yResume, wButton, hButton);
-    	image(backButton, xButton, yBack, wButton, hButton);
+      if (selectedButton[0]) {
+        tint(255, 255);
+      } else { 
+        tint(50, 255); 
+      }
 
+    	image(resumeButton, xResume, yButton, wButton, hButton);
 
-    	//Variables for the mouse position.
-    	int mX = mouseX, mY = mouseY;
+      if (selectedButton[1]) {
+        tint(255, 255);
+      } else { 
+        tint(50, 255); 
+      }
 
-    	/*
-     	 * If the position of the mouse is over the 'Resume' button, 
-     	 * the game will be resumed if the left mouse button is pressed
-     	 */
-    	if (mX > xButton && mX < xButton + wButton && mY > yResume && mY < yResume + hButton) {
-      	if (mousePressed) {
-        		if (mouseButton == LEFT) {
-          		unpauseGame();
-        		}
-      	}
-    	}
+    	image(backButton, xBack, yButton, wButton, hButton);
 
-    	/*
-     	 * If the position of the mouse is over the 'Back To Menu' button, 
-     	 * the player will return to the main menu if the left mouse button is pressed
-     	 */
-    	if (mX > xButton && mX < xButton + wButton && mY > yBack && mY < yBack + hButton) {
-      	if (mousePressed) {
-        		if (mouseButton == LEFT) {
-          		gameState = GameState.START_SCREEN;
-        		}
-      	}
-    	}
-  	}
+      tint(255, 255);
+  }
 }
