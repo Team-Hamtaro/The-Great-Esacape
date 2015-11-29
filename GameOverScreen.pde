@@ -15,7 +15,7 @@ class GameOverScreen {
      */
    public GameOverScreen(){
       gameOverBG = loadImage("loading.png");
-      playButton = loadImage("button_big_play.png");
+      playButton = loadImage("button_big_again.png");
       backButton = loadImage("button_big_back.png");
    }
 
