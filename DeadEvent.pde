@@ -11,6 +11,9 @@ public void deadEvent() {
     theWorld.player.vy = 0;
     theWorld.player.vy -= theWorld.player.JUMP;
     deadEventStart = false;
+    
+    deadSound.play(); //play the dead sound
+    deadSound.cue(0); //sets the sound to 0 (time)
   }
   
   // Check if player is above the lava again. 

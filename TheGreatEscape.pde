@@ -10,6 +10,7 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer backgroundMusic;
 AudioPlayer jumpSound;
+AudioPlayer deadSound;
 
 /** Viewport */
 static final int SCREENX = 1376;
@@ -34,6 +35,8 @@ void setup() {
   // this loads mysong.wav from the data folder
   backgroundMusic = minim.loadFile("cave.mp3");
   jumpSound = minim.loadFile("Jump.wav");
+  deadSound = minim.loadFile("hit.wav");
+  
   backgroundMusic.loop();
   
   size(1376, 768);

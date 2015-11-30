@@ -23,6 +23,8 @@ class Player extends Tile {
     PImage playerJumpingMirror = loadImage("player_jump_1_mirror.png");
     PImage playerFalling = loadImage("player_jump_2.png");
     PImage playerFallingMirror = loadImage("player_jump_2_mirror.png");
+    PImage playerHit = loadImage("player_hit.png");
+    PImage playerHitMirror = loadImage("player_hit_mirror.png");
 
 
   // // The init method can be called to set a player to it's default state
@@ -74,6 +76,7 @@ class Player extends Tile {
     if (fallingSpeed > 0.03) canJump = false;
 
       // Update the image of the player on the speed
+    if (alive) {
     if (vx > 0.3 && canJump && (frameCount % 10) < 5) image(playerWalking, x, y);
     else if (vx > 0.3 && canJump || vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
     else if (vx < -0.3 && canJump && (frameCount % 10) < 5) image(playerWalkingMirror, x, y);
@@ -87,6 +90,11 @@ class Player extends Tile {
     //else if (vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
     //else if (vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
     else image(playerIdle, x, y);
+    }
+    else {
+    if (vx > 0) image(playerHit, x, y);
+    else image(playerHitMirror, x, y);
+    }
   }
   //Call the draw method to draw the player
   void draw() {
