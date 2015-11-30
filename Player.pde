@@ -74,14 +74,18 @@ class Player extends Tile {
     if (fallingSpeed > 0.03) canJump = false;
 
       // Update the image of the player on the speed
-    if (vy < 0 && vx > 0 && !(canJump)) image(playerJumping, x, y);
+    if (vx > 0.3 && canJump && (frameCount % 10) < 5) image(playerWalking, x, y);
+    else if (vx > 0.3 && canJump || vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
+    else if (vx < -0.3 && canJump && (frameCount % 10) < 5) image(playerWalkingMirror, x, y);
+    else if (vx < -0.3 && canJump || vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
+    else if (vy < 0 && vx > 0 && !(canJump)) image(playerJumping, x, y);
     else if (vy < 0 && vx < 0 && !(canJump)) image(playerJumpingMirror, x, y);
     else if (vy > 0 && vx > 0 && !(canJump)) image(playerFalling, x, y);
     else if (vy > 0 && vx < 0 && !(canJump)) image(playerFallingMirror, x, y);
-    else if (vx > 0.3 && canJump) image(playerWalking, x, y);
-    else if (vx < -0.3 && canJump) image(playerWalkingMirror, x, y);
-    else if (vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
-    else if (vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
+    //else if (vx > 0.3 && canJump) image(playerWalking, x, y);
+    //else if (vx < -0.3 && canJump) image(playerWalkingMirror, x, y);
+    //else if (vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
+    //else if (vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
     else image(playerIdle, x, y);
   }
   //Call the draw method to draw the player
