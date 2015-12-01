@@ -27,6 +27,8 @@ StartScreen startScreen;
 World theWorld;
 GameState gameState;
 
+PFont font;
+
 /**
  *  Setup the Viewport and main classes.
  */
@@ -50,6 +52,9 @@ void setup() {
   theWorld = new World();
 
   gameState = GameState.START_SCREEN;
+
+  font = loadFont("Mayan.vlw");
+  textFont(font);
 }
 
 
