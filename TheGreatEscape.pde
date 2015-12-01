@@ -36,9 +36,9 @@ void setup() {
   backgroundMusic = minim.loadFile("cave.mp3");
   jumpSound = minim.loadFile("Jump.wav");
   deadSound = minim.loadFile("hit.wav");
-  
+
   backgroundMusic.loop();
-  
+
   size(1376, 768);
   // surface.setResizable(true);
   background(DEFAULT_BACKGROUND);
@@ -89,3 +89,4 @@ void draw() {
   /** Update the Key state buffer */
   updateKeys();
 }
+

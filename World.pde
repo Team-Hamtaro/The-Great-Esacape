@@ -1,7 +1,7 @@
 //import java.util.AbstractCollection;
 
 class World {
-  
+
 
   ArrayList<Tile> tiles = new ArrayList<Tile>();
   ArrayList<Saw> saws = new ArrayList<Saw>();
@@ -20,7 +20,7 @@ class World {
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.6;
 
-  final int TOTAL_CHUNKS = 7; //Change to equal the total amount of chunks, excluding 'startChunk'
+  final int TOTAL_CHUNKS = 9; //Change to equal the total amount of chunks, excluding 'startChunk'
 
   int[][] worldGrid = new int[GRID_UNITS_WIDE][GRID_UNITS_TALL];
 
@@ -53,7 +53,7 @@ class World {
     tiles.removeAll(tiles); // Remove all tiles
     loadNewChunk = height;
     lavaSpeed = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
-    
+
     // Resets the dead event start position, so it will play again if you die.
     deadEventStart = true;
     aboveTheLavaAgain = false;
@@ -165,6 +165,12 @@ class World {
         case 6:
           parseTile(chunk07[y][x], x, y-24);
           break;
+        case 7:
+          parseTile(chunk08[y][x], x, y-24);
+          break;
+        case 8:
+          parseTile(chunk09[y][x], x, y-24);
+          break;
         }
       }
     }
@@ -264,11 +270,10 @@ class World {
           }
         }
       }
+    } else { 
+      deadEvent();
     }
-  else { 
-    deadEvent();
-    }
-    
+
     player.draw();
     lava.draw();
 
@@ -286,5 +291,4 @@ class World {
 
 
 // P0 = player.y
-
 
