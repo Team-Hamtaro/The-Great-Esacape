@@ -231,7 +231,7 @@ class World {
       boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x, saw.y, saw.RADIUS * 2);
       System.out.println(sawOverlap);
       if (sawOverlap == true) {
-        // player.alive = false;
+        player.alive = false;
         break;
       }
     }
@@ -282,10 +282,7 @@ class World {
           }
         }
       }
-    } else { 
-      deadEvent();
-    }
-  else { 
+    }  else { 
     deadEvent();
     gameOverScreen.points = playerScore;
     }
