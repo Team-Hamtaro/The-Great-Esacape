@@ -20,7 +20,7 @@ class World {
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.6;
 
-  final int TOTAL_CHUNKS = 9; //Change to equal the total amount of chunks, excluding 'startChunk'
+  final int TOTAL_CHUNKS = 10; //Change to equal the total amount of chunks, excluding 'startChunk'
 
   int[][] worldGrid = new int[GRID_UNITS_WIDE][GRID_UNITS_TALL];
 
