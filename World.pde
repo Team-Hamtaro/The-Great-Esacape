@@ -42,8 +42,8 @@ class World {
    * Sets up the Game Grid.
    */
   public World() {
-    bglayer1 = loadImage("bglayer1.png");
     mglayer = loadImage("bglayer2.png");
+    bglayer1 = loadImage("bglayer1.png");
 
     reload();
   }
@@ -209,8 +209,8 @@ class World {
     setScore();
 
     background(0);
+    image(mglayer, 0, (test * 0.1));
     image(bglayer1, 0, 0); 
-    image(mglayer, 0, (test * 0.5));
 
     for (Tile tile : tiles) {
       tile.draw();
