@@ -15,10 +15,11 @@ class World {
   static final int SAW_DYN_X = 4;
   static final int PLAYER_START = 9;
   static final int GRID_UNIT_SIZE = 32;
+  static final float SPEED_INCREASEMENT = 0.05;
 
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
-  static final float START_LAVA_SPEED = 1.6;
+  static final float START_LAVA_SPEED = 1.2;
 
   final int TOTAL_CHUNKS = 10; //Change to equal the total amount of chunks, excluding 'startChunk'
 
@@ -30,6 +31,7 @@ class World {
   float cameraY = 0;
   float playerStartY;
   int playerScore = 0;
+  int increaseSpeedAtScore = 100;
 
 
   /**
@@ -56,7 +58,7 @@ class World {
     loadNewChunk = height;
 
     cameraY = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
-    
+
     // Resets the dead event start position, so it will play again if you die.
     deadEventStart = true;
     aboveTheLavaAgain = false;
@@ -142,6 +144,7 @@ class World {
    * Load a new chunk when the current chunk is at the bottom of the screen.
    */
   void loadChunks() {
+    cameraY += SPEED_INCREASEMENT; // increase the speed of the object moving down.
     randomChunk = (int)random(TOTAL_CHUNKS);
     //println("Loaded: chunk" + (randomChunk+1));
 
@@ -182,7 +185,7 @@ class World {
     }
   }
 
-  void setScore(){
+  void setScore() {
     int score =  (int)(playerStartY - player.y + cameraY);
     if (score > playerScore) playerScore = score;
     println(playerScore);
@@ -283,9 +286,9 @@ class World {
           }
         }
       }
-    }  else { 
-    deadEvent();
-    gameOverScreen.points = playerScore;
+    } else { 
+      deadEvent();
+      gameOverScreen.points = playerScore;
     }
     player.draw();
     lava.draw();

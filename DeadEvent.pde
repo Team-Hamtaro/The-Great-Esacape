@@ -22,7 +22,6 @@ public void deadEvent() {
   // Check is player is under the lava again.
   if (theWorld.player.y >= theWorld.lava.h + 32 && aboveTheLavaAgain) {
     gameState = GameState.GAME_OVER_LOST;
-    theWorld.reload();  
   }
 }
 
