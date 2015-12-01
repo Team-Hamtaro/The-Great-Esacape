@@ -60,6 +60,7 @@ class World {
     saws.removeAll (saws); // Remove al saws
     tiles.removeAll(tiles); // Remove all tiles
     loadNewChunk = height;
+    test = 0;
 
     cameraY = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
 
