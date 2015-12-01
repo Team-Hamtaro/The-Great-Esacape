@@ -2,6 +2,7 @@
  * The World
  */
 class World {
+  PImage bglayer1;
 
   ArrayList<Tile> tiles = new ArrayList<Tile>();
   ArrayList<Saw> saws = new ArrayList<Saw>();
@@ -40,6 +41,8 @@ class World {
    * Sets up the Game Grid.
    */
   public World() {
+    bglayer1 = loadImage("bglayer1.png");
+
     reload();
   }
   // Wordt dit stuk wel gebruikt? <<<<<
@@ -181,6 +184,9 @@ class World {
         case 8:
           parseTile(chunk09[y][x], x, y-24);
           break;
+        case 9:
+          parseTile(chunk10[y][x], x, y-24);
+          break;
         }
       }
     }
@@ -199,7 +205,7 @@ class World {
 
     setScore();
 
-    background(0); 
+    background(bglayer1); 
     for (Tile tile : tiles) {
       tile.draw();
       if (lava.max) { 
