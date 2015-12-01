@@ -1,6 +1,5 @@
 /**
  *  Player Class
- *
  */
 class Player extends Tile {
   
@@ -14,25 +13,24 @@ class Player extends Tile {
   final float JUMP = 5;
   final float MAXSPEED = 3;
   
+  // Load player sprites
+  PImage playerIdle = loadImage("player_idle_1.png");
+  PImage playerIdleMirror = loadImage("player_idle_1_mirror.png");
+  PImage playerWalking = loadImage("player_walking_1.png");
+  PImage playerWalkingMirror = loadImage("player_walking_1_mirror.png");
+  PImage playerJumping = loadImage("player_jump_1.png");
+  PImage playerJumpingMirror = loadImage("player_jump_1_mirror.png");
+  PImage playerFalling = loadImage("player_jump_2.png");
+  PImage playerFallingMirror = loadImage("player_jump_2_mirror.png");
+  PImage playerHit = loadImage("player_hit.png");
+  PImage playerHitMirror = loadImage("player_hit_mirror.png");
 
-    PImage playerIdle = loadImage("player_idle_1.png");
-    PImage playerIdleMirror = loadImage("player_idle_1_mirror.png");
-    PImage playerWalking = loadImage("player_walking_1.png");
-    PImage playerWalkingMirror = loadImage("player_walking_1_mirror.png");
-    PImage playerJumping = loadImage("player_jump_1.png");
-    PImage playerJumpingMirror = loadImage("player_jump_1_mirror.png");
-    PImage playerFalling = loadImage("player_jump_2.png");
-    PImage playerFallingMirror = loadImage("player_jump_2_mirror.png");
-    PImage playerHit = loadImage("player_hit.png");
-    PImage playerHitMirror = loadImage("player_hit_mirror.png");
 
-
-  // // The init method can be called to set a player to it's default state
-  // void init(float newX, float newY, float newWidth, float newHeight) {
-  //   w = newWidth;
-  //   h = newHeight;
-  //   x = newX;   
-  //   y = newY;
+  /**
+   * The init method can be called to set a player to it's default state
+   * @param  float x             x-position
+   * @param  float y             y-position
+   */
   void init(float x, float y) {
     super.init(x, y, SIZE, SIZE);
   }
@@ -57,9 +55,9 @@ class Player extends Tile {
     // vy is increased when the up key is pressed and canJump is true
     if ((keysPressed[UP] || keysPressed[87])&& canJump) {
       vy -= JUMP; 
-      jumpSound.play(); //play the jump sound
-      jumpSound.cue(0); //sets the sound to 0 (time)
-      canJump = false; // can no longer jump
+      jumpSound.play(); // play the jump sound
+      jumpSound.cue(0); // sets the sound to 0 (time)
+      canJump = false; // the player can no longer jump
     };
 
     // Update our position using the velocity
@@ -67,36 +65,36 @@ class Player extends Tile {
     y += vy * speed;
 
     // increased the falling speed and ajust the vy on the falling speed
-    
     vy += fallingSpeed;
     fallingSpeed += 0.01;
- 
     
-    // when the player is falling he cant jump
+    // when the player is falling he can't jump
     if (fallingSpeed > 0.03) canJump = false;
 
-      // Update the image of the player on the speed
+    // Update the image of the player on the speed
     if (alive) {
-    if (vx > 0.3 && canJump && (frameCount % 10) < 5) image(playerWalking, x, y);
-    else if (vx > 0.3 && canJump || vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
-    else if (vx < -0.3 && canJump && (frameCount % 10) < 5) image(playerWalkingMirror, x, y);
-    else if (vx < -0.3 && canJump || vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
-    else if (vy < 0 && vx > 0 && !(canJump)) image(playerJumping, x, y);
-    else if (vy < 0 && vx < 0 && !(canJump)) image(playerJumpingMirror, x, y);
-    else if (vy > 0 && vx > 0 && !(canJump)) image(playerFalling, x, y);
-    else if (vy > 0 && vx < 0 && !(canJump)) image(playerFallingMirror, x, y);
-    //else if (vx > 0.3 && canJump) image(playerWalking, x, y);
-    //else if (vx < -0.3 && canJump) image(playerWalkingMirror, x, y);
-    //else if (vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
-    //else if (vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
-    else image(playerIdle, x, y);
-    }
-    else {
-    if (vx > 0) image(playerHit, x, y);
-    else image(playerHitMirror, x, y);
+      if (vx > 0.3 && canJump && (frameCount % 10) < 5) image(playerWalking, x, y);
+      else if (vx > 0.3 && canJump || vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
+      else if (vx < -0.3 && canJump && (frameCount % 10) < 5) image(playerWalkingMirror, x, y);
+      else if (vx < -0.3 && canJump || vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
+      else if (vy < 0 && vx > 0 && !(canJump)) image(playerJumping, x, y);
+      else if (vy < 0 && vx < 0 && !(canJump)) image(playerJumpingMirror, x, y);
+      else if (vy > 0 && vx > 0 && !(canJump)) image(playerFalling, x, y);
+      else if (vy > 0 && vx < 0 && !(canJump)) image(playerFallingMirror, x, y);
+      //else if (vx > 0.3 && canJump) image(playerWalking, x, y);
+      //else if (vx < -0.3 && canJump) image(playerWalkingMirror, x, y);
+      //else if (vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
+      //else if (vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
+      else image(playerIdle, x, y);
+    } else {
+      if (vx > 0) image(playerHit, x, y);
+      else image(playerHitMirror, x, y);
     }
   }
-  //Call the draw method to draw the player
+
+  /**
+   * Called to draw the player
+   */
   void draw() {
     update();
   }
