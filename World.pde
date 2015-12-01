@@ -32,6 +32,7 @@ class World {
   float playerStartY;
   int playerScore = 0;
   int increaseSpeedAtScore = 100;
+  float test = 0; // zorgt ervoor dat de score goed werkt.
 
 
   /**
@@ -186,7 +187,7 @@ class World {
   }
 
   void setScore() {
-    int score =  (int)(playerStartY - player.y + cameraY);
+    int score =  (int)(playerStartY - player.y + test);
     if (score > playerScore) playerScore = score;
     println(playerScore);
   }
@@ -233,7 +234,6 @@ class World {
     // collision detection between player and all the saws
     for (Saw saw : saws) {
       boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x, saw.y, saw.RADIUS * 2);
-      System.out.println(sawOverlap);
       if (sawOverlap == true) {
         player.alive = false;
         break;
@@ -296,6 +296,8 @@ class World {
     if (lava.max) {
       loadNewChunk += cameraY;
       player.y += cameraY;
+      test += cameraY; 
+      
     }
 
     if (player.y >= lava.h + 32) {
