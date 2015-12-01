@@ -71,6 +71,7 @@ class World {
       }
     }
 
+    playerScore = 0;
     playerStartY =  player.y; // reference value for highscore
 
     lava.init();
