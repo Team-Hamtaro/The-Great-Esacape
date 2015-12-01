@@ -12,6 +12,7 @@ class Player extends Tile {
   final float DAMPING_Y = 0.9;
   final float JUMP = 5;
   final float MAXSPEED = 3;
+
   
   // Load player sprites
   PImage playerIdle = loadImage("player_idle_1.png");
@@ -35,7 +36,6 @@ class Player extends Tile {
     super.init(x, y, SIZE, SIZE);
   }
 
-
   // The update method is called whenever we want to calculate the new position of a player
   // based on the keyboard input
   void update() {
@@ -50,7 +50,7 @@ class Player extends Tile {
       if (keysPressed[RIGHT] || keysPressed[68]) {
         vx += 0.15;
       }
-    } 
+    }
 
     // vy is increased when the up key is pressed and canJump is true
     if ((keysPressed[UP] || keysPressed[87])&& canJump) {

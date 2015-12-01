@@ -6,7 +6,7 @@ final float DEAD_EVENT_END = -60;
 public void deadEvent() {
   // activate's only the first frame when the player is game over.
   if (deadEventStart == true) {
-    theWorld.lavaSpeed = 0;
+    theWorld.cameraY = 0;
     theWorld.player.fallingSpeed = 0;
     theWorld.player.vy = 0;
     theWorld.player.vy -= theWorld.player.JUMP;

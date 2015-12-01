@@ -1,8 +1,8 @@
-//import java.util.AbstractCollection;
-
+/**
+ * The World
+ */
 class World {
   
-
   ArrayList<Tile> tiles = new ArrayList<Tile>();
   ArrayList<Saw> saws = new ArrayList<Saw>();
   Player player;
@@ -27,7 +27,9 @@ class World {
   float loadNewChunk = height;
   int randomChunk = 0; 
 
-  float lavaSpeed = 1.6;
+  float cameraY = 0;
+  float playerStartY;
+  int playerScore = 0;
 
 
   /**
@@ -52,7 +54,7 @@ class World {
     saws.removeAll (saws); // Remove al saws
     tiles.removeAll(tiles); // Remove all tiles
     loadNewChunk = height;
-    lavaSpeed = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
+    cameraY = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
     
     // Resets the dead event start position, so it will play again if you die.
     deadEventStart = true;
@@ -67,6 +69,8 @@ class World {
         parseTile(startChunk[y][x], x, y);
       }
     }
+
+    playerStartY =  player.y; // reference value for highscore
 
     lava.init();
     tiles.add(lava);
@@ -170,23 +174,30 @@ class World {
     }
   }
 
+  void setScore(){
+    int score =  (int)(playerStartY - player.y + cameraY);
+    if (score > playerScore) playerScore = score;
+    println(playerScore);
+  }
+
   /**
    * Draw the updated world once per frame
    */
-
-
   void draw() {
+
+    setScore();
+
     background(0); 
     for (Tile tile : tiles) {
       tile.draw();
       if (lava.max) { 
-        tile.y += lavaSpeed;
+        tile.y += cameraY;
       }
     }
     for (Saw saw : saws) {
       saw.draw();
       if (lava.max) { 
-        saw.y += lavaSpeed;
+        saw.y += cameraY;
       }
     }
 
@@ -213,7 +224,7 @@ class World {
       boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x, saw.y, saw.RADIUS * 2);
       System.out.println(sawOverlap);
       if (sawOverlap == true) {
-        player.alive = false;
+        // player.alive = false;
         break;
       }
     }
@@ -267,15 +278,15 @@ class World {
     }
   else { 
     deadEvent();
+    gameOverScreen.points = playerScore;
     }
     
     player.draw();
     lava.draw();
 
-
     if (lava.max) {
-      loadNewChunk += lavaSpeed;
-      player.y += lavaSpeed;
+      loadNewChunk += cameraY;
+      player.y += cameraY;
     }
 
     if (player.y >= lava.h + 32) {
@@ -283,8 +294,5 @@ class World {
     }
   }
 }
-
-
-// P0 = player.y
 
 
