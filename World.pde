@@ -3,6 +3,7 @@
  */
 class World {
   PImage bglayer1;
+  PImage mglayer;
 
   ArrayList<Tile> tiles = new ArrayList<Tile>();
   ArrayList<Saw> saws = new ArrayList<Saw>();
@@ -42,6 +43,7 @@ class World {
    */
   public World() {
     bglayer1 = loadImage("bglayer1.png");
+    mglayer = loadImage("bglayer2.png");
 
     reload();
   }
@@ -206,7 +208,10 @@ class World {
 
     setScore();
 
-    background(bglayer1); 
+    background(0);
+    image(bglayer1, 0, 0); 
+    image(mglayer, 0, (test * 0.5));
+
     for (Tile tile : tiles) {
       tile.draw();
       if (lava.max) { 
