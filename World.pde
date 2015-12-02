@@ -288,11 +288,12 @@ class World {
 
                 //player.vy = - player.vy; // player vy becomes negative vx when you hit a block above.
                 player.y += yOverlap; // player will bounce of.
+                player.vy = -player.vy/2;
               }
             } else {     // block is left or right
               player.x += xOverlap; // adjust player x - position based on overlap
               if (tile.sideTile) {
-                player.vx = -player.vx; // player vx becomes negative vx when you hit a block left or right
+                player.vx = 0; // player vx becomes negative vx when you hit a block left or right
               }
             }
           }
@@ -308,8 +309,7 @@ class World {
     if (lava.max) {
       loadNewChunk += cameraY;
       player.y += cameraY;
-      test += cameraY; 
-      
+      test += cameraY;
     }
 
     if (player.y >= lava.h + 32) {

@@ -5,13 +5,16 @@ class Player extends Tile {
   
   float fallingSpeed = 0.01;
   float speed = 5;
-  boolean canJump = true;
-  boolean alive = true;
+  boolean canJump = true; // can only jump is canJump == true
+  boolean alive = true; // boolean that is true while the player is alive.
+  boolean jumpKeyReleased = true; // checks if you released the jump key before you can jum again.
+  
   final int SIZE = 30;
-  final float DAMPING_X = 0.9;
+  final float DAMPING_X = 0.8;
   final float DAMPING_Y = 0.9;
   final float JUMP = 5;
   final float MAXSPEED = 3;
+  final float SPEED_INCREASE = 0.35;
 
   
   // Load player sprites
@@ -39,26 +42,31 @@ class Player extends Tile {
   // The update method is called whenever we want to calculate the new position of a player
   // based on the keyboard input
   void update() {
-    vx *= DAMPING_X; // our object will move a bit slower every frame
-    vy *= DAMPING_Y;
+    
+   vx *= DAMPING_X; // our object will move a bit slower every frame
+   vy *= DAMPING_Y;
 
     // Velocity is changed when arrow keys are pressed 
     if (abs(vx) < MAXSPEED) {
       if (keysPressed[LEFT] || keysPressed[65]) {
-        vx -= 0.15;
+        vx -= SPEED_INCREASE;
       } 
       if (keysPressed[RIGHT] || keysPressed[68]) {
-        vx += 0.15;
+        vx += SPEED_INCREASE;
       }
     }
 
     // vy is increased when the up key is pressed and canJump is true
-    if ((keysPressed[UP] || keysPressed[87])&& canJump) {
+    if ((keysPressed[UP] || keysPressed[88]) && canJump && jumpKeyReleased) {
+      jumpKeyReleased = false; // will be true if you release the jump key. So you cant just keep pushing the jump key.
       vy -= JUMP; 
       jumpSound.play(); // play the jump sound
       jumpSound.cue(0); // sets the sound to 0 (time)
       canJump = false; // the player can no longer jump
-    };
+    }
+    else if (!(keysPressed[UP] || keysPressed[88])) {
+      jumpKeyReleased = true;
+    }
 
     // Update our position using the velocity
     x += vx * speed;
