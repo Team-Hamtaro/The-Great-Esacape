@@ -45,7 +45,7 @@ class GameOverScreen {
         }
       }
 
-      if (key == ENTER) {
+      if (key == ENTER || keysPressed[88]) {
         theWorld.reload();  
         if (selectedButton[0]) {
           gameState = GameState.PLAYING;

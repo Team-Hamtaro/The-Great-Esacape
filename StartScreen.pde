@@ -50,7 +50,7 @@ class StartScreen {
         }
 
         if (timer > 10) {
-        if (key == ENTER) {
+        if (key == ENTER || keysPressed[88]) {
           if (selectedButton[0]) {
             startGame();
             timer = 0;

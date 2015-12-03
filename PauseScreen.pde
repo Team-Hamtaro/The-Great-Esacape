@@ -28,7 +28,7 @@ class PauseScreen {
           }
         }
 
-        if (key == ENTER) {
+        if (key == ENTER || keysPressed[88]) {
           if (selectedButton[0]) {
             gameState = GameState.PLAYING;
           }
