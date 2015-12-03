@@ -2,21 +2,25 @@
  *  Player Class
  */
 class Player extends Tile {
-  
+
+  float vxLastFrame;
   float fallingSpeed = 0.01;
   float speed = 5;
   boolean canJump = true; // can only jump is canJump == true
   boolean alive = true; // boolean that is true while the player is alive.
   boolean jumpKeyReleased = true; // checks if you released the jump key before you can jum again.
-  
+
   final int SIZE = 30;
   final float DAMPING_X = 0.8;
   final float DAMPING_Y = 0.9;
   final float JUMP = 5;
-  final float MAXSPEED = 3;
+  final float MAXSPEED = 2.3;
   final float SPEED_INCREASE = 0.35;
+  final float EXTRA_SPEED_FOR_SHOE_SMOKE = 0.3; // var to give the shoe particle's some extra speed.
 
-  
+  //making all the player particle effects the properties of particle's will be decleared in the init function.
+  ParticleSystem shoeSmoke = new ParticleSystem(width/2, height/2);
+
   // Load player sprites
   PImage playerIdle = loadImage("player_idle_1.png");
   PImage playerIdleMirror = loadImage("player_idle_1_mirror.png");
@@ -29,6 +33,9 @@ class Player extends Tile {
   PImage playerHit = loadImage("player_hit.png");
   PImage playerHitMirror = loadImage("player_hit_mirror.png");
 
+  // Initialize the particle system
+  // These settings are generated with the particle editor
+
 
   /**
    * The init method can be called to set a player to it's default state
@@ -37,14 +44,17 @@ class Player extends Tile {
    */
   void init(float x, float y) {
     super.init(x, y, SIZE, SIZE);
+
+    // This function will give the player particle effects all the propperties.
+    particleDeclaration();
   }
 
   // The update method is called whenever we want to calculate the new position of a player
   // based on the keyboard input
-  void update() {
-    
-   vx *= DAMPING_X; // our object will move a bit slower every frame
-   vy *= DAMPING_Y;
+  void update() {    
+    vxLastFrame = vx; 
+    vx *= DAMPING_X; // our object will move a bit slower every frame
+    vy *= DAMPING_Y;
 
     // Velocity is changed when arrow keys are pressed 
     if (abs(vx) < MAXSPEED) {
@@ -63,8 +73,7 @@ class Player extends Tile {
       jumpSound.play(); // play the jump sound
       jumpSound.cue(0); // sets the sound to 0 (time)
       canJump = false; // the player can no longer jump
-    }
-    else if (!(keysPressed[UP] || keysPressed[88])) {
+    } else if (!(keysPressed[UP] || keysPressed[88])) {
       jumpKeyReleased = true;
     }
 
@@ -75,11 +84,67 @@ class Player extends Tile {
     // increased the falling speed and ajust the vy on the falling speed
     vy += fallingSpeed;
     fallingSpeed += 0.01;
-    
+
     // when the player is falling he can't jump
     if (fallingSpeed > 0.03) canJump = false;
 
     // Update the image of the player on the speed
+    updatePlayerImage ();
+    updateParticles ();
+  }
+
+  /**
+   * Called to draw the player
+   */
+  void draw() {
+    update();
+  }
+
+  // in this function all the particle effect will be decleare's
+  void  particleDeclaration () {
+    shoeSmoke.spreadFactor=0.3;
+    shoeSmoke.minSpeed=1.0;
+    shoeSmoke.maxSpeed=7.0;
+    shoeSmoke.startVx=0.0;
+    shoeSmoke.startVy=0.0;
+    shoeSmoke.particleShape="quad";
+    shoeSmoke.emitterType="point";
+    shoeSmoke.birthSize=1.0;
+    shoeSmoke.deathSize=15.0;
+    shoeSmoke.gravity=0.01;
+    shoeSmoke.birthColor=color(205, 133, 63);
+    shoeSmoke.deathColor=color(139, 69, 19);
+    shoeSmoke.blendMode="add";
+    shoeSmoke.framesToLive=20;
+  }
+
+  /*This function update's al particle effects*/
+  void updateParticles () {
+    if ((((vxLastFrame > 0) && (vx < 0)) ||((vxLastFrame < 0))
+      && (vx > 0)) && canJump) {
+      // if it did, emit 10 particles
+      shoeSmoke.startVx = -vx; // and give them velocity based on the player velocity
+
+      /* some extra speed for the particle's */
+      if (vxLastFrame > 0) shoeSmoke.startVx += EXTRA_SPEED_FOR_SHOE_SMOKE;
+      else shoeSmoke.startVx -= EXTRA_SPEED_FOR_SHOE_SMOKE;
+
+      shoeSmoke.y0 += cameraY; // The particle's need to move down just like the rest of the world
+      shoeSmoke.emit(10); // create's 10 particle's
+    }
+
+    shoeSmoke.update();
+
+    // determine the screen coordinates of the particle system
+    shoeSmoke.x0 = x+w/2;
+    shoeSmoke.y0 = y+h;
+
+    // draw the particle system
+    shoeSmoke.draw();
+  }
+
+  /*This functie will update the image on the player every frame */
+  void updatePlayerImage() {
     if (alive) {
       if (vx > 0.3 && canJump && (frameCount % 10) < 5) image(playerWalking, x, y);
       else if (vx > 0.3 && canJump || vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
@@ -89,24 +154,11 @@ class Player extends Tile {
       else if (vy < 0 && vx < 0 && !(canJump)) image(playerJumpingMirror, x, y);
       else if (vy > 0 && vx > 0 && !(canJump)) image(playerFalling, x, y);
       else if (vy > 0 && vx < 0 && !(canJump)) image(playerFallingMirror, x, y);
-      //else if (vx > 0.3 && canJump) image(playerWalking, x, y);
-      //else if (vx < -0.3 && canJump) image(playerWalkingMirror, x, y);
-      //else if (vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
-      //else if (vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
       else image(playerIdle, x, y);
     } else {
       if (vx > 0) image(playerHit, x, y);
       else image(playerHitMirror, x, y);
     }
   }
-
-  /**
-   * Called to draw the player
-   */
-  void draw() {
-    update();
-  }
 }
-
-
 

@@ -3,6 +3,7 @@ boolean aboveTheLavaAgain = false;
 final float DEAD_EVENT_VY = -0.15;
 final float DEAD_EVENT_END = -60;
 
+// This function wil be activate's when the player is dead
 public void deadEvent() {
   // activate's only the first frame when the player is game over.
   if (deadEventStart == true) {
