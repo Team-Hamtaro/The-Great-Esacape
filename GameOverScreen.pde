@@ -10,6 +10,8 @@ class GameOverScreen {
 
   boolean[] selectedButton = {true, false};
 
+  int wButton, hButton, xPlay, xBack, yButton;
+
   /**
    *  Default constructor. Here we load the the background image.
    */
@@ -17,6 +19,12 @@ class GameOverScreen {
     gameOverBG = loadImage("loading.png");
     playButton = loadImage("button_big_again.png");
     backButton = loadImage("button_big_back.png");
+  
+    wButton = 256;
+    hButton = 128;
+    xPlay = wButton;
+    xBack = width - 2 * wButton;
+    yButton = height / 3;
   }
 
   // Use this gameover screen for win message 
@@ -45,7 +53,7 @@ class GameOverScreen {
         }
       }
 
-      if (key == ENTER || keysPressed[88]) {
+      if (key == ENTER || keysPressed[90]) {
         theWorld.reload();  
         if (selectedButton[0]) {
           gameState = GameState.PLAYING;
@@ -55,18 +63,36 @@ class GameOverScreen {
         }
       }
     }
+
+    int mX = mouseX, mY = mouseY;
+    if (mY >= yButton && mY <= yButton + hButton) {
+      if (mX >= xPlay && mX <= xPlay + wButton) {
+        cursor(HAND);
+        selectedButton[0] = true;
+        selectedButton[1] = false;
+        if (mousePressed && mouseButton == LEFT) {
+          theWorld.reload();  
+          gameState = GameState.PLAYING;
+        }
+      } else if (mX >= xBack && mX <= xBack + wButton) {
+        cursor(HAND);
+        selectedButton[0] = false;
+        selectedButton[1] = true;
+        if (mousePressed && mouseButton == LEFT) {
+          theWorld.reload();  
+          gameState = GameState.START_SCREEN;
+        }
+      } else {
+        cursor(ARROW);
+      }
+    } else {
+      cursor(ARROW); 
+    }
   }
     
   // update and draw the gameover screen
   void updateAndDraw() {
     update();
-
-    int wButton, hButton, xPlay, xBack, yButton;
-    wButton = 256;
-    hButton = 128;
-    xPlay = wButton;
-    xBack = width - 2 * wButton;
-    yButton = height / 3;
 
     // Draw the background image
     image(gameOverBG, 0, 0);
