@@ -7,6 +7,9 @@ class World {
 
   ArrayList<Tile> tiles = new ArrayList<Tile>();
   ArrayList<Saw> saws = new ArrayList<Saw>();
+  ArrayList<Rock> rocks = new ArrayList<Rock>();
+  ArrayList<Magma> magmas = new ArrayList<Magma>();
+  ArrayList<Tiki> tikis = new ArrayList<Tiki>();  
   Player player;
   Lava lava = new Lava();
 
@@ -15,6 +18,9 @@ class World {
   static final int TILE_START = 2;
   static final int SAW_STATIC = 3;
   static final int SAW_DYN_X = 4;
+  static final int ROCK_DYN = 5;
+  static final int TILE_MAGMA = 6;
+  static final int TILE_TIKI = 7;
   static final int PLAYER_START = 9;
   static final int GRID_UNIT_SIZE = 32;
   static final float SPEED_INCREASEMENT = 0.05;
@@ -61,6 +67,9 @@ class World {
   void reload() {  
     saws.removeAll (saws); // Remove al saws
     tiles.removeAll(tiles); // Remove all tiles
+    rocks.removeAll (rocks);// Remove all rocks
+    magmas.removeAll (magmas);// Remove all magma tiles
+    tikis.removeAll (tikis); // Remove all tiki tiles
     loadNewChunk = height;
     test = 0;
 
@@ -141,6 +150,43 @@ class World {
         println("x: " + x + ", y: " + y);
 
         break;
+      }
+       case ROCK_DYN : 
+      {
+        Rock rock = new Rock();
+        rock.init(x * GRID_UNIT_SIZE, 
+        y * GRID_UNIT_SIZE, 
+        GRID_UNIT_SIZE, 
+        GRID_UNIT_SIZE);
+        rocks.add(rock);
+        println("Rock");
+        println("x: " + x + ", y: " + y);
+
+        break;
+      }
+    case TILE_MAGMA :
+      {
+        Magma magma = new Magma();
+        magma.init(x * GRID_UNIT_SIZE, 
+        y * GRID_UNIT_SIZE, 
+        GRID_UNIT_SIZE, 
+        GRID_UNIT_SIZE);
+        magmas.add(magma);
+        println("Magma");
+        println("x: " + x + ", y: " + y);
+        break;
+      }
+      case TILE_TIKI :
+      {
+        Tiki tiki = new Tiki();
+        tiki.init(x * GRID_UNIT_SIZE, 
+        y * GRID_UNIT_SIZE, 
+        GRID_UNIT_SIZE, 
+        GRID_UNIT_SIZE);
+        tikis.add(tiki);
+        println("Tiki");
+        println("x: " + x + ", y: " + y);
+       break; 
       }
     default :
       break;
@@ -224,7 +270,25 @@ class World {
         saw.y += cameraY;
       }
     }
-
+    for (Rock rock : rocks) {
+      rock.draw();
+      if (lava.max) { 
+        rock.y += cameraY;
+      }
+    }
+    for (Magma magma : magmas) {
+      magma.draw();
+      if (lava.max) {
+        magma.y += cameraY;
+      }
+    }
+    for (Tiki tiki : tikis) {
+     tiki.draw();
+    if(lava.max) {
+     tiki.y += cameraY;
+     tiki.dartsY += cameraY;
+    } 
+    }
 
     for (int i = 0; i < tiles.size (); i++) {
       if (tiles.get(i).outOfScreen()) {
@@ -237,7 +301,25 @@ class World {
         saws.remove(i);
       }
     }
+    
+    for (int i = 0; i < rocks.size (); i++) {
+      if (rocks.get(i).times > frameRate * 6) {
+        rocks.remove(i);
+      }
+    }
 
+    for (int i = 0; i < magmas.size (); i++) {
+      if (magmas.get(i).outOfScreen()) {
+        magmas.remove(i);
+      }
+    }
+    
+    for (int i = 0; i < tikis.size (); i++){
+     if(tikis.get(i).outOfScreen()) {
+      tikis.remove(i);
+     } 
+    }
+    
     if (loadNewChunk > height) {
       loadChunks(); 
       loadNewChunk = 0;
@@ -251,8 +333,35 @@ class World {
         break;
       }
     }
-
-
+    // colision detection between player and all the rocks
+    for (Rock rock : rocks) {
+      boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x, rock.y, rock.RADIUS * 2);
+      System.out.println(rockOverlap);
+      if (rockOverlap == true) {
+        player.alive = false;
+        break;
+      }
+    }
+    // collision detection between player and all magma tiles
+    for (Magma magma : magmas) {
+      boolean magmaOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, magma.x, magma.y, magma.w, magma.h);
+      System.out.println(magmaOverlap);
+      if (magmaOverlap == true) {
+        player.alive = false;
+        break;
+      }
+    }
+    
+    for (Tiki tiki : tikis) {
+     if(abs(tiki.y - player.y) < 96) {
+       tiki.isShot = true;
+       tiki.darts();
+    }
+    if(tiki.dartsX > width) {
+     tiki.isShot = false; 
+    }
+    }
+    
     // collision detection between player and all the tiles
     if (player.alive) {
       for (Tile tile : tiles) {
