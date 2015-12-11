@@ -14,7 +14,7 @@ class Tile {
   // for the left or right check in World
   boolean sideTile;
   
-  PImage tileImg = loadImage("tile0.png");
+  PImage tileImg = loadImage("tile.png");
 
   // The init method can be called to set an tile to it's default state
   void init(float newX, float newY, float newWidth, float newHeight) {
