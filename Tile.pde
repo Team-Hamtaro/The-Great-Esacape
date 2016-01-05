@@ -14,7 +14,7 @@ class Tile {
   // for the left or right check in World
   boolean sideTile;
 
-  PImage tileImg = loadImage("tile0.png");
+  PImage tileImg = loadImage("tile.png");
 
   // The init method can be called to set an tile to it's default state
   void init(float newX, float newY, float newWidth, float newHeight) {
@@ -56,6 +56,8 @@ class Magma {
   // for the left or right check in World
 
   PImage magmaImg = loadImage("lava_tile.png");
+  
+  ParticleSystem magmaFire = new ParticleSystem(0, 0);
 
   // The init method can be called to set an tile to it's default state
   void init(float newX, float newY, float newWidth, float newHeight) {
@@ -65,16 +67,21 @@ class Magma {
     // the position of the tile is randomly chosen to fit within the window 
     x = newX;   
     y = newY;
+
+    //Declare the particle's
+    particleDeclare();
   }
 
   // Whenever you want to update the tile, call this method
   void update() {    
+    particleUpdate();
     // A tile doesn't move
   }
 
   // Whenever you want to draw the tile, call this method
   void draw() {
     image(magmaImg, x, y);
+    update();
   }
 
   //Checks if the tile is underneath the screen
@@ -83,6 +90,29 @@ class Magma {
       return true;
     }
     return false;
+  }
+  void particleUpdate() {
+
+    magmaFire.x0 = x + random(w);
+    magmaFire.y0 = y + h;
+    magmaFire.emit(2);
+    magmaFire.update();
+    magmaFire.draw();
+  }
+
+  void particleDeclare () {
+    magmaFire.minSpeed=0.0;
+    magmaFire.maxSpeed=1.0;
+    magmaFire.startVx=0.0;
+    magmaFire.startVy=-1;
+    magmaFire.birthSize=6.0;
+    magmaFire.deathSize=10.0;
+    magmaFire.spreadFactor=0;
+    magmaFire.gravity=0.08;
+    magmaFire.birthColor=color(228, 34, 23);
+    magmaFire.deathColor=color(158, 0, 0);
+    magmaFire.blendMode="add";
+    magmaFire.framesToLive=20;
   }
 }
 
@@ -115,19 +145,19 @@ class Tiki {
   }
 
   void darts() {
-    if(isShot) {
-    pushMatrix();
-    translate(dartsX, dartsY); // Translate the image to the ellipse of the Rock
-    image(dartImg, w, h);
-    popMatrix();
-    rect(dartsX, dartsY, w, h);
-    dartsX += dartsXM;
-  }
+    if (isShot) {
+      pushMatrix();
+      translate(dartsX, dartsY); // Translate the image to the ellipse of the Rock
+      image(dartImg, w, h);
+      popMatrix();
+      rect(dartsX, dartsY, w, h);
+      dartsX += dartsXM;
+    }
   }
   // Whenever you want to update the tile, call this method
   void update() {    
     // A tile doesn't move
-}
+  }
   // Whenever you want to draw the tile, call this method
   void draw() {
     image(tikiImg, x, y);
@@ -141,4 +171,3 @@ class Tiki {
     return false;
   }
 }
-

@@ -9,6 +9,8 @@ class Player extends Tile {
   boolean canJump = true; // can only jump is canJump == true
   boolean alive = true; // boolean that is true while the player is alive.
   boolean jumpKeyReleased = true; // checks if you released the jump key before you can jum again.
+  
+  ParticleSystem shoeSmoke = new ParticleSystem(0, 0);
 
   final int SIZE = 30;
   final float DAMPING_X = 0.8;
@@ -18,8 +20,6 @@ class Player extends Tile {
   final float SPEED_INCREASE = 0.35;
   final float EXTRA_SPEED_FOR_SHOE_SMOKE = 0.3; // var to give the shoe particle's some extra speed.
 
-  //making all the player particle effects the properties of particle's will be decleared in the init function.
-  ParticleSystem shoeSmoke = new ParticleSystem(width/2, height/2);
 
   // Load player sprites
   PImage playerIdle = loadImage("player_idle_1.png");
@@ -44,8 +44,6 @@ class Player extends Tile {
    */
   void init(float x, float y) {
     super.init(x, y, SIZE, SIZE);
-
-    // This function will give the player particle effects all the propperties.
     particleDeclaration();
   }
 
@@ -100,24 +98,6 @@ class Player extends Tile {
     update();
   }
 
-  // in this function all the particle effect will be decleare's
-  void  particleDeclaration () {
-    shoeSmoke.spreadFactor=0.3;
-    shoeSmoke.minSpeed=1.0;
-    shoeSmoke.maxSpeed=7.0;
-    shoeSmoke.startVx=0.0;
-    shoeSmoke.startVy=0.0;
-    shoeSmoke.particleShape="quad";
-    shoeSmoke.emitterType="point";
-    shoeSmoke.birthSize=1.0;
-    shoeSmoke.deathSize=15.0;
-    shoeSmoke.gravity=0.01;
-    shoeSmoke.birthColor=color(205, 133, 63);
-    shoeSmoke.deathColor=color(139, 69, 19);
-    shoeSmoke.blendMode="add";
-    shoeSmoke.framesToLive=20;
-  }
-
   /*This function update's al particle effects*/
   void updateParticles () {
     if ((((vxLastFrame > 0) && (vx < 0)) ||((vxLastFrame < 0))
@@ -160,5 +140,19 @@ class Player extends Tile {
       else image(playerHitMirror, x, y);
     }
   }
+    void  particleDeclaration () {
+    shoeSmoke.spreadFactor=0.3;
+    shoeSmoke.minSpeed=1.0;
+    shoeSmoke.maxSpeed=7.0;
+    shoeSmoke.startVx=0.0;
+    shoeSmoke.startVy=0.0;
+    shoeSmoke.birthSize=1.0;
+    shoeSmoke.deathSize=5.0;
+    shoeSmoke.gravity=-0.01;
+    shoeSmoke.birthColor=color(205, 133, 63);
+    shoeSmoke.deathColor=color(139, 69, 19);
+    shoeSmoke.blendMode="add";
+    shoeSmoke.framesToLive=20;
+   }
 }
 
