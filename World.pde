@@ -28,13 +28,17 @@ class World {
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.2;
+  static final float MAX_LAVA_SPEED = 1.4;
 
   final int TOTAL_CHUNKS = 10; //Change to equal the total amount of chunks, excluding 'startChunk'
 
   int[][] worldGrid = new int[GRID_UNITS_WIDE][GRID_UNITS_TALL];
 
-  float loadNewChunk = height;
+  float chunkLoadTimer = height;
   int randomChunk = 0; 
+  
+  ArrayList<int[][]> chunkList = new ArrayList<int[][]>();
+  int chunkDiff = 1;
 
   float cameraY = 0;
   float playerStartY;
@@ -70,7 +74,9 @@ class World {
     rocks.removeAll (rocks);// Remove all rocks
     magmas.removeAll (magmas);// Remove all magma tiles
     tikis.removeAll (tikis); // Remove all tiki tiles
-    loadNewChunk = height;
+  
+    chunkDiff = 1;
+    chunkLoadTimer = height;
     test = 0;
 
     cameraY = START_LAVA_SPEED; // Lava speed will be slow again at the start of the game.
@@ -132,8 +138,6 @@ class World {
         GRID_UNIT_SIZE, 
         GRID_UNIT_SIZE);
         saws.add(saw);
-        println("Saw");
-        println("x: " + x + ", y: " + y);
 
         break;
       }
@@ -146,8 +150,6 @@ class World {
         GRID_UNIT_SIZE);
         saw.v = 1;
         saws.add(saw);
-        println("Saw");
-        println("x: " + x + ", y: " + y);
 
         break;
       }
@@ -159,8 +161,6 @@ class World {
         GRID_UNIT_SIZE, 
         GRID_UNIT_SIZE);
         rocks.add(rock);
-        println("Rock");
-        println("x: " + x + ", y: " + y);
 
         break;
       }
@@ -172,8 +172,6 @@ class World {
         GRID_UNIT_SIZE, 
         GRID_UNIT_SIZE);
         magmas.add(magma);
-        println("Magma");
-        println("x: " + x + ", y: " + y);
         break;
       }
       case TILE_TIKI :
@@ -184,8 +182,6 @@ class World {
         GRID_UNIT_SIZE, 
         GRID_UNIT_SIZE);
         tikis.add(tiki);
-        println("Tiki");
-        println("x: " + x + ", y: " + y);
        break; 
       }
     default :
@@ -198,8 +194,10 @@ class World {
    */
   void loadChunks() {
     cameraY += SPEED_INCREASEMENT; // increase the speed of the object moving down.
-    randomChunk = (int)random(TOTAL_CHUNKS);
-    //println("Loaded: chunk" + (randomChunk+1));
+    
+    int activeChunks = chunkList.size();
+    println(chunkList.size());
+    randomChunk = (int)random(activeChunks);
 
     /** Iterate through Columns */
     for (int x = 0; x < GRID_UNITS_WIDE; x++) {
@@ -207,34 +205,34 @@ class World {
       for (int y = 0; y < GRID_UNITS_TALL; y++) {
         switch(randomChunk) {
         case 0:
-          parseTile(chunk01[y][x], x, y-24);
+          parseTile(chunkList.get(0)[y][x], x, y-24);
           break;
         case 1:
-          parseTile(chunk02[y][x], x, y-24);
+          parseTile(chunkList.get(1)[y][x], x, y-24);
           break;
         case 2:
-          parseTile(chunk03[y][x], x, y-24);
+          parseTile(chunkList.get(2)[y][x], x, y-24);
           break;
         case 3:
-          parseTile(chunk04[y][x], x, y-24);
+          parseTile(chunkList.get(3)[y][x], x, y-24);
           break;
         case 4:
-          parseTile(chunk05[y][x], x, y-24);
+          parseTile(chunkList.get(4)[y][x], x, y-24);
           break;
         case 5:
-          parseTile(chunk06[y][x], x, y-24);
+          parseTile(chunkList.get(5)[y][x], x, y-24);
           break;
         case 6:
-          parseTile(chunk07[y][x], x, y-24);
+          parseTile(chunkList.get(6)[y][x], x, y-24);
           break;
         case 7:
-          parseTile(chunk08[y][x], x, y-24);
+          parseTile(chunkList.get(7)[y][x], x, y-24);
           break;
         case 8:
-          parseTile(chunk09[y][x], x, y-24);
+          parseTile(chunkList.get(8)[y][x], x, y-24);
           break;
         case 9:
-          parseTile(chunk10[y][x], x, y-24);
+          parseTile(chunkList.get(9)[y][x], x, y-24);
           break;
         }
       }
@@ -244,19 +242,17 @@ class World {
   void setScore() {
     int score =  (int)(playerStartY - player.y + test);
     if (score > playerScore) playerScore = score;
-    println(playerScore);
   }
 
   /**
    * Draw the updated world once per frame
    */
   void draw() {
-
     setScore();
 
     background(0);
-    image(mglayer, 0, (test * 0.1));
-    image(bglayer1, 0, 0); 
+    //image(mglayer, 0, (test * 0.1));
+    //image(bglayer1, 0, 0); 
 
     for (Tile tile : tiles) {
       tile.draw();
@@ -320,9 +316,9 @@ class World {
      } 
     }
     
-    if (loadNewChunk > height) {
+    if (chunkLoadTimer > height) {
       loadChunks(); 
-      loadNewChunk = 0;
+      chunkLoadTimer = 0;
     }
 
     // collision detection between player and all the saws
@@ -336,7 +332,6 @@ class World {
     // colision detection between player and all the rocks
     for (Rock rock : rocks) {
       boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x, rock.y, rock.RADIUS * 2);
-      System.out.println(rockOverlap);
       if (rockOverlap == true) {
         player.alive = false;
         break;
@@ -345,7 +340,6 @@ class World {
     // collision detection between player and all magma tiles
     for (Magma magma : magmas) {
       boolean magmaOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, magma.x, magma.y, magma.w, magma.h);
-      System.out.println(magmaOverlap);
       if (magmaOverlap == true) {
         player.alive = false;
         break;
@@ -416,13 +410,45 @@ class World {
     lava.draw();
 
     if (lava.max) {
-      loadNewChunk += cameraY;
+      chunkLoadTimer += cameraY;
       player.y += cameraY;
       test += cameraY;
     }
 
     if (player.y >= lava.h + 32) {
       player.alive = false;
+    }
+
+    switch(chunkDiff) {
+      case 1:
+        chunkList.clear();
+        chunkList.add(chunk01);
+        chunkList.add(chunk02);
+        chunkList.add(chunk03);
+        break;
+      case 2:
+        chunkList.clear();
+        chunkList.add(chunk04);
+        chunkList.add(chunk05);
+        chunkList.add(chunk06);
+        break;
+      case 3:
+        chunkList.clear();
+        chunkList.add(chunk07);
+        chunkList.add(chunk08);
+        chunkList.add(chunk09);
+        break;
+      default:
+        chunkList.clear();
+        break;
+    }
+
+    if (cameraY >= MAX_LAVA_SPEED) {
+      if (chunkDiff < 3) {
+        chunkDiff++;
+        println("new chunk difficulty " + chunkDiff);
+        cameraY = START_LAVA_SPEED;
+      }
     }
   }
 }
