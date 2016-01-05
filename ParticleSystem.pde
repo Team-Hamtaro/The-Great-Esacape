@@ -12,28 +12,22 @@ class Particle {
   int framesToLive;
 
   // Angular velocity
-  float w;
+  float angularVelocity;
 
   // angle (for quad particles)
   float angle;
 
 
-  // Shape of the particle (default: ellipse)
-  String particleShape = "ellipse";
-
-
   // Constructor
-  Particle(float x, float y, int framesToLive, String particleShape) {
+  Particle(float x, float y, int framesToLive) {
     this.x = x; 
     this.y = y;
     this.framesToLive = framesToLive;
-    this.particleShape = particleShape;
 
     // random angular velocity (left or right)
-    w = random(-0.1, 0.1);
+    angularVelocity = random(-0.1, 0.1);
 
     // determine coordinate offsets if quad
-    if (particleShape == "quad") {
       qx0 = -random(1.0); 
       qy0 = -random(1.0);
       qx1 = random(1.0); 
@@ -42,7 +36,6 @@ class Particle {
       qy2 = random(1.0);
       qx3 = -random(1.0); 
       qy3 = random(1.0);
-    }
   }
 
   // update position and frames to live
@@ -52,18 +45,11 @@ class Particle {
     framesToLive--;
   }
 
-  // draw the particle based on particleShape
+
+  // draw the particle's Pushmatrix and popMatrix will store the data for a short time.
   void draw() {
-    if (particleShape == "ellipse") {
-      fill(drawColor); 
-      ellipse(x, y, this.size/2, this.size/2);
-    } else
-      if (particleShape == "line") {
-      stroke(drawColor);          
-      line(x, y, x + vx * speed * this.size, y + vy * speed * this.size);
-    } else
-      if (particleShape == "quad") {
-      angle += w;
+
+      angle += angularVelocity;
       pushMatrix();
       translate(x, y);
       pushMatrix();              
@@ -76,7 +62,7 @@ class Particle {
       qx3*ps2, qy3*ps2);
       popMatrix();
       popMatrix();
-    }
+    
   }
 }
 
@@ -87,11 +73,7 @@ class ParticleSystem {
   // the origin of emission. x1 and y1 are used when emitter is a line 
   float  x0, y0, x1, y1;
 
-  // shape of the particles
-  String particleShape = "ellipse";
   String blendMode = "add";
-  // type of emitter
-  String emitterType = "point";
 
   // amount of particles to emit
   int emissionRate = 0;
@@ -134,18 +116,12 @@ class ParticleSystem {
 
     for (int iParticle=0; iParticle<particleAmount; iParticle++) {
 
-      if (emitterType == "line") {
-        // spread particles randomly among line between (x0, y0) and (x1, y1)
-        t = random(1.0);
-        x = (1.0-t)*x0 + t * x1;
-        y = (1.0-t)*y0 + t * y1;
-      } else { // particles are emitted from a point (x0, y0)
         x = x0;
         y = y0;
-      }
+   
 
       // spawn an new particle in the system
-      Particle particle = new Particle(x, y, framesToLive, particleShape);
+      Particle particle = new Particle(x, y, framesToLive);
       particle.vx = random(startVx-spreadFactor/2, startVx+spreadFactor/2);
       particle.vy = random(startVy-spreadFactor/2, startVy+spreadFactor/2);
       particle.speed = random(minSpeed, maxSpeed);
@@ -173,8 +149,7 @@ class ParticleSystem {
   void draw() {
 
     // only change context once for all particles
-    if (particleShape != "line") noStroke();
-    strokeWeight(2);
+    noStroke();
     noSmooth();
 
     // determine how transparancy is handeled
@@ -198,4 +173,5 @@ class ParticleSystem {
     blendMode(BLEND);
   }
 }
+
 

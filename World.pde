@@ -29,7 +29,7 @@ class World {
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.2;
 
-  final int TOTAL_CHUNKS = 10; //Change to equal the total amount of chunks, excluding 'startChunk'
+  final int TOTAL_CHUNKS = 30; //Change to equal the total amount of chunks, excluding 'startChunk'
 
   int[][] worldGrid = new int[GRID_UNITS_WIDE][GRID_UNITS_TALL];
 
@@ -196,7 +196,7 @@ class World {
   /**
    * Load a new chunk when the current chunk is at the bottom of the screen.
    */
-  void loadChunks() {
+   void loadChunks() {
     cameraY += SPEED_INCREASEMENT; // increase the speed of the object moving down.
     randomChunk = (int)random(TOTAL_CHUNKS);
     //println("Loaded: chunk" + (randomChunk+1));
@@ -235,6 +235,66 @@ class World {
           break;
         case 9:
           parseTile(chunk10[y][x], x, y-24);
+          break;
+        case 10:
+          parseTile(chunk11[y][x], x, y-24);
+          break;
+        case 11:
+          parseTile(chunk12[y][x], x, y-24);
+          break;
+        case 12:
+          parseTile(chunk13[y][x], x, y-24);
+          break;
+        case 13:
+          parseTile(chunk14[y][x], x, y-24);
+          break;
+        case 14:
+          parseTile(chunk15[y][x], x, y-24);
+          break;
+        case 15:
+          parseTile(chunk16[y][x], x, y-24);
+          break;
+        case 16:
+          parseTile(chunk17[y][x], x, y-24);
+          break;
+        case 17:
+          parseTile(chunk18[y][x], x, y-24);
+          break;
+        case 18:
+          parseTile(chunk19[y][x], x, y-24);
+          break;
+        case 19:
+          parseTile(chunk20[y][x], x, y-24);
+          break;
+        case 20:
+          parseTile(chunk21[y][x], x, y-24);
+          break;
+        case 21:
+          parseTile(chunk22[y][x], x, y-24);
+          break;
+        case 22:
+          parseTile(chunk23[y][x], x, y-24);
+          break;
+        case 23:
+          parseTile(chunk24[y][x], x, y-24);
+          break;
+        case 24:
+          parseTile(chunk25[y][x], x, y-24);
+          break;
+        case 25:
+          parseTile(chunk26[y][x], x, y-24);
+          break;
+        case 26:
+          parseTile(chunk27[y][x], x, y-24);
+          break;
+        case 27:
+          parseTile(chunk28[y][x], x, y-24);
+          break;
+        case 28:
+          parseTile(chunk29[y][x], x, y-24);
+          break;
+        case 29:
+          parseTile(chunk30[y][x], x, y-24);
           break;
         }
       }

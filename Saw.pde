@@ -16,6 +16,8 @@ class Saw {
   
   final float RADIUS = 32;
   
+  ParticleSystem sawSpark = new ParticleSystem(0, 0);
+  int countFrames = 0; //Count frames to create a particle the 5th frame
   
   PImage sawImg = loadImage("saw.png");
 
@@ -28,6 +30,8 @@ class Saw {
     y = newY;
     
     xOrigin = x;
+    
+    particleDeclare();
   }
 
   void oscillate() {
@@ -53,6 +57,7 @@ class Saw {
     popMatrix();
     
     oscillate();
+    particleUpdate();
   }
 
   //Checks if the Saw is underneath the screen
@@ -61,6 +66,33 @@ class Saw {
       return true;
     }
     return false;
+  }  
+  
+    void particleUpdate() {
+    countFrames +=1;
+    
+    sawSpark.x0 = x;
+    sawSpark.y0 = y + h;
+    if (countFrames == 5){
+    sawSpark.emit(1);
+    countFrames = 0;
+    }
+    sawSpark.update();
+    sawSpark.draw();
+  }
+
+  void particleDeclare () {
+    sawSpark.minSpeed=1.0;
+    sawSpark.maxSpeed=2.0;
+    sawSpark.startVx=-3.0;
+    sawSpark.startVy=-0.5;
+    sawSpark.birthSize=4.0;
+    sawSpark.deathSize=8.0;
+    sawSpark.gravity=0.08;
+    sawSpark.birthColor=color(191, 9, 9);
+    sawSpark.deathColor=color(205,15,15);
+    sawSpark.blendMode="add";
+    sawSpark.framesToLive=15;
   }
 }
 
