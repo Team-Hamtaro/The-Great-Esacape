@@ -203,7 +203,38 @@ class World {
     for (int x = 0; x < GRID_UNITS_WIDE; x++) {
       /** Iterate through Rows */
       for (int y = 0; y < GRID_UNITS_TALL; y++) {
-        parseTile(chunkList.get((randomChunk-1))[y][x], x, y-24);
+        switch(randomChunk) {
+        case 0:
+          parseTile(chunkList.get(0)[y][x], x, y-24);
+          break;
+        case 1:
+          parseTile(chunkList.get(1)[y][x], x, y-24);
+          break;
+        case 2:
+          parseTile(chunkList.get(2)[y][x], x, y-24);
+          break;
+        case 3:
+          parseTile(chunkList.get(3)[y][x], x, y-24);
+          break;
+        case 4:
+          parseTile(chunkList.get(4)[y][x], x, y-24);
+          break;
+        case 5:
+          parseTile(chunkList.get(5)[y][x], x, y-24);
+          break;
+        case 6:
+          parseTile(chunkList.get(6)[y][x], x, y-24);
+          break;
+        case 7:
+          parseTile(chunkList.get(7)[y][x], x, y-24);
+          break;
+        case 8:
+          parseTile(chunkList.get(8)[y][x], x, y-24);
+          break;
+        case 9:
+          parseTile(chunkList.get(9)[y][x], x, y-24);
+          break;
+        }
       }
     }
   }
