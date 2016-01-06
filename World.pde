@@ -381,9 +381,9 @@ class World {
       chunkLoadTimer = 0;
     }
 
-    // collision detection between player and all the saws
+ // collision detection between player and all the saws
     for (Saw saw : saws) {
-      boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x, saw.y, saw.RADIUS * 2);
+      boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x-16, saw.y-16, saw.RADIUS * 2);
       if (sawOverlap == true) {
         player.alive = false;
         break;
@@ -391,7 +391,8 @@ class World {
     }
     // colision detection between player and all the rocks
     for (Rock rock : rocks) {
-      boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x, rock.y, rock.RADIUS * 2);
+      boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x-16, rock.y-16, rock.RADIUS * 2);
+      System.out.println(rockOverlap);
       if (rockOverlap == true) {
         player.alive = false;
         break;
@@ -406,12 +407,23 @@ class World {
       }
     }
     
+    // if the player is around the same height the tiki totem shoots a dart
     for (Tiki tiki : tikis) {
-     if(abs(tiki.y - player.y) < 96) {
+      if(tiki.isShot == false) {
+     if(abs(tiki.y - player.y) < 96 || tiki.isShot ) {
        tiki.isShot = true;
-       tiki.darts();
     }
-    if(tiki.dartsX > width) {
+      }
+      // movement of the dart and collision detection of the dart and the player
+      if( tiki.isShot == true){
+       tiki.darts();
+       boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+32, tiki.dartsY, tiki.w, tiki.h);
+      System.out.println(dartOverlap);
+      if (dartOverlap == true) {
+        player.alive = false;
+      }
+      }
+    if(tiki.dartsX < 0) {
      tiki.isShot = false; 
     }
     }

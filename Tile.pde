@@ -125,9 +125,11 @@ class Tiki {
   float vx, vy;
 
   boolean isShot = false;
+  
   float dartsX = x;
   float dartsY = y;
-  float dartsXM = 20;
+  float dartsXM = 15;
+
 
   // for the left or right check in World
 
@@ -142,22 +144,23 @@ class Tiki {
     // the position of the tile is randomly chosen to fit within the window 
     x = newX;   
     y = newY;
+    dartsX = newX;
+    dartsY = newY;
   }
 
   void darts() {
-    if (isShot) {
-      pushMatrix();
-      translate(dartsX, dartsY); // Translate the image to the ellipse of the Rock
-      image(dartImg, w, h);
-      popMatrix();
-      rect(dartsX, dartsY, w, h);
-      dartsX += dartsXM;
-    }
+    if(isShot) {
+    pushMatrix();
+    translate(dartsX, dartsY-32); // Translate the image to rect of the dart
+    image(dartImg, w, h);
+    popMatrix();
+    dartsX -= dartsXM;
+  }
   }
   // Whenever you want to update the tile, call this method
   void update() {    
     // A tile doesn't move
-  }
+}
   // Whenever you want to draw the tile, call this method
   void draw() {
     image(tikiImg, x, y);
@@ -171,3 +174,4 @@ class Tiki {
     return false;
   }
 }
+
