@@ -14,7 +14,9 @@ class Tile {
   // for the left or right check in World
   boolean sideTile;
 
-  PImage tileImg = loadImage("tile.png");
+  int currentChunkDiff = 1;
+
+  PImage tileImg = loadImage("tile2.png");
 
   // The init method can be called to set an tile to it's default state
   void init(float newX, float newY, float newWidth, float newHeight) {
@@ -29,10 +31,19 @@ class Tile {
   // Whenever you want to update the tile, call this method
   void update() {    
     // A tile doesn't move
+    if (theWorld.chunkDiff == 2 && y < 0) {
+      tileImg = loadImage("tile1.png");
+    } else if (theWorld.chunkDiff == 3 && y < 0) {
+      tileImg = loadImage("tile0.png");
+    }
   }
 
   // Whenever you want to draw the tile, call this method
   void draw() {
+    if (currentChunkDiff != theWorld.chunkDiff) {
+      update();
+      currentChunkDiff = theWorld.chunkDiff;
+    }
     image(tileImg, x, y);
   }
 
@@ -125,11 +136,9 @@ class Tiki {
   float vx, vy;
 
   boolean isShot = false;
-  
   float dartsX = x;
   float dartsY = y;
-  float dartsXM = 15;
-
+  float dartsXM = 20;
 
   // for the left or right check in World
 
@@ -144,23 +153,22 @@ class Tiki {
     // the position of the tile is randomly chosen to fit within the window 
     x = newX;   
     y = newY;
-    dartsX = newX;
-    dartsY = newY;
   }
 
   void darts() {
-    if(isShot) {
-    pushMatrix();
-    translate(dartsX, dartsY-32); // Translate the image to rect of the dart
-    image(dartImg, w, h);
-    popMatrix();
-    dartsX -= dartsXM;
-  }
+    if (isShot) {
+      pushMatrix();
+      translate(dartsX, dartsY); // Translate the image to the ellipse of the Rock
+      image(dartImg, w, h);
+      popMatrix();
+      rect(dartsX, dartsY, w, h);
+      dartsX += dartsXM;
+    }
   }
   // Whenever you want to update the tile, call this method
   void update() {    
     // A tile doesn't move
-}
+  }
   // Whenever you want to draw the tile, call this method
   void draw() {
     image(tikiImg, x, y);
@@ -174,4 +182,3 @@ class Tiki {
     return false;
   }
 }
-
