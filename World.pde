@@ -27,16 +27,14 @@ class World {
 
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
-  static final float START_LAVA_SPEED = 1.2;
-  static final float MAX_LAVA_SPEED = 1.4;
+  static final float START_LAVA_SPEED = 1.0;
+  static final float MAX_LAVA_SPEED = 1.5;
 
   final int TOTAL_CHUNKS = 30; //Change to equal the total amount of chunks, excluding 'startChunk'
 
   int[][] worldGrid = new int[GRID_UNITS_WIDE][GRID_UNITS_TALL];
 
   float chunkLoadTimer = height;
-  int randomChunk = 0; 
-  
   ArrayList<int[][]> chunkList = new ArrayList<int[][]>();
   int chunkDiff = 1;
 
@@ -85,12 +83,8 @@ class World {
     deadEventStart = true;
     aboveTheLavaAgain = false;
 
-    /** Iterate through Columns */
     for (int x = 0; x < GRID_UNITS_WIDE; x++) {
-      /** Iterate through Rows */
-      // println("Column: %c", x);
       for (int y = 0; y < GRID_UNITS_TALL; y++) {
-        // println("Row: %r", y);
         parseTile(startChunk[y][x], x, y);
       }
     }
@@ -196,107 +190,17 @@ class World {
     cameraY += SPEED_INCREASEMENT; // increase the speed of the object moving down.
     
     int activeChunks = chunkList.size();
-    println(chunkList.size());
-    randomChunk = (int)random(activeChunks);
+    int randomChunk = (int)random(activeChunks);
 
     /** Iterate through Columns */
     for (int x = 0; x < GRID_UNITS_WIDE; x++) {
       /** Iterate through Rows */
       for (int y = 0; y < GRID_UNITS_TALL; y++) {
-        switch(randomChunk) {
-        case 0:
-          parseTile(chunkList.get(0)[y][x], x, y-24);
-          break;
-        case 1:
-          parseTile(chunkList.get(1)[y][x], x, y-24);
-          break;
-        case 2:
-          parseTile(chunkList.get(2)[y][x], x, y-24);
-          break;
-        case 3:
-          parseTile(chunkList.get(3)[y][x], x, y-24);
-          break;
-        case 4:
-          parseTile(chunkList.get(4)[y][x], x, y-24);
-          break;
-        case 5:
-          parseTile(chunkList.get(5)[y][x], x, y-24);
-          break;
-        case 6:
-          parseTile(chunkList.get(6)[y][x], x, y-24);
-          break;
-        case 7:
-          parseTile(chunkList.get(7)[y][x], x, y-24);
-          break;
-        case 8:
-          parseTile(chunkList.get(8)[y][x], x, y-24);
-          break;
-        case 9:
-          parseTile(chunkList.get(9)[y][x], x, y-24);
-          break;
-        case 10:
-          parseTile(chunk11[y][x], x, y-24);
-          break;
-        case 11:
-          parseTile(chunk12[y][x], x, y-24);
-          break;
-        case 12:
-          parseTile(chunk13[y][x], x, y-24);
-          break;
-        case 13:
-          parseTile(chunk14[y][x], x, y-24);
-          break;
-        case 14:
-          parseTile(chunk15[y][x], x, y-24);
-          break;
-        case 15:
-          parseTile(chunk16[y][x], x, y-24);
-          break;
-        case 16:
-          parseTile(chunk17[y][x], x, y-24);
-          break;
-        case 17:
-          parseTile(chunk18[y][x], x, y-24);
-          break;
-        case 18:
-          parseTile(chunk19[y][x], x, y-24);
-          break;
-        case 19:
-          parseTile(chunk20[y][x], x, y-24);
-          break;
-        case 20:
-          parseTile(chunk21[y][x], x, y-24);
-          break;
-        case 21:
-          parseTile(chunk22[y][x], x, y-24);
-          break;
-        case 22:
-          parseTile(chunk23[y][x], x, y-24);
-          break;
-        case 23:
-          parseTile(chunk24[y][x], x, y-24);
-          break;
-        case 24:
-          parseTile(chunk25[y][x], x, y-24);
-          break;
-        case 25:
-          parseTile(chunk26[y][x], x, y-24);
-          break;
-        case 26:
-          parseTile(chunk27[y][x], x, y-24);
-          break;
-        case 27:
-          parseTile(chunk28[y][x], x, y-24);
-          break;
-        case 28:
-          parseTile(chunk29[y][x], x, y-24);
-          break;
-        case 29:
-          parseTile(chunk30[y][x], x, y-24);
-          break;
-        }
+        parseTile(chunkList.get(randomChunk)[y][x], x, y-24);
       }
     }
+
+    println("loaded: chunk" + randomChunk);
   }
 
   void setScore() {
@@ -381,7 +285,7 @@ class World {
       chunkLoadTimer = 0;
     }
 
- // collision detection between player and all the saws
+    // collision detection between player and all the saws
     for (Saw saw : saws) {
       boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x-16, saw.y-16, saw.RADIUS * 2);
       if (sawOverlap == true) {
@@ -392,7 +296,6 @@ class World {
     // colision detection between player and all the rocks
     for (Rock rock : rocks) {
       boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x-16, rock.y-16, rock.RADIUS * 2);
-      System.out.println(rockOverlap);
       if (rockOverlap == true) {
         player.alive = false;
         break;
@@ -497,18 +400,39 @@ class World {
         chunkList.add(chunk01);
         chunkList.add(chunk02);
         chunkList.add(chunk03);
-        break;
-      case 2:
-        chunkList.clear();
         chunkList.add(chunk04);
         chunkList.add(chunk05);
         chunkList.add(chunk06);
-        break;
-      case 3:
-        chunkList.clear();
         chunkList.add(chunk07);
         chunkList.add(chunk08);
         chunkList.add(chunk09);
+        chunkList.add(chunk10);
+        break;
+      case 2:
+        chunkList.clear();
+        chunkList.add(chunk11);
+        chunkList.add(chunk12);
+        chunkList.add(chunk13);
+        chunkList.add(chunk14);
+        chunkList.add(chunk15);
+        chunkList.add(chunk16);
+        chunkList.add(chunk17);
+        chunkList.add(chunk18);
+        chunkList.add(chunk19);
+        chunkList.add(chunk20);
+        break;
+      case 3:
+        chunkList.clear();
+        chunkList.add(chunk21);
+        chunkList.add(chunk22);
+        chunkList.add(chunk23);
+        chunkList.add(chunk24);
+        chunkList.add(chunk25);
+        chunkList.add(chunk26);
+        chunkList.add(chunk27);
+        chunkList.add(chunk28);
+        chunkList.add(chunk29);
+        chunkList.add(chunk30);
         break;
       default:
         chunkList.clear();
