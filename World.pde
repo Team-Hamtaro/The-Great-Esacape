@@ -11,6 +11,7 @@ class World {
   ArrayList<Magma> magmas = new ArrayList<Magma>();
   ArrayList<Tiki> tikis = new ArrayList<Tiki>();  
   Player player;
+  Effecten effecten = new Effecten();
   Lava lava = new Lava();
 
   static final int TILE_EMPTY = 0;
@@ -23,12 +24,12 @@ class World {
   static final int TILE_TIKI = 7;
   static final int PLAYER_START = 9;
   static final int GRID_UNIT_SIZE = 32;
-  static final float SPEED_INCREASEMENT = 0.05;
+  static final float SPEED_INCREASEMENT = 0.1;
 
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.0;
-  static final float MAX_LAVA_SPEED = 1.3;
+  static final float MAX_LAVA_SPEED = 1.6;
   static final int HALFRADIUS = 16;
 
   final int TOTAL_CHUNKS = 30; //Change to equal the total amount of chunks, excluding 'startChunk'
@@ -94,6 +95,8 @@ class World {
     playerStartY =  player.y; // reference value for highscore
 
     lava.init();
+    effecten.init();
+    
     tiles.add(lava);
   }
 
@@ -111,8 +114,6 @@ class World {
       player.init(x * GRID_UNIT_SIZE, 
       y * GRID_UNIT_SIZE);
       this.player = player;
-      println("Player");
-      println("x: " + x + ", y: " + y);
 
       break;    
     case TILE_SOLID : 
@@ -200,8 +201,6 @@ class World {
         parseTile(chunkList.get(randomChunk)[y][x], x, y-24);
       }
     }
-
-    println("loaded: chunk" + randomChunk);
   }
 
   void setScore() {
@@ -328,7 +327,6 @@ class World {
       if( tiki.isShot == true){
        tiki.darts();
        boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+32, tiki.dartsY, tiki.w, tiki.h);
-      System.out.println(dartOverlap);
       if (dartOverlap == true) {
         player.alive = false;
       }
@@ -389,6 +387,7 @@ class World {
       gameOverScreen.points = playerScore;
     }
     player.draw();
+    effecten.draw();
     lava.draw();
 
     if (lava.max) {
@@ -449,7 +448,6 @@ class World {
     if (cameraY >= MAX_LAVA_SPEED) {
       if (chunkDiff < 3) {
         chunkDiff++;
-        println("new chunk difficulty " + chunkDiff);
         cameraY = START_LAVA_SPEED;
       }
     }

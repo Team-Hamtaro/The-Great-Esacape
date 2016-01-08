@@ -119,7 +119,7 @@ class Magma {
     magmaFire.birthSize=6.0;
     magmaFire.deathSize=10.0;
     magmaFire.spreadFactor=0;
-    magmaFire.gravity=0.08;
+    magmaFire.gravity=0.07;
     magmaFire.birthColor=color(228, 34, 23);
     magmaFire.deathColor=color(158, 0, 0);
     magmaFire.blendMode="add";
