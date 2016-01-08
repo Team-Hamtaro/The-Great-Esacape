@@ -142,7 +142,7 @@ class Rock {
     fill(0, 0, 0, 0);
     ellipse(x, y, RADIUS * 2, RADIUS * 2); // makes an invisible ellipse at the place on the location of the rock
 
-    if ( y >= 16 ) { 
+    if ( y >= -16 ) { 
       y += v; //Movement of the Rock on the Y-axis
     }
 

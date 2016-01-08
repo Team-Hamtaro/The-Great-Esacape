@@ -29,6 +29,7 @@ class World {
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.0;
   static final float MAX_LAVA_SPEED = 1.3;
+  static final int HALFRADIUS = 16;
 
   final int TOTAL_CHUNKS = 30; //Change to equal the total amount of chunks, excluding 'startChunk'
 
@@ -287,7 +288,7 @@ class World {
 
     // collision detection between player and all the saws
     for (Saw saw : saws) {
-      boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x-16, saw.y-16, saw.RADIUS * 2);
+      boolean sawOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, saw.x-HALFRADIUS, saw.y-HALFRADIUS, saw.RADIUS * 2);
       if (sawOverlap == true) {
         player.alive = false;
         break;
@@ -295,7 +296,7 @@ class World {
     }
     // colision detection between player and all the rocks
     for (Rock rock : rocks) {
-      boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x-16, rock.y-16, rock.RADIUS * 2);
+      boolean rockOverlap = rectBall(player.x, player.y, player.SIZE, player.SIZE, rock.x-HALFRADIUS, rock.y-HALFRADIUS, rock.RADIUS * 2);
       if (rockOverlap == true) {
         player.alive = false;
         break;
@@ -316,6 +317,12 @@ class World {
      if(abs(tiki.y - player.y) < 96 || tiki.isShot ) {
        tiki.isShot = true;
     }
+      } // Collision between the tiki totem and the player
+      boolean tikiOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.x, tiki.y, tiki.w, tiki.h);
+      if (tikiOverlap == true) {
+         float xOverlap = calculate1DOverlap(player.x, tiki.x, player.w, tiki.w);
+          player.x += xOverlap;
+        break;
       }
       // movement of the dart and collision detection of the dart and the player
       if( tiki.isShot == true){
