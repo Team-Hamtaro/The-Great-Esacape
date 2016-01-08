@@ -9,9 +9,11 @@ class Player extends Tile {
   boolean canJump = true; // can only jump is canJump == true
   boolean alive = true; // boolean that is true while the player is alive.
   boolean jumpKeyReleased = true; // checks if you released the jump key before you can jum again.
-  
+
   ParticleSystem shoeSmoke = new ParticleSystem(0, 0);
   ParticleSystem deadEffect = new ParticleSystem(0, 0);
+  ParticleSystem jumpEffect = new ParticleSystem(0, 0);
+
 
   final int SIZE = 30;
   final float DAMPING_X = 0.8;
@@ -35,6 +37,8 @@ class Player extends Tile {
   PImage playerHitMirror = loadImage("player_hit_mirror.png");
 
   // Initialize the particle system
+
+
   // These settings are generated with the particle editor
 
 
@@ -69,9 +73,12 @@ class Player extends Tile {
     if ((keysPressed[UP] || keysPressed[88]) && canJump && jumpKeyReleased) {
       jumpKeyReleased = false; // will be true if you release the jump key. So you cant just keep pushing the jump key.
       vy -= JUMP; 
+      canJump = false; // the player can no longer jump
+      
+      jumpEffect.emit(20);
+      
       jumpSound.play(); // play the jump sound
       jumpSound.cue(0); // sets the sound to 0 (time)
-      canJump = false; // the player can no longer jump
     } else if (!(keysPressed[UP] || keysPressed[88])) {
       jumpKeyReleased = true;
     }
@@ -116,17 +123,21 @@ class Player extends Tile {
 
     shoeSmoke.update();
     deadEffect.update();
+    jumpEffect.update();
 
-    // determine the screen coordinates of the particle system
+    // determine the screen coordinates of the particle effects
     shoeSmoke.x0 = x+w/2;
     shoeSmoke.y0 = y+h;
-    
     deadEffect.x0 = x;
     deadEffect.y0 = y;
+    jumpEffect.x0 = x + w/2; 
+    jumpEffect.y0 = y + h;
+    jumpEffect.startVx = -vx/8;
 
     // draw the particle system
     shoeSmoke.draw();
     deadEffect.draw();
+    jumpEffect.draw();
   }
 
   /*This functie will update the image on the player every frame */
@@ -136,42 +147,55 @@ class Player extends Tile {
       else if (vx > 0.3 && canJump || vx < 0.3 && !(vx < 0) && canJump) image(playerIdle, x, y);
       else if (vx < -0.3 && canJump && (frameCount % 10) < 5) image(playerWalkingMirror, x, y);
       else if (vx < -0.3 && canJump || vx > -0.3 && !(vx > 0) && canJump) image(playerIdleMirror, x, y);
-      else if (vy < 0 && vx > 0 && !(canJump)) image(playerJumping, x, y);
-      else if (vy < 0 && vx < 0 && !(canJump)) image(playerJumpingMirror, x, y);
+      else if  (vy < 0 && vx > 0 && !(canJump)) image(playerJumping, x, y); 
+      else if (vy < 0 && vx < 0 && !(canJump))  image(playerJumpingMirror, x, y);
       else if (vy > 0 && vx > 0 && !(canJump)) image(playerFalling, x, y);
       else if (vy > 0 && vx < 0 && !(canJump)) image(playerFallingMirror, x, y);
       else image(playerIdle, x, y);
     } else {
-      if (vx > 0) image(playerHit, x, y);
-      else image(playerHitMirror, x, y);
+        if (vx > 0) image(playerHit, x, y);
+        else image(playerHitMirror, x, y);
+      }
+    }
+    void  particleDeclaration () {
+      shoeSmoke.spreadFactor=0.3;
+      shoeSmoke.minSpeed=1.0;
+      shoeSmoke.maxSpeed=7.0;
+      shoeSmoke.startVx=0.0;
+      shoeSmoke.startVy=0.0;
+      shoeSmoke.birthSize=1.0;
+      shoeSmoke.deathSize=5.0;
+      shoeSmoke.gravity=-0.01;
+      shoeSmoke.birthColor=color(205, 133, 63);
+      shoeSmoke.deathColor=color(139, 69, 19);
+      shoeSmoke.blendMode="add";
+      shoeSmoke.framesToLive=20;
+
+      deadEffect.spreadFactor=1;
+      deadEffect.minSpeed=1.0;
+      deadEffect.maxSpeed=7.0;
+      deadEffect.startVx=0.0;
+      deadEffect.startVy=0.0;
+      deadEffect.birthSize=10.0;
+      deadEffect.deathSize=1.0;
+      deadEffect.gravity=-0.00;
+      deadEffect.birthColor=color(222, 60, 63);
+      deadEffect.deathColor=color(139, 30, 19);
+      deadEffect.blendMode="add";
+      deadEffect.framesToLive=190;
+
+      jumpEffect.spreadFactor=0.4;
+      jumpEffect.minSpeed=3.0;
+      jumpEffect.maxSpeed=7.0;
+      jumpEffect.startVx=0.0;
+      jumpEffect.startVy=-0.02;
+      jumpEffect.birthSize=5.0;
+      jumpEffect.deathSize=2.0;
+      jumpEffect.gravity= 0.02;
+      jumpEffect.birthColor=color(200, 60, 160);
+      jumpEffect.deathColor=color(138, 30, 138);
+      jumpEffect.blendMode="add";
+      jumpEffect.framesToLive=30;
     }
   }
-    void  particleDeclaration () {
-    shoeSmoke.spreadFactor=0.3;
-    shoeSmoke.minSpeed=1.0;
-    shoeSmoke.maxSpeed=7.0;
-    shoeSmoke.startVx=0.0;
-    shoeSmoke.startVy=0.0;
-    shoeSmoke.birthSize=1.0;
-    shoeSmoke.deathSize=5.0;
-    shoeSmoke.gravity=-0.01;
-    shoeSmoke.birthColor=color(205, 133, 63);
-    shoeSmoke.deathColor=color(139, 69, 19);
-    shoeSmoke.blendMode="add";
-    shoeSmoke.framesToLive=20;
-    
-    deadEffect.spreadFactor=1;
-    deadEffect.minSpeed=1.0;
-    deadEffect.maxSpeed=7.0;
-    deadEffect.startVx=0.0;
-    deadEffect.startVy=0.0;
-    deadEffect.birthSize=10.0;
-    deadEffect.deathSize=1.0;
-    deadEffect.gravity=-0.00;
-    deadEffect.birthColor=color(222, 60, 63);
-    deadEffect.deathColor=color(139, 30, 19);
-    deadEffect.blendMode="add";
-    deadEffect.framesToLive=190;
-   }
-}
 
