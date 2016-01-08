@@ -28,7 +28,7 @@ class World {
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
   static final float START_LAVA_SPEED = 1.0;
-  static final float MAX_LAVA_SPEED = 1.5;
+  static final float MAX_LAVA_SPEED = 1.3;
 
   final int TOTAL_CHUNKS = 30; //Change to equal the total amount of chunks, excluding 'startChunk'
 
