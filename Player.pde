@@ -11,6 +11,7 @@ class Player extends Tile {
   boolean jumpKeyReleased = true; // checks if you released the jump key before you can jum again.
   
   ParticleSystem shoeSmoke = new ParticleSystem(0, 0);
+  ParticleSystem deadEffect = new ParticleSystem(0, 0);
 
   final int SIZE = 30;
   final float DAMPING_X = 0.8;
@@ -114,13 +115,18 @@ class Player extends Tile {
     }
 
     shoeSmoke.update();
+    deadEffect.update();
 
     // determine the screen coordinates of the particle system
     shoeSmoke.x0 = x+w/2;
     shoeSmoke.y0 = y+h;
+    
+    deadEffect.x0 = x;
+    deadEffect.y0 = y;
 
     // draw the particle system
     shoeSmoke.draw();
+    deadEffect.draw();
   }
 
   /*This functie will update the image on the player every frame */
@@ -153,6 +159,19 @@ class Player extends Tile {
     shoeSmoke.deathColor=color(139, 69, 19);
     shoeSmoke.blendMode="add";
     shoeSmoke.framesToLive=20;
+    
+    deadEffect.spreadFactor=1;
+    deadEffect.minSpeed=1.0;
+    deadEffect.maxSpeed=7.0;
+    deadEffect.startVx=0.0;
+    deadEffect.startVy=0.0;
+    deadEffect.birthSize=10.0;
+    deadEffect.deathSize=1.0;
+    deadEffect.gravity=-0.00;
+    deadEffect.birthColor=color(222, 60, 63);
+    deadEffect.deathColor=color(139, 30, 19);
+    deadEffect.blendMode="add";
+    deadEffect.framesToLive=190;
    }
 }
 
