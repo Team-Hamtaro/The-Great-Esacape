@@ -10,11 +10,6 @@ class Player extends Tile {
   boolean alive = true; // boolean that is true while the player is alive.
   boolean jumpKeyReleased = true; // checks if you released the jump key before you can jum again.
 
-  ParticleSystem shoeSmoke = new ParticleSystem(0, 0);
-  ParticleSystem deadEffect = new ParticleSystem(0, 0);
-  ParticleSystem jumpEffect = new ParticleSystem(0, 0);
-
-
   final int SIZE = 30;
   final float DAMPING_X = 0.8;
   final float DAMPING_Y = 0.9;
@@ -49,7 +44,6 @@ class Player extends Tile {
    */
   void init(float x, float y) {
     super.init(x, y, SIZE, SIZE);
-    particleDeclaration();
   }
 
   // The update method is called whenever we want to calculate the new position of a player
@@ -85,7 +79,7 @@ class Player extends Tile {
       vy -= JUMP; 
       canJump = false; // the player can no longer jump
       
-      jumpEffect.emit(20);
+      theWorld.effecten.jumpEffect.emit(20);
       
       jumpSound.play(); // play the jump sound
       jumpSound.cue(0); // sets the sound to 0 (time)
@@ -121,33 +115,24 @@ class Player extends Tile {
     if ((((vxLastFrame > 0) && (vx < 0)) ||((vxLastFrame < 0))
       && (vx > 0)) && canJump) {
       // if it did, emit 10 particles
-      shoeSmoke.startVx = -vx; // and give them velocity based on the player velocity
+      theWorld.effecten.shoeSmoke.startVx = -vx; // and give them velocity based on the player velocity
 
       /* some extra speed for the particle's */
-      if (vxLastFrame > 0) shoeSmoke.startVx += EXTRA_SPEED_FOR_SHOE_SMOKE;
-      else shoeSmoke.startVx -= EXTRA_SPEED_FOR_SHOE_SMOKE;
+      if (vxLastFrame > 0) theWorld.effecten.shoeSmoke.startVx += EXTRA_SPEED_FOR_SHOE_SMOKE;
+      else theWorld.effecten.shoeSmoke.startVx -= EXTRA_SPEED_FOR_SHOE_SMOKE;
 
-      shoeSmoke.y0 += cameraY; // The particle's need to move down just like the rest of the world
-      shoeSmoke.emit(10); // create's 10 particle's
+      theWorld.effecten.shoeSmoke.y0 += cameraY; // The particle's need to move down just like the rest of the world
+      theWorld.effecten.shoeSmoke.emit(10); // create's 10 particle's
     }
 
-    shoeSmoke.update();
-    deadEffect.update();
-    jumpEffect.update();
-
     // determine the screen coordinates of the particle effects
-    shoeSmoke.x0 = x+w/2;
-    shoeSmoke.y0 = y+h;
-    deadEffect.x0 = x;
-    deadEffect.y0 = y;
-    jumpEffect.x0 = x + w/2; 
-    jumpEffect.y0 = y + h;
-    jumpEffect.startVx = -vx/8;
-
-    // draw the particle system
-    shoeSmoke.draw();
-    deadEffect.draw();
-    jumpEffect.draw();
+    theWorld.effecten.shoeSmoke.x0 = x+w/2;
+    theWorld.effecten.shoeSmoke.y0 = y+h;
+    theWorld.effecten.deadEffect.x0 = x;
+    theWorld.effecten.deadEffect.y0 = y;
+    theWorld.effecten.jumpEffect.x0 = x + w/2; 
+    theWorld.effecten.jumpEffect.y0 = y + h;
+    theWorld.effecten.jumpEffect.startVx = -vx/8;
   }
 
   /*This functie will update the image on the player every frame */
@@ -166,46 +151,6 @@ class Player extends Tile {
         if (vx > 0) image(playerHit, x, y);
         else image(playerHitMirror, x, y);
       }
-    }
-    void  particleDeclaration () {
-      shoeSmoke.spreadFactor=0.3;
-      shoeSmoke.minSpeed=1.0;
-      shoeSmoke.maxSpeed=7.0;
-      shoeSmoke.startVx=0.0;
-      shoeSmoke.startVy=0.0;
-      shoeSmoke.birthSize=1.0;
-      shoeSmoke.deathSize=5.0;
-      shoeSmoke.gravity=-0.01;
-      shoeSmoke.birthColor=color(205, 133, 63);
-      shoeSmoke.deathColor=color(139, 69, 19);
-      shoeSmoke.blendMode="add";
-      shoeSmoke.framesToLive=20;
-
-      deadEffect.spreadFactor=1;
-      deadEffect.minSpeed=1.0;
-      deadEffect.maxSpeed=7.0;
-      deadEffect.startVx=0.0;
-      deadEffect.startVy=0.0;
-      deadEffect.birthSize=10.0;
-      deadEffect.deathSize=1.0;
-      deadEffect.gravity=-0.00;
-      deadEffect.birthColor=color(222, 60, 63);
-      deadEffect.deathColor=color(139, 30, 19);
-      deadEffect.blendMode="add";
-      deadEffect.framesToLive=190;
-
-      jumpEffect.spreadFactor=0.4;
-      jumpEffect.minSpeed=3.0;
-      jumpEffect.maxSpeed=7.0;
-      jumpEffect.startVx=0.0;
-      jumpEffect.startVy=-0.02;
-      jumpEffect.birthSize=5.0;
-      jumpEffect.deathSize=2.0;
-      jumpEffect.gravity= 0.02;
-      jumpEffect.birthColor=color(200, 60, 160);
-      jumpEffect.deathColor=color(138, 30, 138);
-      jumpEffect.blendMode="add";
-      jumpEffect.framesToLive=30;
     }
   }
 
