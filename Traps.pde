@@ -146,7 +146,7 @@ class Rock {
       y += v; //Movement of the Rock on the Y-axis
     }
 
-    if (v < 15) { // makes it not fall any faster than 15 per frame
+    if (v < 11) { // makes it not fall any faster than 15 per frame
       v *= 1.05;
     }
 

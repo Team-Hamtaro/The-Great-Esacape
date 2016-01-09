@@ -59,13 +59,23 @@ class Player extends Tile {
     vx *= DAMPING_X; // our object will move a bit slower every frame
     vy *= DAMPING_Y;
 
+
+
     // Velocity is changed when arrow keys are pressed 
     if (abs(vx) < MAXSPEED) {
       if (keysPressed[LEFT] || keysPressed[65]) {
         vx -= SPEED_INCREASE;
+        
+        theWorld.effecten.walkDust.x0 = x + SIZE;
+        theWorld.effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
+        if (canJump) theWorld.effecten.walkDust.emit(1);
       } 
       if (keysPressed[RIGHT] || keysPressed[68]) {
         vx += SPEED_INCREASE;
+        
+        theWorld.effecten.walkDust.x0 = x;
+        theWorld.effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
+        if (canJump) theWorld.effecten.walkDust.emit(1);
       }
     }
 
