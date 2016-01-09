@@ -17,7 +17,6 @@ class Particle {
   // angle (for quad particles)
   float angle;
 
-
   // Constructor
   Particle(float x, float y, int framesToLive) {
     this.x = x; 

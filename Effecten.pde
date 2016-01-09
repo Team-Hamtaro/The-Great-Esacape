@@ -1,7 +1,9 @@
    class Effecten {
      
    int lavaBurstCheck = 0;
+   
    ParticleSystem lavaBurst = new ParticleSystem(0, 0);
+   ParticleSystem walkDust = new ParticleSystem(0, 0);
    
    void init() {
    particleDeclare(); 
@@ -24,6 +26,9 @@
 
     lavaBurst.update();
     lavaBurst.draw();
+    
+    walkDust.update();
+    walkDust.draw();
   }
 
   void particleDeclare () {
@@ -40,5 +45,19 @@
     lavaBurst.deathColor=color(205,15,15);
     lavaBurst.blendMode="add";
     lavaBurst.framesToLive=100;
+    
+    walkDust.spreadFactor=0.4;
+    walkDust.y0 = SCREENY - 50;
+    walkDust.minSpeed=2.0;
+    walkDust.maxSpeed=3.0;
+    walkDust.startVx=-0.0;
+    walkDust.startVy=-0.5;
+    walkDust.birthSize=3.0;
+    walkDust.deathSize=1.0;
+    walkDust.gravity=0.05;
+    walkDust.birthColor=color(191, 9, 9);
+    walkDust.deathColor=color(205,15,15);
+    walkDust.blendMode="add";
+    walkDust.framesToLive=20;
   }
   }
