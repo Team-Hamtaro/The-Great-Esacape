@@ -12,7 +12,7 @@ public void deadEvent() {
     theWorld.player.vy = 0;
     theWorld.player.vy -= theWorld.player.JUMP;
     deadEventStart = false;
-    theWorld.player.deadEffect.emit(100);
+    theWorld.effecten.deadEffect.emit(100);
     
     deadSound.play(); //play the dead sound
     deadSound.cue(0); //sets the sound to 0 (time)
