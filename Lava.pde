@@ -44,5 +44,4 @@ class Lava extends Tile {
       max = true;
     }
   }  
-  
 }

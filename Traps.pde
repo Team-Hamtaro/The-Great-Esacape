@@ -15,8 +15,11 @@ class Saw {
   float TRAVEL = 64;
 
   final float RADIUS = 32;
+  final float LAVA_BURST_START_Y = 110;
 
   ParticleSystem sawSpark = new ParticleSystem(0, 0);
+  ParticleSystem lavaBurst = new ParticleSystem(0, 0);
+  
   int countFrames = 0; //Count frames to create a particle the 5th frame
 
   PImage sawImg = loadImage("saw.png");
@@ -81,6 +84,14 @@ class Saw {
     }
     sawSpark.update();
     sawSpark.draw();
+    
+    
+    lavaBurst.x0 = x - w + random(w * 2);
+    lavaBurst.y0 = y + h;
+    lavaBurst.update();
+    lavaBurst.draw();
+    
+    if (y > SCREENY - LAVA_BURST_START_Y) lavaBurst.emit(5);
   }
 
   void particleDeclare () {
@@ -95,6 +106,20 @@ class Saw {
     sawSpark.deathColor=color(205,15,15);
     sawSpark.blendMode="add";
     sawSpark.framesToLive=15;
+    
+    lavaBurst.spreadFactor=0.4;
+    lavaBurst.y0 = SCREENY - 50;
+    lavaBurst.minSpeed=3.0;
+    lavaBurst.maxSpeed=8.0;
+    lavaBurst.startVx=-0.0;
+    lavaBurst.startVy=-0.3;
+    lavaBurst.birthSize=4.0;
+    lavaBurst.deathSize=7.0;
+    lavaBurst.gravity=0.01;
+    lavaBurst.birthColor=color(191, 9, 9);
+    lavaBurst.deathColor=color(205, 15, 15);
+    lavaBurst.blendMode="add";
+    lavaBurst.framesToLive=120;
   }
 }
 /**
@@ -111,9 +136,13 @@ class Rock {
   float v = 0.01;
   float counter = 0; // for counting to 7 before the next rock falls
   int times = 0; // counts the amount of times the rock fell
+  
   final float RADIUS = 32;
+  final float LAVA_BURST_START_Y = 140;
 
   ParticleSystem smallRocks = new ParticleSystem(0, 0);
+  ParticleSystem lavaBurst = new ParticleSystem(0, 0);
+    
   PImage rockImg = loadImage("rock_normal.png");
 
   // The init method can be called to set an tile to it's default state
@@ -171,12 +200,19 @@ class Rock {
     smallRocks.update();
     smallRocks.draw();
     
-    if (y < 0 - h*2 && y > -h*6) {
-      smallRocks.emit(1);
-    }
+    if (y < 0 - h*2 && y > -h*6) smallRocks.emit(1);
+    
+    lavaBurst.x0 = x - w + random(w * 2);
+    lavaBurst.y0 = y + h;
+    lavaBurst.update();
+    lavaBurst.draw();
+    
+    if (y > SCREENY - LAVA_BURST_START_Y) lavaBurst.emit(50);
+   
   }
 
   void particleDeclare () {
+    
     smallRocks.minSpeed=3.0;
     smallRocks.maxSpeed=4.0;
     smallRocks.startVx=0;
@@ -189,6 +225,20 @@ class Rock {
     smallRocks.deathColor=color(300, 100, 32);
     smallRocks.blendMode="add";
     smallRocks.framesToLive=60;
+    
+    lavaBurst.spreadFactor=0.4;
+    lavaBurst.y0 = SCREENY - 50;
+    lavaBurst.minSpeed=3.0;
+    lavaBurst.maxSpeed=8.0;
+    lavaBurst.startVx=-0.0;
+    lavaBurst.startVy=-0.3;
+    lavaBurst.birthSize=4.0;
+    lavaBurst.deathSize=7.0;
+    lavaBurst.gravity=0.01;
+    lavaBurst.birthColor=color(191, 9, 9);
+    lavaBurst.deathColor=color(205, 15, 15);
+    lavaBurst.blendMode="add";
+    lavaBurst.framesToLive=110;
     
   }
 }

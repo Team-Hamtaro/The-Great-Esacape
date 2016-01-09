@@ -131,7 +131,7 @@ class Effecten {
     deadEffect.birthColor=color(222, 60, 63);
     deadEffect.deathColor=color(139, 30, 19);
     deadEffect.blendMode="add";
-    deadEffect.framesToLive=190;
+    deadEffect.framesToLive=140;
 
     jumpEffect.spreadFactor=0.4;
     jumpEffect.minSpeed=3.0;
