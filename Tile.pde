@@ -138,7 +138,7 @@ class Tiki {
   boolean isShot = false;
   float dartsX = x; // give the dart the same starting point but a different variable so the totem doesnt move together with the dart
   float dartsY = y;
-  float dartsXM = 10;
+  float dartsXM = 6;
   float counter = 0;
 
   // for the left or right check in World
@@ -176,7 +176,6 @@ class Tiki {
   void draw() {
     image(tikiImg, x, y);
   }
-
   //Checks if the tile is underneath the screen
   boolean outOfScreen() {
     if (y > height) {

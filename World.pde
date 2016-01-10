@@ -328,6 +328,12 @@ class World {
       // movement of the dart and collision detection of the dart and the player
       if( tiki.isShot == true){
        tiki.darts();
+       
+       /* code to call the effects */
+     effecten.dartsEffect.x0 = tiki.dartsX + 40;
+     effecten.dartsEffect.y0 = tiki.dartsY + 16;
+     effecten.dartsEffect.emit(1);
+     
        boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+GRID_UNIT_SIZE, tiki.dartsY+GRID_UNIT_SIZE, tiki.w, tiki.h);
       if (dartOverlap == true) {
         player.alive = false;
