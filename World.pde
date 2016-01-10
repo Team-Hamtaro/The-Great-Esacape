@@ -313,8 +313,10 @@ class World {
     // if the player is around the same height the tiki totem shoots a dart
     for (Tiki tiki : tikis) {
       if(tiki.isShot == false) {
-     if(abs(tiki.y - player.y) < 96 || tiki.isShot ) {
+     if(abs(tiki.y - player.y) < 96 || tiki.counter == 1) {
        tiki.isShot = true;
+       tiki.counter = 0;
+       tiki.dartsX = tiki.x;
     }
       } // Collision between the tiki totem and the player
       boolean tikiOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.x, tiki.y, tiki.w, tiki.h);
@@ -326,7 +328,7 @@ class World {
       // movement of the dart and collision detection of the dart and the player
       if( tiki.isShot == true){
        tiki.darts();
-       boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+32, tiki.dartsY, tiki.w, tiki.h);
+       boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+GRID_UNIT_SIZE, tiki.dartsY+GRID_UNIT_SIZE, tiki.w, tiki.h);
       if (dartOverlap == true) {
         player.alive = false;
       }

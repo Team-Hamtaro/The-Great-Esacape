@@ -136,9 +136,10 @@ class Tiki {
   float vx, vy;
 
   boolean isShot = false;
-  float dartsX = x;
+  float dartsX = x; // give the dart the same starting point but a different variable so the totem doesnt move together with the dart
   float dartsY = y;
   float dartsXM = 10;
+  float counter = 0;
 
   // for the left or right check in World
 
@@ -159,8 +160,9 @@ class Tiki {
 
   void darts() {
     if (isShot) {
+      counter = millis()/1000;
       pushMatrix();
-      translate(dartsX, dartsY-32); // Translate the image to the ellipse of the Rock
+      translate(dartsX, dartsY-World.GRID_UNIT_SIZE); // Translate the image of the dart to the tiki totem
       image(dartImg, w, h);
       popMatrix();
       dartsX -= dartsXM;
