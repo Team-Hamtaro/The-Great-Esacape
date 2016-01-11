@@ -64,7 +64,10 @@ class GameOverScreen {
     
     image(backButton, xBack, yButton, wButton, hButton);
 
-    tint(255, 255);        
+    tint(255, 255);
+
+    drawMessage();
+    drawScore();
   }
 
   /**
