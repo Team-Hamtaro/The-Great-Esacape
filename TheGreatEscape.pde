@@ -26,6 +26,7 @@ GameOverScreen gameOverScreen;
 PauseScreen pauseScreen;
 StartScreen startScreen;
 World theWorld;
+Credits credits;
 GameState gameState;
 
 PFont font;
@@ -42,7 +43,7 @@ void setup() {
   hitSound = minim.loadFile("hit.wav");
   
   backgroundMusic.loop();
-  
+
   size(1376, 768);
   // surface.setResizable(true);
   background(DEFAULT_BACKGROUND);
@@ -52,6 +53,7 @@ void setup() {
   pauseScreen = new PauseScreen();
   gameOverScreen = new GameOverScreen();
   theWorld = new World();
+  credits = new Credits();
 
   gameState = GameState.START_SCREEN;
 
@@ -88,6 +90,9 @@ void draw() {
   case GAME_OVER_WON: 
     gameOverScreen.setWon();  
     gameOverScreen.updateAndDraw(); 
+    break;
+  case CREDITS:
+    credits.draw();
     break;
   default :
     break;
