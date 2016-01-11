@@ -29,7 +29,7 @@ class StartScreen {
 		startBG = loadImage("loading.png");
     	playButton = loadImage("button_big_play.png");
     	quitButton = loadImage("button_big_quit.png");
-        creditsButton = loadImage("button_big_again.png");  //PLACEHOLDER IMAGE
+        creditsButton = loadImage("button_big_credits.png");  
 
         wButton = 256;
         hButton = 128;
