@@ -35,6 +35,11 @@ PFont font;
  *  Setup the Viewport and main classes.
  */
 void setup() {
+  size(1376, 768, OPENGL);
+  // surface.setResizable(true);
+  background(DEFAULT_BACKGROUND);
+  frameRate(60); 
+  
   minim = new Minim(this);
   // this loads mysong.wav from the data folder
   backgroundMusic = minim.loadFile("cave.mp3");
@@ -43,11 +48,6 @@ void setup() {
   hitSound = minim.loadFile("hit.wav");
   
   backgroundMusic.loop();
-
-  size(1376, 768);
-  // surface.setResizable(true);
-  background(DEFAULT_BACKGROUND);
-  frameRate(60); 
 
   startScreen = new StartScreen();
   pauseScreen = new PauseScreen();
