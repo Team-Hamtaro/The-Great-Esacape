@@ -38,6 +38,62 @@ class GameOverScreen {
   }
 
   void update() {
+    handleInput();
+  }
+    
+  // update and draw the gameover screen
+  void updateAndDraw() {
+    update();
+
+    // Draw the background image
+    image(gameOverBG, 0, 0);
+    
+    if (selectedButton[0]) {
+      tint(255, 255);
+    } else { 
+      tint(50, 255); 
+    }
+    
+    image(playButton, xPlay, yButton, wButton, hButton);
+    
+    if (selectedButton[1]) {
+      tint(255, 255);
+    } else { 
+      tint(100, 255); 
+    }
+    
+    image(backButton, xBack, yButton, wButton, hButton);
+
+    tint(255, 255);        
+  }
+
+  /**
+   * Draw the screen heading
+   */
+  void drawMessage() {
+    fill(255);
+    textSize(64);
+    textAlign(CENTER);
+    text(gameOverMessage, width/2, 140);
+  }
+
+  /**
+   * Draw the Player's score
+   */
+  void drawScore() {
+    // draw bottom text frame
+    textSize(24);
+    fill(0, 0, 0, 50);
+    rect(0, height/2+90, width, 70);
+    
+    // draw the bottom text
+    noStroke();
+    fill(255);
+    text("You had " + points + " points", width/2, height/2 + 135);
+
+  }
+
+  void handleInput() {
     if (keyPressed) {
       if (keyCode == LEFT) {
         if (selectedButton[1]) {
@@ -89,46 +145,5 @@ class GameOverScreen {
       cursor(ARROW); 
     }
   }
-    
-  // update and draw the gameover screen
-  void updateAndDraw() {
-    update();
 
-    // Draw the background image
-    image(gameOverBG, 0, 0);
-    
-    if (selectedButton[0]) {
-      tint(255, 255);
-    } else { 
-      tint(50, 255); 
-    }
-    
-    image(playButton, xPlay, yButton, wButton, hButton);
-    
-    if (selectedButton[1]) {
-      tint(255, 255);
-    } else { 
-      tint(100, 255); 
-    }
-    
-    image(backButton, xBack, yButton, wButton, hButton);
-
-    tint(255, 255);
-    
-    // draw gameover text
-    fill(255);
-    textSize(64);
-    textAlign(CENTER);
-    text(gameOverMessage, width/2, 140);
-    
-    // draw bottom text frame
-    textSize(24);
-    fill(0, 0, 0, 50);
-    rect(0, height/2+90, width, 70);
-    
-    // draw the bottom text
-    noStroke();
-    fill(255);
-    text("You had " + points + " points", width/2, height/2 + 135);
-  }
 }
