@@ -13,7 +13,7 @@ class GameOverScreen {
   int wButton, hButton, xPlay, xBack, yButton;
 
   /**
-   *  Default constructor. Here we load the the background image.
+   *  Default constructor.
    */
   public GameOverScreen(){
     gameOverBG = loadImage("loading.png");
@@ -119,7 +119,7 @@ class GameOverScreen {
     fill(255);
     textSize(32);
     textAlign(CENTER);
-    text(gameOverMessage, width/2, 40);
+    text(gameOverMessage, width/2, 140);
     
     // draw bottom text frame
     textSize(24);
