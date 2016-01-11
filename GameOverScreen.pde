@@ -10,6 +10,8 @@ class GameOverScreen {
 
   boolean[] selectedButton = {true, false};
 
+  Lava lava = new Lava();
+  
   int wButton, hButton, xPlay, xBack, yButton;
 
   /**
@@ -114,7 +116,14 @@ class GameOverScreen {
     image(backButton, xBack, yButton, wButton, hButton);
 
     tint(255, 255);
-    
+         
+    // Drawing lava at the bottom of the screen
+    lava.draw();
+    lava.h = height - lava.screenHeight;
+    fill(168, 0, 32);
+    noStroke();
+    rect(-1, lava.h+31, width + 1, lava.h);
+          
     // draw gameover text
     fill(255);
     textSize(32);

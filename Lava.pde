@@ -4,14 +4,16 @@ class Lava extends Tile {
   boolean max; //Checkt of maximum is bereikt
   color c; //LATER EEN IMAGE VAN MAKEN. -> Kleur van de lava
   PImage lavaImg = loadImage("lava_plat.png");
-
+  int screenHeight = 70;
+  
   void init() {
     h = height;  
     maxHeight = height / 1.1;
     speed = 0.5;
     v = 1; 
     x = 0;
-
+    
+    
     super.init(0, h, width, h);
 
     max = false;   

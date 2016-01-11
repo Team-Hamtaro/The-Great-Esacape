@@ -14,7 +14,9 @@ class StartScreen {
     PImage creditsButton;
 
     boolean[] selectedButton = {true, false, false};
-
+     
+     Lava lava = new Lava();
+     
     int timer = 0;
 
     //Variables for the width, height, x and y positions of the buttons
@@ -153,6 +155,13 @@ class StartScreen {
         image(quitButton, xQuit, yButton, wButton, hButton);
 
         tint(255, 255);
+        
+        // Drawing lava at the bottom of the screen
+        lava.draw();
+        lava.h = height - lava.screenHeight;
+        fill(168, 0, 32);
+        noStroke();
+        rect(-1, lava.h+31, width + 1, lava.h);
     
     	//Draws the title of the game
     	fill(255);

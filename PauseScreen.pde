@@ -5,6 +5,7 @@ class PauseScreen {
 
   boolean[] selectedButton = {true, false};
 
+  Lava lava = new Lava();
   //The variables for the width, height, x and y positions of the buttons
   int wButton, hButton, xResume, xBack, yButton;
       
@@ -96,5 +97,12 @@ class PauseScreen {
   	image(backButton, xBack, yButton, wButton, hButton);
 
     tint(255, 255);
+  
+    // Drawing lava at the bottom of the screen
+    lava.draw();
+    lava.h = height - lava.screenHeight;
+    fill(168, 0, 32);
+    noStroke();
+    rect(-1, lava.h+31, width + 1, lava.h);
   }
 }
