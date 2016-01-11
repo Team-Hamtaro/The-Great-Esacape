@@ -6,6 +6,7 @@ class Credits {
   int test = 1;
   int color1, color2, color3, color4, color5, color6;
   int framesUntilEffectChanges = 20;
+  int timer = 0;
   boolean isInitialized = false;
 
   ParticleSystem stars = new ParticleSystem(0, 0);
@@ -13,6 +14,8 @@ class Credits {
    
 
   void update() {
+    timer ++;
+
     if (!isInitialized) {
       y = 600; 
       z = -200;
@@ -27,23 +30,12 @@ class Credits {
   }
 
   void draw() {
-    
     update();
 
     background(0);
     particleUpdate();
     rotateX(PI/4);
 
-    /*TO BE ADDED IN THE CREDITS:
-     		 * SPECIAL THANKS -> Irene
-     		 * PLAYTESTERS
-     		 * PRODUCTION BABIES
-     		 * CATERING
-     		 * VOICE ACTORS
-     		 * SCRIPT WRITERS
-     		 * DUTCH TRANSPORT SYSTEM
-     		 * KELDER
-     		 */
     fill(255, 200, 100);
     
     textAlign(CENTER);
@@ -76,7 +68,6 @@ class Credits {
     text("Voice Acting:", x, y + 30 * offset, z);
     text("Playtesters:", x, y + 33 * offset, z);
     text("Production Babies:", x, y + 42 * offset, z);
-
     text("Special Thanks:", x, y + 48 * offset, z);
 
     textSize(28);
@@ -100,7 +91,6 @@ class Credits {
     text("Stip", x, y + 44 * offset, z);
     text("Mr. Bauer", x, y + 45 * offset, z);
     text("Alexander Mulder", x, y + 46 * offset, z);
-
     text("Die vrouw van de slager die me altijd plakjes worst gaf. \n Dankjewel, ik vond ze echt heel lekker!", x, y + 49 * offset, z);
     text("Irene Overtoom", x, y + 51 * offset, z);
     text("Familie's van alle hamsters", x, y + 52 * offset, z);
@@ -114,12 +104,13 @@ class Credits {
 
     y--;
 
-    if (keyPressed) {
+    if (keyPressed && timer > 60) {
       backgroundMusic.close();
       backgroundMusic = minim.loadFile("cave.mp3");
       backgroundMusic.loop();
 
       isInitialized = false;
+      timer = 0;
 
       gameState = GameState.START_SCREEN;
     }
