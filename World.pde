@@ -11,7 +11,6 @@ class World {
   ArrayList<Magma> magmas = new ArrayList<Magma>();
   ArrayList<Tiki> tikis = new ArrayList<Tiki>();  
   Player player;
-  Effecten effecten = new Effecten();
   Lava lava = new Lava();
 
   static final int TILE_EMPTY = 0;

@@ -18,6 +18,7 @@ static final int SCREENX = 1376;
 static final int SCREENY = 768;
 final color DEFAULT_BACKGROUND = color(120, 120, 120);
 
+Effecten effecten = new Effecten();
 
 /** @type {Number} Camera coordinates. */
 float cameraX = 0, cameraY = 0;

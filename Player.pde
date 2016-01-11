@@ -60,16 +60,16 @@ class Player extends Tile {
       if (keysPressed[LEFT] || keysPressed[65]) {
         vx -= SPEED_INCREASE;
         
-        theWorld.effecten.walkDust.x0 = x + SIZE;
-        theWorld.effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
-        if (canJump) theWorld.effecten.walkDust.emit(1);
+        effecten.walkDust.x0 = x + SIZE;
+        effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
+        if (canJump) effecten.walkDust.emit(1);
       } 
       if (keysPressed[RIGHT] || keysPressed[68]) {
         vx += SPEED_INCREASE;
         
-        theWorld.effecten.walkDust.x0 = x;
-        theWorld.effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
-        if (canJump) theWorld.effecten.walkDust.emit(1);
+        effecten.walkDust.x0 = x;
+        effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
+        if (canJump) effecten.walkDust.emit(1);
       }
     }
 
@@ -79,7 +79,7 @@ class Player extends Tile {
       vy -= JUMP; 
       canJump = false; // the player can no longer jump
       
-      theWorld.effecten.jumpEffect.emit(20);
+      effecten.jumpEffect.emit(20);
       
       jumpSound.play(); // play the jump sound
       jumpSound.cue(0); // sets the sound to 0 (time)
@@ -115,24 +115,24 @@ class Player extends Tile {
     if ((((vxLastFrame > 0) && (vx < 0)) ||((vxLastFrame < 0))
       && (vx > 0)) && canJump) {
       // if it did, emit 10 particles
-      theWorld.effecten.shoeSmoke.startVx = -vx; // and give them velocity based on the player velocity
+      effecten.shoeSmoke.startVx = -vx; // and give them velocity based on the player velocity
 
       /* some extra speed for the particle's */
-      if (vxLastFrame > 0) theWorld.effecten.shoeSmoke.startVx += EXTRA_SPEED_FOR_SHOE_SMOKE;
-      else theWorld.effecten.shoeSmoke.startVx -= EXTRA_SPEED_FOR_SHOE_SMOKE;
+      if (vxLastFrame > 0) effecten.shoeSmoke.startVx += EXTRA_SPEED_FOR_SHOE_SMOKE;
+      else effecten.shoeSmoke.startVx -= EXTRA_SPEED_FOR_SHOE_SMOKE;
 
-      theWorld.effecten.shoeSmoke.y0 += cameraY; // The particle's need to move down just like the rest of the world
-      theWorld.effecten.shoeSmoke.emit(10); // create's 10 particle's
+      effecten.shoeSmoke.y0 += cameraY; // The particle's need to move down just like the rest of the world
+      effecten.shoeSmoke.emit(10); // create's 10 particle's
     }
 
     // determine the screen coordinates of the particle effects
-    theWorld.effecten.shoeSmoke.x0 = x+w/2;
-    theWorld.effecten.shoeSmoke.y0 = y+h;
-    theWorld.effecten.deadEffect.x0 = x;
-    theWorld.effecten.deadEffect.y0 = y;
-    theWorld.effecten.jumpEffect.x0 = x + w/2; 
-    theWorld.effecten.jumpEffect.y0 = y + h;
-    theWorld.effecten.jumpEffect.startVx = -vx/8;
+    effecten.shoeSmoke.x0 = x+w/2;
+    effecten.shoeSmoke.y0 = y+h;
+    effecten.deadEffect.x0 = x;
+    effecten.deadEffect.y0 = y;
+    effecten.jumpEffect.x0 = x + w/2; 
+    effecten.jumpEffect.y0 = y + h;
+    effecten.jumpEffect.startVx = -vx/8;
   }
 
   /*This functie will update the image on the player every frame */

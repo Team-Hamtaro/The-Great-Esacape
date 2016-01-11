@@ -93,7 +93,7 @@ class Effecten {
     lavaBurst.gravity=0.01;
     lavaBurst.birthColor=color(191, 9, 9);
     lavaBurst.deathColor=color(205, 15, 15);
-    lavaBurst.blendMode="add";
+    lavaBurst.blendMode="false";
     lavaBurst.framesToLive=100;
 
     walkDust.spreadFactor=0.4;
@@ -134,7 +134,7 @@ class Effecten {
     deadEffect.birthColor=color(222, 60, 63);
     deadEffect.deathColor=color(139, 30, 19);
     deadEffect.blendMode="add";
-    deadEffect.framesToLive=140;
+    deadEffect.framesToLive=70;
 
     jumpEffect.spreadFactor=0.4;
     jumpEffect.minSpeed=3.0;

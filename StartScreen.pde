@@ -6,14 +6,15 @@
  *  @since  `date +%d.%m.%Y`
  */
 class StartScreen {
-
+      
 	//The images of the background and the buttons.
 	PImage startBG;
  	PImage playButton;
   	PImage quitButton;
-    PImage creditsButton;
+        PImage creditsButton;
 
     boolean[] selectedButton = {true, false, false};
+    boolean firstLoad;
      
      Lava lava = new Lava();
      
@@ -125,11 +126,16 @@ class StartScreen {
 	 *  Update and draw startscreen.
 	 */
 	void updateAndDraw() {
+     /* Load in the effects */
+    if (firstLoad) {
+      effecten.init();
+      firstLoad = false; 
+     }
+     
         update();
-
     	//Draws the background and the 'Play' and 'Quit' buttons
     	image(startBG, 0, 0);
-    	
+    	effecten.draw();
         if (selectedButton[0]) {
             tint(255, 255);
         } else { 
@@ -162,6 +168,7 @@ class StartScreen {
         fill(168, 0, 32);
         noStroke();
         rect(-1, lava.h+31, width + 1, lava.h);
+        lava.v = 1;
     
     	//Draws the title of the game
     	fill(255);

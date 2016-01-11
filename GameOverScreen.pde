@@ -123,6 +123,7 @@ class GameOverScreen {
     fill(168, 0, 32);
     noStroke();
     rect(-1, lava.h+31, width + 1, lava.h);
+    lava.v = 1;
           
     // draw gameover text
     fill(255);
