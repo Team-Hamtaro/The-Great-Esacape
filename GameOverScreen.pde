@@ -117,7 +117,7 @@ class GameOverScreen {
     
     // draw gameover text
     fill(255);
-    textSize(32);
+    textSize(64);
     textAlign(CENTER);
     text(gameOverMessage, width/2, 140);
     
