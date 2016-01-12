@@ -12,6 +12,8 @@ AudioPlayer backgroundMusic;
 AudioPlayer jumpSound;
 AudioPlayer deadSound;
 AudioPlayer hitSound;
+AudioPlayer pauseSound;
+AudioPlayer cursorSound;
 
 /** Viewport */
 static final int SCREENX = 1376;
@@ -27,6 +29,7 @@ GameOverScreen gameOverScreen;
 PauseScreen pauseScreen;
 StartScreen startScreen;
 World theWorld;
+Music theMusic;
 Credits credits;
 GameState gameState;
 
@@ -47,13 +50,16 @@ void setup() {
   jumpSound = minim.loadFile("Jump.wav");
   deadSound = minim.loadFile("dying.wav");
   hitSound = minim.loadFile("hit.wav");
+  cursorSound = minim.loadFile("cursor.wav");
+  pauseSound = minim.loadFile("pause.wav");
   
-  backgroundMusic.loop();
+  //backgroundMusic.loop();
 
   startScreen = new StartScreen();
   pauseScreen = new PauseScreen();
   gameOverScreen = new GameOverScreen();
   theWorld = new World();
+  theMusic = new Music();
   credits = new Credits();
 
   gameState = GameState.START_SCREEN;
@@ -69,6 +75,8 @@ void setup() {
  */
 void draw() {
   // Determine what level or screen to update and draw, based on the game state
+  theMusic.draw();
+  
   switch (gameState) {
   case START_SCREEN: 
     startScreen.updateAndDraw();

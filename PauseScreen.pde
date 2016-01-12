@@ -27,6 +27,9 @@ class PauseScreen {
     if (keyPressed) {
       if (keyCode == LEFT) {
         if (selectedButton[1]) {
+          cursorSound.play();
+          cursorSound.cue(0);
+          
           selectedButton[0] = true;
           selectedButton[1] = false;
         }
@@ -34,6 +37,9 @@ class PauseScreen {
 
       if (keyCode == RIGHT) {
         if (selectedButton[0]) {
+          cursorSound.play();
+          cursorSound.cue(0);
+          
           selectedButton[0] = false;
           selectedButton[1] = true;
         }
@@ -46,6 +52,9 @@ class PauseScreen {
         else if (selectedButton[1]) {
           gameState = GameState.START_SCREEN;
           theWorld.reload();
+          
+          selectedButton[0] = true;
+          selectedButton[1] = false;
         }
       }      
     }

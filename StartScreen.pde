@@ -55,10 +55,16 @@ class StartScreen {
         if (!keyIsPressed) {
             if (keysPressed[37]) {
                 if (selectedButton[1]) {
+                    cursorSound.play();
+                    cursorSound.cue(0);
+                    
                     selectedButton[0] = true;
                     selectedButton[1] = false;
                     selectedButton[2] = false;
                 } else if (selectedButton[2]) {
+                    cursorSound.play();
+                    cursorSound.cue(0);
+                    
                     selectedButton[0] = false;
                     selectedButton[1] = true;
                     selectedButton[2] = false;
@@ -66,10 +72,16 @@ class StartScreen {
                 keyIsPressed = true;
             } else if (keysPressed[39]) {
                 if (selectedButton[0]) {
+                    cursorSound.play();
+                    cursorSound.cue(0);
+                    
                     selectedButton[0] = false;
                     selectedButton[1] = true;
                     selectedButton[2] = false;
                 } else if (selectedButton[1]) {
+                    cursorSound.play();
+                    cursorSound.cue(0);
+                    
                     selectedButton[0] = false;
                     selectedButton[1] = false;
                     selectedButton[2] = true;
