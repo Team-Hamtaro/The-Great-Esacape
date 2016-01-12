@@ -15,6 +15,9 @@ class StartScreen {
 
     boolean[] selectedButton = {true, false, false};
     boolean keyIsPressed = false;
+    boolean firstLoad = true;
+
+    Lava lava = new Lava();
 
     int timer = 0;
     
@@ -126,10 +129,18 @@ class StartScreen {
      *  Update and draw startscreen.
      */
     void updateAndDraw() {
+        /* Load in the effects */  
+        if (firstLoad) {  
+            effecten.init();  
+            firstLoad = false;   
+        }  
+      
         update();
 
         //Draws the background and the 'Play' and 'Quit' buttons
         image(startBG, 0, 0);
+
+        effecten.draw();
         
         if (selectedButton[0]) {
             tint(255, 255);
@@ -156,6 +167,14 @@ class StartScreen {
         image(quitButton, xQuit, yButton, wButton, hButton);
 
         tint(255, 255);
+
+        //Draws lava at the bottom of the screen
+        lava.draw();
+        lava.h = height - lava.screenHeight;
+        fill(168, 0, 32);
+        noStroke();
+        rect(-1, lava.h + 31, width + 1, lava.h);
+        lava.v = 1;
     
         //Draws the title of the game
         fill(255);
