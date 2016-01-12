@@ -11,7 +11,6 @@ class World {
   ArrayList<Magma> magmas = new ArrayList<Magma>();
   ArrayList<Tiki> tikis = new ArrayList<Tiki>();  
   Player player;
-  Effecten effecten = new Effecten();
   Lava lava = new Lava();
 
   static final int TILE_EMPTY = 0;
@@ -28,9 +27,13 @@ class World {
 
   static final int GRID_UNITS_WIDE = 43;
   static final int GRID_UNITS_TALL = 24;
-  static final float START_LAVA_SPEED = 1.0;
-  static final float MAX_LAVA_SPEED = 1.6;
+  static final float START_LAVA_SPEED = 1.2;
+  static final float MAX_LAVA_SPEED = 1.7;
   static final int HALFRADIUS = 16;
+  static final int PLAYER_UNDER_TIKI = 32;
+  static final int EFFECT_TO_THE_RIGHT = 40;
+  static final int EFFECT_TO_UNDER = 16;
+  
 
   final int TOTAL_CHUNKS = 30; //Change to equal the total amount of chunks, excluding 'startChunk'
 
@@ -320,7 +323,7 @@ class World {
     // if the player is around the same height the tiki totem shoots a dart
     for (Tiki tiki : tikis) {
       if(tiki.isShot == false) {
-     if(abs(tiki.y - player.y) < 96 || tiki.counter == 1) {
+     if(abs(tiki.y - player.y) < PLAYER_UNDER_TIKI || tiki.counter == 1) {
        tiki.isShot = true;
        tiki.counter = 0;
        tiki.dartsX = tiki.x;
@@ -335,6 +338,12 @@ class World {
       // movement of the dart and collision detection of the dart and the player
       if( tiki.isShot == true){
        tiki.darts();
+       
+       /* code to call the effects */
+     effecten.dartsEffect.x0 = tiki.dartsX + EFFECT_TO_THE_RIGHT;
+     effecten.dartsEffect.y0 = tiki.dartsY + EFFECT_TO_UNDER;
+     effecten.dartsEffect.emit(1);
+     
        boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+GRID_UNIT_SIZE, tiki.dartsY+GRID_UNIT_SIZE, tiki.w, tiki.h);
       if (dartOverlap == true) {
         player.alive = false;

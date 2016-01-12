@@ -11,6 +11,8 @@ class GameOverScreen {
 
   boolean[] selectedButton = {true, false};
 
+  Lava lava = new Lava();
+  
   int wButton, hButton, xPlay, xBack, yButton;
   ArrayList<HighScore> scores;
   String playerName = "";
@@ -73,9 +75,22 @@ class GameOverScreen {
 
     tint(255, 255);
 
+    drawLava();
     drawMessage();
     drawScore();
     drawScoreList();
+  }
+
+  void drawLava() {
+    tint(255, 255);
+         
+    // Drawing lava at the bottom of the screen
+    lava.draw();
+    lava.h = height - lava.screenHeight;
+    fill(168, 0, 32);
+    noStroke();
+    rect(-1, lava.h+31, width + 1, lava.h);
+    lava.v = 1;
   }
 
   /**
@@ -198,5 +213,4 @@ class GameOverScreen {
       cursor(ARROW); 
     }
   }
-
 }

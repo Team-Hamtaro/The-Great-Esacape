@@ -18,6 +18,7 @@ static final int SCREENX = 1376;
 static final int SCREENY = 768;
 final color DEFAULT_BACKGROUND = color(120, 120, 120);
 
+Effecten effecten = new Effecten();
 
 /** @type {Number} Camera coordinates. */
 float cameraX = 0, cameraY = 0;
@@ -26,6 +27,7 @@ GameOverScreen gameOverScreen;
 PauseScreen pauseScreen;
 StartScreen startScreen;
 World theWorld;
+Credits credits;
 GameState gameState;
 
 PFont font;
@@ -34,6 +36,11 @@ PFont font;
  *  Setup the Viewport and main classes.
  */
 void setup() {
+  size(1376, 768, OPENGL);
+  // surface.setResizable(true);
+  background(DEFAULT_BACKGROUND);
+  frameRate(60); 
+  
   minim = new Minim(this);
   // this loads mysong.wav from the data folder
   backgroundMusic = minim.loadFile("cave.mp3");
@@ -42,16 +49,12 @@ void setup() {
   hitSound = minim.loadFile("hit.wav");
   
   backgroundMusic.loop();
-  
-  size(1376, 768);
-  // surface.setResizable(true);
-  background(DEFAULT_BACKGROUND);
-  frameRate(60); 
 
   startScreen = new StartScreen();
   pauseScreen = new PauseScreen();
   gameOverScreen = new GameOverScreen();
   theWorld = new World();
+  credits = new Credits();
 
   gameState = GameState.START_SCREEN;
 
@@ -88,6 +91,9 @@ void draw() {
   case GAME_OVER_WON: 
     gameOverScreen.setWon();  
     gameOverScreen.updateAndDraw(); 
+    break;
+  case CREDITS:
+    credits.draw();
     break;
   default :
     break;
