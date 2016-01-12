@@ -76,7 +76,7 @@ void draw() {
   case PLAYING: 
     theWorld.draw();
     if (keyPressed) {
-      if (key == 'p' || key == 'P') {
+      if (keysPressed[34] || keysPressed[80]) {
         gameState = GameState.GAME_PAUSED;
       }
     }
