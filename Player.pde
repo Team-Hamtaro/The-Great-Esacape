@@ -74,7 +74,7 @@ class Player extends Tile {
     }
 
     // vy is increased when the up key is pressed and canJump is true
-    if ((keysPressed[UP] || keysPressed[88]) && canJump && jumpKeyReleased) {
+    if ((keysPressed[UP] || keysPressed[88] || keysPressed[32]) && canJump && jumpKeyReleased) {
       jumpKeyReleased = false; // will be true if you release the jump key. So you cant just keep pushing the jump key.
       vy -= JUMP; 
       canJump = false; // the player can no longer jump
