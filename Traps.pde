@@ -104,7 +104,7 @@ class Saw {
     sawSpark.gravity=0.08;
     sawSpark.birthColor=color(191, 9, 9);
     sawSpark.deathColor=color(205,15,15);
-    sawSpark.blendMode="add";
+    sawSpark.blendMode="false";
     sawSpark.framesToLive=15;
     
     lavaBurst.spreadFactor=0.4;
@@ -118,7 +118,7 @@ class Saw {
     lavaBurst.gravity=0.01;
     lavaBurst.birthColor=color(191, 9, 9);
     lavaBurst.deathColor=color(205, 15, 15);
-    lavaBurst.blendMode="add";
+    lavaBurst.blendMode="false";
     lavaBurst.framesToLive=120;
   }
 }

@@ -203,13 +203,19 @@ class World {
     if (score > playerScore) playerScore = score;
   }
 
+  void drawScore() {
+    textSize(36);
+    noStroke();
+    fill(255);
+    text("Score: " + playerScore, width/2, height - 18 + cameraY);
+  }
+
   /**
    * Draw the updated world once per frame
    */
   void draw() {
-    setScore();
-
     background(0);
+    setScore();
     image(mglayer, 0, (test * 0.1));
     image(bglayer1, 0, 0); 
 
@@ -392,6 +398,7 @@ class World {
     player.draw();
     effecten.draw();
     lava.draw();
+    drawScore();
 
     if (lava.max) {
       chunkLoadTimer += cameraY;

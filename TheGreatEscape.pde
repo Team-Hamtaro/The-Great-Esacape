@@ -85,7 +85,7 @@ void draw() {
     pauseScreen.updateAndDraw();
     break;
   case GAME_OVER_LOST:
-    gameOverScreen.setLose(); 
+    // gameOverScreen.setLose(); 
     gameOverScreen.updateAndDraw(); 
     break;
   case GAME_OVER_WON: 
