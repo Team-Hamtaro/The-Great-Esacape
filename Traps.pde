@@ -188,9 +188,9 @@ class Rock {
       if (counter % 7 == 0) { // if the rock is off screen for 7 seconds it will relocate the rock and reset the counter
         x = random(960);
         if( x < RADIUS){
-        x = RADIUS;
+        x = RADIUS*2;
         } else if( x > width - RADIUS){
-         x = width-RADIUS; 
+         x = width-RADIUS*2; 
         }
         y = -h * 6;
         v = 0.01;
