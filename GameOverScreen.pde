@@ -7,9 +7,11 @@ class GameOverScreen {
   PImage playButton;
   PImage backButton;
   String gameOverMessage = "";
+  
 
   boolean[] selectedButton = {true, false};
-
+  boolean firstLoad = true;
+  
   Lava lava = new Lava();
   
   int wButton, hButton, xPlay, xBack, yButton;
@@ -94,10 +96,18 @@ class GameOverScreen {
     
   // update and draw the gameover screen
   void updateAndDraw() {
+    
+    if(firstLoad){
+     effecten.init();
+     firstLoad = false;      
+    }
+   
     update();
 
     // Draw the background image
     image(gameOverBG, 0, 0);
+    
+    effecten.draw();
     
     if (selectedButton[0]) {
       tint(255, 255);
