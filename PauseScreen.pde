@@ -4,7 +4,8 @@ class PauseScreen {
 	PImage backButton;
 
   boolean[] selectedButton = {true, false};
-
+  boolean firstLoad = true;
+  
   Lava lava = new Lava();
   //The variables for the width, height, x and y positions of the buttons
   int wButton, hButton, xResume, xBack, yButton;
@@ -76,10 +77,15 @@ class PauseScreen {
 
   void updateAndDraw() {
     update();
-
+    if(firstLoad){
+     effecten.init();
+    firstLoad = false; 
+    }
     //Draws the background 
     image(pauseBG, 0, 0);
-
+    
+     effecten.draw();
+    
     if (selectedButton[0]) {
       tint(255, 255);
     } else { 
@@ -104,5 +110,6 @@ class PauseScreen {
     fill(168, 0, 32);
     noStroke();
     rect(-1, lava.h+31, width + 1, lava.h);
+    lava.v = 1;
   }
 }

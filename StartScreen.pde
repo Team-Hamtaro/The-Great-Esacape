@@ -77,7 +77,7 @@ class StartScreen {
                 keyIsPressed = true;
             }
 
-            if (key == ENTER && timer > 60 || keysPressed[90] && timer > 10) {
+            if (key == ENTER && timer > 60 || keysPressed[90] && timer > 60) {
                 if (selectedButton[0]) {
                     timer = 0;
                     startGame();

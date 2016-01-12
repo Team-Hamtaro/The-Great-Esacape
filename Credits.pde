@@ -10,8 +10,6 @@ class Credits {
   boolean isInitialized = false;
 
   ParticleSystem stars = new ParticleSystem(0, 0);
- 
-   
 
   void update() {
     timer ++;
@@ -68,7 +66,7 @@ class Credits {
     text("Voice Acting:", x, y + 30 * offset, z);
     text("Playtesters:", x, y + 33 * offset, z);
     text("Production Babies:", x, y + 42 * offset, z);
-    text("Special Thanks:", x, y + 48 * offset, z);
+    text("Special Thanks:", x, y + 67 * offset, z);
 
     textSize(28);
     text("Rik Langeveld", x, y + 15 * offset, z);	
@@ -91,18 +89,44 @@ class Credits {
     text("Stip", x, y + 44 * offset, z);
     text("Mr. Bauer", x, y + 45 * offset, z);
     text("Alexander Mulder", x, y + 46 * offset, z);
-    text("Die vrouw van de slager die me altijd plakjes worst gaf. \n Dankjewel, ik vond ze echt heel lekker!", x, y + 49 * offset, z);
-    text("Irene Overtoom", x, y + 51 * offset, z);
-    text("Familie's van alle hamsters", x, y + 52 * offset, z);
-    text("Remy Kooring", x, y + 53 * offset, z);
-    text("Sunderdota", x, y + 54 * offset, z);
-    text("Luna Chenango Cordelia", x, y + 55 * offset, z);
-    text("Will Verdrag", x, y + 56 * offset, z);
-    text("Kinder chocolade", x, y + 57 * offset, z);
-    text("Koffie", x, y + 58 * offset, z);
-    text("Zonder jullie hadden we dit nooit gekunt!", x, y + 59 * offset, z);
+    text("Alessio", x, y + 47 * offset, z);
+    text("Douk", x, y + 48 * offset, z);
+    text("Geffrey", x, y + 49 * offset, z);
+    text("Huub", x, y + 50 * offset, z);
+    text("Jesse", x, y + 51 * offset, z);
+    text("Jessy", x, y + 52 * offset, z);
+    text("Leonie", x, y + 53 * offset, z);
+    text("Marc", x, y + 54 * offset, z);
+    text("Mauro", x, y + 55 * offset, z);
+    text("Maxim", x, y + 56 * offset, z);
+    text("Mels", x, y + 57 * offset, z);
+    text("Naomi", x, y + 58 * offset, z);
+    text("Nino", x, y + 59 * offset, z);
+    text("Remco", x, y + 60 * offset, z);
+    text("Ricardo", x, y + 61 * offset, z);
+    text("Seanan", x, y + 62 * offset, z);
+    text("Wouter S", x, y + 63 * offset, z);
+    text("Wouter V", x, y + 64 * offset, z);
+    text("Dominique", x, y + 65 * offset, z);
+    text("Die vrouw van de slager die me altijd plakjes worst gaf. \n Dankjewel, ik vond ze echt heel lekker!", x, y + 68 * offset, z);
+    text("Irene Overtoom", x, y + 70 * offset, z);
+    text("Familie's van alle hamsters", x, y + 71 * offset, z);
+    text("Remy Kooring", x, y + 72 * offset, z);
+    text("Sunderdota", x, y + 73 * offset, z);
+    text("Luna Chenango Cordelia", x, y + 74 * offset, z);
+    text("Will Verdrag", x, y + 75 * offset, z);
+    text("Kinder chocolade", x, y + 76 * offset, z);
+    text("Koffie", x, y + 77 * offset, z);
+    text("Zonder jullie hadden we dit nooit gekund!", x, y + 78 * offset, z);
+
+    textSize(100);
+    text("THANKS FOR PLAYING!", x, y + 85 * offset, z);
 
     y--;
+
+    if (y + 85 * offset <= -850) {
+      gameState = GameState.START_SCREEN;
+    }
 
     if (keyPressed && timer > 60) {
       backgroundMusic.close();

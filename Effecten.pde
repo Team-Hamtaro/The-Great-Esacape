@@ -8,6 +8,7 @@ class Effecten {
   ParticleSystem deadEffect = new ParticleSystem(0, 0);
   ParticleSystem jumpEffect = new ParticleSystem(0, 0);
   ParticleSystem dartsEffect = new ParticleSystem(0, 0);
+  ParticleSystem firework = new ParticleSystem(0, 0);
 
   void init() {
     particleDeclare();
@@ -71,6 +72,7 @@ class Effecten {
     jumpEffect.update();
     walkDust.update();
     dartsEffect.update();
+    firework.update();
 
     // draw the particle effects
     shoeSmoke.draw();
@@ -79,6 +81,7 @@ class Effecten {
     walkDust.draw();
     lavaBurst.draw();
     dartsEffect.draw();
+    firework.draw();
   }
 
   void particleDeclare () {
@@ -107,7 +110,7 @@ class Effecten {
     walkDust.gravity=0.05;
     walkDust.birthColor=color(191, 9, 9);
     walkDust.deathColor=color(205, 15, 15);
-    walkDust.blendMode="add";
+    walkDust.blendMode="false";
     walkDust.framesToLive=20;
 
     shoeSmoke.spreadFactor=0.3;
@@ -120,7 +123,7 @@ class Effecten {
     shoeSmoke.gravity=-0.01;
     shoeSmoke.birthColor=color(205, 133, 63);
     shoeSmoke.deathColor=color(139, 69, 19);
-    shoeSmoke.blendMode="add";
+    shoeSmoke.blendMode="false";
     shoeSmoke.framesToLive=20;
 
     deadEffect.spreadFactor=1;
@@ -146,7 +149,7 @@ class Effecten {
     jumpEffect.gravity= 0.02;
     jumpEffect.birthColor=color(200, 60, 160);
     jumpEffect.deathColor=color(138, 30, 138);
-    jumpEffect.blendMode="add";
+    jumpEffect.blendMode="false";
     jumpEffect.framesToLive=30;
     
     dartsEffect.spreadFactor=0.6;
@@ -159,8 +162,22 @@ class Effecten {
     dartsEffect.gravity= 0.01;
     dartsEffect.birthColor=color(102, 204, 26);
     dartsEffect.deathColor=color(102, 204, 26);
-    dartsEffect.blendMode="add";
+    dartsEffect.blendMode="false";
     dartsEffect.framesToLive=20;
+    
+    firework.spreadFactor=1;
+    firework.y0 = SCREENY - 50;
+    firework.minSpeed=3.0;
+    firework.maxSpeed=8.0;
+    firework.startVx=-0.0;
+    firework.startVy=-0.3;
+    firework.birthSize=4.0;
+    firework.deathSize=7.0;
+    firework.gravity=0.01;
+    firework.birthColor=color(191, 9, 9);
+    firework.deathColor=color(205, 15, 15);
+    firework.blendMode="false";
+    firework.framesToLive=100;
     
   }
 }
