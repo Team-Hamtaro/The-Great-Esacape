@@ -210,8 +210,6 @@ class World {
 
   void drawScore() {
     textSize(36);
-    fill(0, 0, 0, 50);
-    rect(0, height/2+40, width, height/2);
     noStroke();
     fill(255);
     text("Score: " + playerScore, width/2, height - 18 + cameraY);
