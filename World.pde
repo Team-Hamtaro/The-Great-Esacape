@@ -210,8 +210,8 @@ class World {
     setScore();
 
     background(0);
-    //image(mglayer, 0, (test * 0.1));
-    //image(bglayer1, 0, 0); 
+    image(mglayer, 0, (test * 0.1));
+    image(bglayer1, 0, 0); 
 
     for (Tile tile : tiles) {
       tile.draw();
