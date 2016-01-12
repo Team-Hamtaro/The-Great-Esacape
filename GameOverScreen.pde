@@ -1,6 +1,7 @@
 // The GameOverScreen class hold all the functionality for displaying game-over information 
 class GameOverScreen {
   int points = 0;
+  LeaderBoard leaderBoard;
     
   // GameOverScreen can be recycled for win and lose
   PImage gameOverBG;
@@ -11,6 +12,9 @@ class GameOverScreen {
   boolean[] selectedButton = {true, false};
 
   int wButton, hButton, xPlay, xBack, yButton;
+  ArrayList<HighScore> scores;
+  String playerName = "";
+  boolean takeingInput = true;
 
   /**
    *  Default constructor.
@@ -19,6 +23,9 @@ class GameOverScreen {
     gameOverBG = loadImage("loading.png");
     playButton = loadImage("button_big_again.png");
     backButton = loadImage("button_big_back.png");
+    leaderBoard = new LeaderBoard();
+    scores = leaderBoard.score_list;
+    setLose();
   
     wButton = 256;
     hButton = 128;
@@ -68,6 +75,7 @@ class GameOverScreen {
 
     drawMessage();
     drawScore();
+    drawScoreList();
   }
 
   /**
@@ -85,19 +93,59 @@ class GameOverScreen {
    */
   void drawScore() {
     // draw bottom text frame
-    textSize(24);
+    textSize(36);
     fill(0, 0, 0, 50);
-    rect(0, height/2+90, width, 70);
-    
+    rect(0, height/2+40, width, height/2);
+    String scoreMessage = "You had " + points + " points !";
     // draw the bottom text
     noStroke();
     fill(255);
-    text("You had " + points + " points", width/2, height/2 + 135);
 
+    if (leaderBoard.isNewHighScore(points)) {
+      scoreMessage += " Type your name! ";
+      takeingInput = true;
+      gameOverMessage = "Congratulations! New HighScore!";
+      if (playerName != "") {
+        scoreMessage = playerName;
+      }
+      getUsername();
+    }
+    textAlign(CENTER);
+    text(scoreMessage, width/2, height/2 + 35);
+
+  }
+
+  void getUsername() {
+      if (!(input == '\u0000')) {
+        if (key == BACKSPACE) {
+          playerName = playerName.substring(0, playerName.length()-1);
+        } else {
+          playerName += key;
+        }
+        input = '\u0000';
+      }
+  }
+
+  void saveScore() {
+    leaderBoard.add(playerName,points);
+    leaderBoard.writeScoreFile();
+    playerName = "";
+    points = 0;
+  }
+
+  void drawScoreList() {
+    textAlign(CENTER);
+    textSize(24);
+    for (int i=0 ; i < scores.size() ; i++ ) {
+      text((i+1) +". " +
+        scores.get(i).name + " " +
+        scores.get(i).score, width/2 - 70, height/2 + i*26+100);
+    }
   }
 
   void handleInput() {
     if (keyPressed) {
+
       if (keyCode == LEFT) {
         if (selectedButton[1]) {
           selectedButton[0] = true;
@@ -113,7 +161,9 @@ class GameOverScreen {
       }
 
       if (key == ENTER || keysPressed[90]) {
-        theWorld.reload();  
+        theWorld.reload();
+        setLose(); 
+        saveScore();
         if (selectedButton[0]) {
           gameState = GameState.PLAYING;
         }
