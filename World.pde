@@ -60,14 +60,6 @@ class World {
 
     reload();
   }
-  // Wordt dit stuk wel gebruikt? <<<<<
-  /*
-  int worldSquareAt(PVector thisPosition) { //return what tile is at a coordinate
-   float gridSpotX = thisPosition.x/GRID_UNIT_SIZE;
-   float gridSpotY = thisPosition.y/GRID_UNIT_SIZE;
-   return worldGrid[int(gridSpotY)][int(gridSpotX)];
-   }
-   */
   /**
    * Load chunks into the World
    */

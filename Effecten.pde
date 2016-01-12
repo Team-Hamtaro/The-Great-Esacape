@@ -8,6 +8,7 @@ class Effecten {
   ParticleSystem deadEffect = new ParticleSystem(0, 0);
   ParticleSystem jumpEffect = new ParticleSystem(0, 0);
   ParticleSystem dartsEffect = new ParticleSystem(0, 0);
+  ParticleSystem firework = new ParticleSystem(0, 0);
 
   void init() {
     particleDeclare();
@@ -71,6 +72,7 @@ class Effecten {
     jumpEffect.update();
     walkDust.update();
     dartsEffect.update();
+    firework.update();
 
     // draw the particle effects
     shoeSmoke.draw();
@@ -79,6 +81,7 @@ class Effecten {
     walkDust.draw();
     lavaBurst.draw();
     dartsEffect.draw();
+    firework.draw();
   }
 
   void particleDeclare () {
@@ -161,6 +164,20 @@ class Effecten {
     dartsEffect.deathColor=color(102, 204, 26);
     dartsEffect.blendMode="add";
     dartsEffect.framesToLive=20;
+    
+    firework.spreadFactor=1;
+    firework.y0 = SCREENY - 50;
+    firework.minSpeed=3.0;
+    firework.maxSpeed=8.0;
+    firework.startVx=-0.0;
+    firework.startVy=-0.3;
+    firework.birthSize=4.0;
+    firework.deathSize=7.0;
+    firework.gravity=0.01;
+    firework.birthColor=color(191, 9, 9);
+    firework.deathColor=color(205, 15, 15);
+    firework.blendMode="false";
+    firework.framesToLive=100;
     
   }
 }

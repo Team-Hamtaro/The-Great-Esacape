@@ -120,7 +120,7 @@ class Credits {
       framesUntilEffectChanges++;
       stars.x0 = random(SCREENX);
       stars.y0 = random(SCREENY);
-       if (framesUntilEffectChanges >= 15) {
+       if (framesUntilEffectChanges >= 60) {
       color1 = (int)random(255);
       color2 = (int)random(255);
       color3 = (int)random(255);
@@ -156,7 +156,7 @@ class Credits {
       stars.gravity=0.00;
       stars.birthColor=color(color1, color2, color3);
       stars.deathColor=color(color4, color5, color6);
-      stars.blendMode="add";
+      stars.blendMode="true";
       stars.framesToLive=100;
     }
 }
