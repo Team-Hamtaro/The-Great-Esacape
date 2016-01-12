@@ -110,7 +110,7 @@ class Effecten {
     walkDust.gravity=0.05;
     walkDust.birthColor=color(191, 9, 9);
     walkDust.deathColor=color(205, 15, 15);
-    walkDust.blendMode="add";
+    walkDust.blendMode="false";
     walkDust.framesToLive=20;
 
     shoeSmoke.spreadFactor=0.3;
@@ -123,7 +123,7 @@ class Effecten {
     shoeSmoke.gravity=-0.01;
     shoeSmoke.birthColor=color(205, 133, 63);
     shoeSmoke.deathColor=color(139, 69, 19);
-    shoeSmoke.blendMode="add";
+    shoeSmoke.blendMode="false";
     shoeSmoke.framesToLive=20;
 
     deadEffect.spreadFactor=1;
@@ -149,7 +149,7 @@ class Effecten {
     jumpEffect.gravity= 0.02;
     jumpEffect.birthColor=color(200, 60, 160);
     jumpEffect.deathColor=color(138, 30, 138);
-    jumpEffect.blendMode="add";
+    jumpEffect.blendMode="false";
     jumpEffect.framesToLive=30;
     
     dartsEffect.spreadFactor=0.6;
@@ -162,7 +162,7 @@ class Effecten {
     dartsEffect.gravity= 0.01;
     dartsEffect.birthColor=color(102, 204, 26);
     dartsEffect.deathColor=color(102, 204, 26);
-    dartsEffect.blendMode="add";
+    dartsEffect.blendMode="false";
     dartsEffect.framesToLive=20;
     
     firework.spreadFactor=1;
