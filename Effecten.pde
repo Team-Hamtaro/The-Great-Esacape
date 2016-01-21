@@ -61,7 +61,7 @@ class Effecten {
 
     if (lavaBurstCheck >= 1000) {
 
-      lavaBurst.x0 = (int)random(SCREENX);
+      lavaBurst.x = (int)random(SCREENX);
       lavaBurst.emit(100);
       lavaBurstCheck = 0;
     }
@@ -86,7 +86,7 @@ class Effecten {
 
   void particleDeclare () {
     lavaBurst.spreadFactor=0.4;
-    lavaBurst.y0 = SCREENY - 50;
+    lavaBurst.y = SCREENY - 50;
     lavaBurst.minSpeed=3.0;
     lavaBurst.maxSpeed=8.0;
     lavaBurst.startVx=-0.0;
@@ -96,11 +96,10 @@ class Effecten {
     lavaBurst.gravity=0.01;
     lavaBurst.birthColor=color(191, 9, 9);
     lavaBurst.deathColor=color(205, 15, 15);
-    lavaBurst.blendMode="false";
     lavaBurst.framesToLive=100;
 
     walkDust.spreadFactor=0.4;
-    walkDust.y0 = SCREENY - 50;
+    walkDust.y = SCREENY - 50;
     walkDust.minSpeed=2.0;
     walkDust.maxSpeed=3.0;
     walkDust.startVx=-0.0;
@@ -110,7 +109,6 @@ class Effecten {
     walkDust.gravity=0.05;
     walkDust.birthColor=color(191, 9, 9);
     walkDust.deathColor=color(205, 15, 15);
-    walkDust.blendMode="false";
     walkDust.framesToLive=20;
 
     shoeSmoke.spreadFactor=0.3;
@@ -123,7 +121,6 @@ class Effecten {
     shoeSmoke.gravity=-0.01;
     shoeSmoke.birthColor=color(205, 133, 63);
     shoeSmoke.deathColor=color(139, 69, 19);
-    shoeSmoke.blendMode="false";
     shoeSmoke.framesToLive=20;
 
     deadEffect.spreadFactor=1;
@@ -149,7 +146,6 @@ class Effecten {
     jumpEffect.gravity= 0.02;
     jumpEffect.birthColor=color(200, 60, 160);
     jumpEffect.deathColor=color(138, 30, 138);
-    jumpEffect.blendMode="false";
     jumpEffect.framesToLive=30;
     
     dartsEffect.spreadFactor=0.6;
@@ -162,11 +158,10 @@ class Effecten {
     dartsEffect.gravity= 0.01;
     dartsEffect.birthColor=color(102, 204, 26);
     dartsEffect.deathColor=color(102, 204, 26);
-    dartsEffect.blendMode="false";
     dartsEffect.framesToLive=20;
     
     firework.spreadFactor=1;
-    firework.y0 = SCREENY - 50;
+    firework.y = SCREENY - 50;
     firework.minSpeed=3.0;
     firework.maxSpeed=8.0;
     firework.startVx=-0.0;
@@ -176,7 +171,6 @@ class Effecten {
     firework.gravity=0.01;
     firework.birthColor=color(191, 9, 9);
     firework.deathColor=color(205, 15, 15);
-    firework.blendMode="false";
     firework.framesToLive=100;
     
   }

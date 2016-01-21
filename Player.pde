@@ -17,6 +17,7 @@ class Player extends Tile {
   final float MAXSPEED = 2.3;
   final float SPEED_INCREASE = 0.35;
   final float EXTRA_SPEED_FOR_SHOE_SMOKE = 0.3; // var to give the shoe particle's some extra speed.
+  final float DEFAULT_FALLINGSPEED = 0.01;
 
 
   // Load player sprites
@@ -60,15 +61,15 @@ class Player extends Tile {
       if (keysPressed[LEFT] || keysPressed[65]) {
         vx -= SPEED_INCREASE;
         
-        effecten.walkDust.x0 = x + SIZE;
-        effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
+        effecten.walkDust.x = x + SIZE;
+        effecten.walkDust.y = y + SIZE - (int) random(SIZE/2);
         if (canJump) effecten.walkDust.emit(1);
       } 
       if (keysPressed[RIGHT] || keysPressed[68]) {
         vx += SPEED_INCREASE;
         
-        effecten.walkDust.x0 = x;
-        effecten.walkDust.y0 = y + SIZE - (int) random(SIZE/2);
+        effecten.walkDust.x = x;
+        effecten.walkDust.y = y + SIZE - (int) random(SIZE/2);
         if (canJump) effecten.walkDust.emit(1);
       }
     }
@@ -121,17 +122,17 @@ class Player extends Tile {
       if (vxLastFrame > 0) effecten.shoeSmoke.startVx += EXTRA_SPEED_FOR_SHOE_SMOKE;
       else effecten.shoeSmoke.startVx -= EXTRA_SPEED_FOR_SHOE_SMOKE;
 
-      effecten.shoeSmoke.y0 += cameraY; // The particle's need to move down just like the rest of the world
+      effecten.shoeSmoke.y += cameraY; // The particle's need to move down just like the rest of the world
       effecten.shoeSmoke.emit(10); // create's 10 particle's
     }
 
     // determine the screen coordinates of the particle effects
-    effecten.shoeSmoke.x0 = x+w/2;
-    effecten.shoeSmoke.y0 = y+h;
-    effecten.deadEffect.x0 = x;
-    effecten.deadEffect.y0 = y;
-    effecten.jumpEffect.x0 = x + w/2; 
-    effecten.jumpEffect.y0 = y + h;
+    effecten.shoeSmoke.x = x+w/2;
+    effecten.shoeSmoke.y = y+h;
+    effecten.deadEffect.x = x;
+    effecten.deadEffect.y = y;
+    effecten.jumpEffect.x = x + w/2; 
+    effecten.jumpEffect.y = y + h;
     effecten.jumpEffect.startVx = -vx/8;
   }
 

@@ -331,8 +331,8 @@ class World {
        tiki.darts();
        
        /* code to call the effects */
-     effecten.dartsEffect.x0 = tiki.dartsX + EFFECT_TO_THE_RIGHT;
-     effecten.dartsEffect.y0 = tiki.dartsY + EFFECT_TO_UNDER;
+     effecten.dartsEffect.x = tiki.dartsX + EFFECT_TO_THE_RIGHT;
+     effecten.dartsEffect.y = tiki.dartsY + EFFECT_TO_UNDER;
      effecten.dartsEffect.emit(1);
      
        boolean dartOverlap = rectRect(player.x, player.y, player.SIZE, player.SIZE, tiki.dartsX+GRID_UNIT_SIZE, tiki.dartsY+GRID_UNIT_SIZE, tiki.w, tiki.h);
@@ -348,8 +348,8 @@ class World {
     // collision detection between player and all the tiles
     if (player.alive) {
       for (Tile tile : tiles) {
-        if (abs(tile.x - player.x) < 50 && abs(tile.y - player.y) < 50) { // only checks is a tile is close to the player
-          // Collision detection and response typically happens after all game objects are updated
+        if (abs(tile.x - player.x) < 50 && abs(tile.y - player.y) < player.SIZE*2 + player.vy) { // only checks is a tile is close to the player
+         
           // calculate overlap in x direction between player and tile
           float xOverlap = calculate1DOverlap(player.x, tile.x, player.w, tile.w);
 
@@ -358,7 +358,7 @@ class World {
           float yOverlap = calculate1DOverlap(playeryAndSpeed, tile.y, player.h, tile.h);
 
 
-          // used for checking if the block is a sideTile. without this the player will glitch in the ground!
+          // used for checking if the block is a sideTile
           if (player.y + player.SIZE > tile.y + (tile.h/3) && player.y < tile.y + tile.h - (tile.h/3)) {
             tile.sideTile = true;
           } else {
@@ -373,14 +373,13 @@ class World {
               if (yOverlap < 0) { // block under the player
                 player.y += yOverlap + (player.vy * player.speed) ; 
                 player.canJump = true; // making able to jump again.
-                player.fallingSpeed = 0.01; // set the falling speed to zero.
+                player.fallingSpeed = player.DEFAULT_FALLINGSPEED; // set the falling speed to zero.
                 player.vy = 0;
               }
               if (yOverlap > 0 + (player.vy * player.speed)) { // block is above the player
 
-                //player.vy = - player.vy; // player vy becomes negative vx when you hit a block above.
                 player.y += yOverlap; // player will bounce of.
-                player.vy = -player.vy/2;
+                player.vy = -player.vy/2; // vy of player will be negative vy
               }
             } else {     // block is left or right
               player.x += xOverlap; // adjust player x - position based on overlap
@@ -391,10 +390,12 @@ class World {
           }
         }
       }
+      // if player is not alive
     } else { 
       deadEvent();
       gameOverScreen.points = playerScore;
     }
+    
     player.draw();
     effecten.draw();
     lava.draw();

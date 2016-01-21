@@ -1,21 +1,15 @@
-// Class for a single particle
+// Class waar de losse particle's gemaakt worden.
 class Particle {
   float x, y, vx, vy, size, particleColor, speed;
 
-  // quad coordinate offset
-  float qx0, qy0, qx1, qy1, qx2, qy2, qx3, qy3;
+  // quad hoeken coördinaten
+  float qx, qy, qx1, qy1, qx2, qy2, qx3, qy3;
 
-  // Color used to draw the particle
+  // kleur van het particle
   color drawColor;
 
-  // amount of frames the particle has to live
+  // frames dat het particle bestaad.
   int framesToLive;
-
-  // Angular velocity
-  float angularVelocity;
-
-  // angle (for quad particles)
-  float angle;
 
   // Constructor
   Particle(float x, float y, int framesToLive) {
@@ -23,21 +17,18 @@ class Particle {
     this.y = y;
     this.framesToLive = framesToLive;
 
-    // random angular velocity (left or right)
-    angularVelocity = random(-0.1, 0.1);
-
     // determine coordinate offsets if quad
-      qx0 = -random(1.0); 
-      qy0 = -random(1.0);
-      qx1 = random(1.0); 
-      qy1 = -random(1.0);
-      qx2 = random(1.0); 
-      qy2 = random(1.0);
-      qx3 = -random(1.0); 
-      qy3 = random(1.0);
+    qx = -random(1.0); 
+    qy = -random(1.0);
+    qx1 = random(1.0); 
+    qy1 = -random(1.0);
+    qx2 = random(1.0); 
+    qy2 = random(1.0);
+    qx3 = -random(1.0); 
+    qy3 = random(1.0);
   }
 
-  // update position and frames to live
+  // update positie en verminder de frames to live een.
   void update() {
     x += vx * speed;
     y += vy * speed;
@@ -45,81 +36,74 @@ class Particle {
   }
 
 
-  // draw the particle's Pushmatrix and popMatrix will store the data for a short time.
+  // Tekent de particle's op het scherm. pushMatrix slaat de gegevens even op.
   void draw() {
 
-      angle += angularVelocity;
-      pushMatrix();
-      translate(x, y);
-      pushMatrix();              
-      rotate(angle);
-      fill(drawColor);
-      float ps2 = this.size/2;
-      quad(qx0*ps2, qy0*ps2, 
-      qx1*ps2, qy1*ps2, 
-      qx2*ps2, qy2*ps2, 
-      qx3*ps2, qy3*ps2);
-      popMatrix();
-      popMatrix();
-    
+    pushMatrix();
+    translate(x, y);
+    pushMatrix();              
+    fill(drawColor);
+    float ps2 = this.size/2;
+    quad(qx*ps2, qy*ps2, 
+    qx1*ps2, qy1*ps2, 
+    qx2*ps2, qy2*ps2, 
+    qx3*ps2, qy3*ps2);
+
+    popMatrix();
+    popMatrix();
   }
 }
 
 // Particle system to manage emission of particles
 class ParticleSystem {
+  
+  //lijst met particle's
   ArrayList<Particle> particles;
 
-  // the origin of emission. x1 and y1 are used when emitter is a line 
-  float  x0, y0, x1, y1;
+  float  x, y;
 
-  String blendMode = "add";
+  // verander blendmode naar add, als kleuren gemengd moeten worden.
+  String blendMode;
 
-  // amount of particles to emit
-  int emissionRate = 0;
-
-  // amount of frames to emit particles
-  int framesToEmit = 0;
-
-  // color at birth and color at death
+  // startkleur en eindkleur
   color birthColor, deathColor;
 
-  // size at birth and size at death
+  // start grote en eind grote
   float birthSize, deathSize;
 
-  // amount of frames after which the particle is removed
+  // frames dat het particle bestaad
   int framesToLive;
 
-  // direction in which the particles are emitted
+  // start richting van de particle's
   float startVx, startVy;
 
-  // particles are spread slightly randomly
+  // spreid de particle's uit
   float spreadFactor;
 
-  // particles have different emission speeds, between minSpeed and maxSpeed
+  // De particle's krijgen een snelheid tussen min- en maxspeed
   float minSpeed, maxSpeed;
 
-  // force pulling in y direction
+  // particle's richting de y positie
   float gravity;
 
   // Create new particle system, emitter at (x,y)
   ParticleSystem(float x, float y) {
-    this.x0 = x;
-    this.y0 = y;  
+    this.x = x;
+    this.y = y;  
     particles = new ArrayList<Particle>();
   }
 
 
-  // add an amount of particles to the particle system
+  // Maakt het een aantal particle's aan dat wordt aangegeven met de emit functie
   void emit(int particleAmount) {
-    float t, x, y;
+    float x, y;
 
-    for (int iParticle=0; iParticle<particleAmount; iParticle++) {
+    for (int i=0; i<particleAmount; i++) {
 
-        x = x0;
-        y = y0;
-   
+      x = this.x;
+      y = this.y;
 
-      // spawn an new particle in the system
+      // Maak een nieuwe particle aan.
       Particle particle = new Particle(x, y, framesToLive);
       particle.vx = random(startVx-spreadFactor/2, startVx+spreadFactor/2);
       particle.vy = random(startVy-spreadFactor/2, startVy+spreadFactor/2);
@@ -128,15 +112,10 @@ class ParticleSystem {
     }
   }
 
-  // creal the particle system
-  void reset() {
-    particles.clear();
-  }
-
-  // update speed, size and color of all particles
+  // update de richting, grote en kleur van alle particles
   void update() {
-    for (int iParticle=0; iParticle<particles.size (); iParticle++) {
-      Particle particle = particles.get(iParticle);
+    for (int i=0; i<particles.size (); i++) {
+      Particle particle = particles.get(i);
       particle.vy += gravity;
       particle.update();
       if (particle.framesToLive == 0)
@@ -144,33 +123,26 @@ class ParticleSystem {
     }
   }
 
-  // draw all particles
+  // teken alle particle's op het scherm
   void draw() {
 
-    // only change context once for all particles
-    noStroke();
-    noSmooth();
+    // als blendmode op add staat worden de particle's vermengd. 
+    if (blendMode == "add") blendMode(ADD);
 
-    // determine how transparancy is handeled
-    if (blendMode == "add")
-      blendMode(ADD);
-    else
-      if (blendMode == "blend")
-      blendMode(BLEND);
 
     for (Particle particle : particles) {
-      // determine size by interpolation
-      particle.size = lerp(deathSize, birthSize, (float)particle.framesToLive/(float)framesToLive);      
-      // determine color by interpolation
+      //Zorgt ervoor dat de particle's groter of kleiner worden als de particle langer bestaad. 
+      particle.size = lerp(deathSize, birthSize, (float)particle.framesToLive/(float)framesToLive);
+      //Zorgt voor een vloeiende overgang tussen de birthcoller and deathcolor.
       color particleColor = lerpColor(deathColor, birthColor, ((float)particle.framesToLive/(float)framesToLive));
 
-      particle.drawColor = particleColor;
+      // kleur particle wordt aangepast
+      particle.drawColor = particleColor;    
       particle.draw();
     }
 
-    // reset blendmode
+    //zet de blendmode terug naar default
     blendMode(BLEND);
   }
 }
-
 

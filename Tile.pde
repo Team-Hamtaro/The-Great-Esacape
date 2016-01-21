@@ -104,8 +104,8 @@ class Magma {
   }
   void particleUpdate() {
 
-    magmaFire.x0 = x + random(w);
-    magmaFire.y0 = y + h;
+    magmaFire.x = x + random(w);
+    magmaFire.y = y + h;
     magmaFire.emit(2);
     magmaFire.update();
     magmaFire.draw();

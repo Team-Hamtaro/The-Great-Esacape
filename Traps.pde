@@ -76,8 +76,8 @@ class Saw {
     
     countFrames +=1;
     
-    sawSpark.x0 = x;
-    sawSpark.y0 = y + h;
+    sawSpark.x = x;
+    sawSpark.y = y + h;
     if (countFrames == 5){
     sawSpark.emit(1);
     countFrames = 0;
@@ -86,8 +86,8 @@ class Saw {
     sawSpark.draw();
     
     
-    lavaBurst.x0 = x - w + random(w * 2);
-    lavaBurst.y0 = y + h;
+    lavaBurst.x = x - w + random(w * 2);
+    lavaBurst.y = y + h;
     lavaBurst.update();
     lavaBurst.draw();
     
@@ -104,11 +104,10 @@ class Saw {
     sawSpark.gravity=0.08;
     sawSpark.birthColor=color(191, 9, 9);
     sawSpark.deathColor=color(205,15,15);
-    sawSpark.blendMode="false";
     sawSpark.framesToLive=15;
     
     lavaBurst.spreadFactor=0.4;
-    lavaBurst.y0 = SCREENY - 50;
+    lavaBurst.y = SCREENY - 50;
     lavaBurst.minSpeed=3.0;
     lavaBurst.maxSpeed=8.0;
     lavaBurst.startVx=-0.0;
@@ -118,7 +117,6 @@ class Saw {
     lavaBurst.gravity=0.01;
     lavaBurst.birthColor=color(191, 9, 9);
     lavaBurst.deathColor=color(205, 15, 15);
-    lavaBurst.blendMode="false";
     lavaBurst.framesToLive=120;
   }
 }
@@ -200,15 +198,15 @@ class Rock {
   }
 
   void particleUpdate() {
-    smallRocks.x0 = x - w + random(w * 2);
-    smallRocks.y0 = y + h;
+    smallRocks.x = x - w + random(w * 2);
+    smallRocks.y = y + h;
     smallRocks.update();
     smallRocks.draw();
     
     if (y < 0 - h*2 && y > -h*6) smallRocks.emit(1);
     
-    lavaBurst.x0 = x - w + random(w * 2);
-    lavaBurst.y0 = y + h;
+    lavaBurst.x = x - w + random(w * 2);
+    lavaBurst.y = y + h;
     lavaBurst.update();
     lavaBurst.draw();
     
@@ -228,11 +226,10 @@ class Rock {
     smallRocks.gravity=0.02;
     smallRocks.birthColor=color(228, 92, 16);
     smallRocks.deathColor=color(300, 100, 32);
-    smallRocks.blendMode="add";
     smallRocks.framesToLive=60;
     
     lavaBurst.spreadFactor=0.4;
-    lavaBurst.y0 = SCREENY - 50;
+    lavaBurst.y = SCREENY - 50;
     lavaBurst.minSpeed=3.0;
     lavaBurst.maxSpeed=8.0;
     lavaBurst.startVx=-0.0;
@@ -242,7 +239,6 @@ class Rock {
     lavaBurst.gravity=0.01;
     lavaBurst.birthColor=color(191, 9, 9);
     lavaBurst.deathColor=color(205, 15, 15);
-    lavaBurst.blendMode="add";
     lavaBurst.framesToLive=110;
     
   }

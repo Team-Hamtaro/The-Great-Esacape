@@ -142,8 +142,8 @@ class Credits {
       void particleUpdate() {
       
       framesUntilEffectChanges++;
-      stars.x0 = random(SCREENX);
-      stars.y0 = random(SCREENY);
+      stars.x = random(SCREENX);
+      stars.y = random(SCREENY);
        if (framesUntilEffectChanges >= 15) {
       color1 = (int)random(255);
       color2 = (int)random(255);
