@@ -55,6 +55,10 @@ public class LeaderBoard implements Serializable {
         }
     }
     
+     /*
+     * Test the parameter against the highscore table to determine if it is a new highscore. 
+     */
+    
     public boolean isNewHighScore(int score) {
         HighScore lowestHighScores = score_list.get(score_list.size() - 1);
         
@@ -91,7 +95,9 @@ public class LeaderBoard implements Serializable {
         }
     }
     
-    
+    /*
+     * Add a new highscore to the leaderBoard 
+     */
     public void add(String name, int score) {
         score_list.add(new HighScore(score, name));
         int min_element; // marks last element to compare
@@ -114,24 +120,15 @@ public class LeaderBoard implements Serializable {
         }
     }
 
-    // public void newScore(int score) {
-    //     if (this.isNewHighScore(score)) {
-    //         String name =  JOptionPane.showInputDialog("New high score, enter your name");
-
-    //         // Don't add high scores when the player doesn't enter a name
-    //         if (name == null)
-    //             return;
-
-    //         this.add(name, score);
-    //         writeScoreFile();
-    //     }
-    // }
     
     public ArrayList<HighScore> getScoreList() {
         return score_list;
     }
 }
 
+    /*
+     * This class stores the player name and score. 
+     */
 public class HighScore {
     public String name;
     public int score;

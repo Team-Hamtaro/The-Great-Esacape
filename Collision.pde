@@ -17,6 +17,15 @@ boolean rectRect(float x1, float y1, float w1, float h1, float x2, float y2, flo
     return false;
   }
 }
+ 
+// Calculates the overlap of two objects in 1 dimension
+// Provide the (x or y) coordinates of object0 (x0) and object1 (x1) and
+// dimensions d0 and d1 (width or height) 
+// returns 0 if no overlap 
+float calculate1DOverlap(float p0, float p1, float d0, float d1) {
+  float dl = p0+d0-p1, dr = p1+d1-p0;  
+  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr;
+}
 
 /* 
  RECT/BALL COLLISION FUNCTION
@@ -28,15 +37,6 @@ boolean rectRect(float x1, float y1, float w1, float h1, float x2, float y2, flo
  + diameter of second ball
  
  */
- 
-// Calculates the overlap of two objects in 1 dimension
-// Provide the (x or y) coordinates of object0 (x0) and object1 (x1) and
-// dimensions d0 and d1 (width or height) 
-// returns 0 if no overlap 
-float calculate1DOverlap(float p0, float p1, float d0, float d1) {
-  float dl = p0+d0-p1, dr = p1+d1-p0;  
-  return (dr<0 || dl<0) ? 0 : (dr >= dl) ? -dl : dr;
-}
 
 boolean rectBall(float rx, float ry, float rw, float rh, float bx, float by, float d) {
 

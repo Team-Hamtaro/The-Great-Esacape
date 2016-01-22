@@ -54,7 +54,7 @@ class Particle {
   }
 }
 
-// Particle system voor het aanmaken van de particle's
+// Particle class voor het regelen van de aanmaak van particle's.
 class ParticleSystem {
   
   //lijst met particle's

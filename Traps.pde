@@ -38,7 +38,7 @@ class Saw {
     particleDeclare();
     
   }
-  // Movement of the saw the distance of TRAVEL
+
   void oscillate() {
 
     if (abs(xOrigin-x) >= TRAVEL) v=-v;
@@ -131,7 +131,7 @@ class Rock {
   /** The tiles size. */
   float w, h;
 
-  float v = 0.01; // vertical velocity
+  float v = 0.01;
   float counter = 0; // for counting to 7 before the next rock falls
   int times = 0; // counts the amount of times the rock fell
   
@@ -173,7 +173,7 @@ class Rock {
       y += v; //Movement of the Rock on the Y-axis
     }
 
-    if (v < 11) { // Increases the fallingspeed until it hits the speed of 11 pixels per update
+    if (v < 11) { // makes it not fall any faster than 15 per frame
       v *= 1.05;
     }
 
