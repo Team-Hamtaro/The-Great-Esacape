@@ -30,7 +30,7 @@ class Tile {
 
   // Whenever you want to update the tile, call this method
   void update() {    
-    // A tile doesn't move
+    // Changes the image of the basic tiles when entering a new difficulty
     if (theWorld.chunkDiff == 2 && y < 0) {
       tileImg = loadImage("tile1.png");
     } else if (theWorld.chunkDiff == 3 && y < 0) {
@@ -136,10 +136,9 @@ class Tiki {
   float vx, vy;
 
   boolean isShot = false;
-  float dartsX = x; // give the dart the same starting point but a different variable so the totem doesnt move together with the dart
+  float dartsX = x; // give the dart the same starting point but a different variable as the totem, so it doesn't move with the dart
   float dartsY = y;
   float dartsXM = 6;
-  float counter = 0;
 
   // for the left or right check in World
 
@@ -160,7 +159,6 @@ class Tiki {
 
   void darts() {
     if (isShot) {
-      counter = millis()/1000;
       pushMatrix();
       translate(dartsX, dartsY-World.GRID_UNIT_SIZE); // Translate the image of the dart to the tiki totem
       image(dartImg, w, h);

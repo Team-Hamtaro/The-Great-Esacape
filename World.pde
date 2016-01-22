@@ -314,9 +314,8 @@ class World {
     // if the player is around the same height the tiki totem shoots a dart
     for (Tiki tiki : tikis) {
       if(tiki.isShot == false) {
-     if(abs(tiki.y - player.y) < PLAYER_UNDER_TIKI || tiki.counter == 1) {
+     if(abs(tiki.y - player.y) < PLAYER_UNDER_TIKI) {
        tiki.isShot = true;
-       tiki.counter = 0;
        tiki.dartsX = tiki.x;
     }
       } // Collision between the tiki totem and the player
