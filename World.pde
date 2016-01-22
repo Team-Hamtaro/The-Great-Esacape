@@ -347,13 +347,14 @@ class World {
     // collision detection between player and all the tiles
     if (player.alive) {
       for (Tile tile : tiles) {
-        if (abs(tile.x - player.x) < 50 && abs(tile.y - player.y) < player.SIZE*2 + player.vy) { // only checks is a tile is close to the player
+        // only checks if a tile is close to the player, otherwise it will skip the check for collision.
+        if (abs(tile.x - player.x) < 50 && abs(tile.y - player.y) < player.SIZE*2 + player.vy) { 
          
           // calculate overlap in x direction between player and tile
           float xOverlap = calculate1DOverlap(player.x, tile.x, player.w, tile.w);
 
           float playeryAndSpeed = player.y  + (player.vy * player.speed);
-          // calculate overlap in y direction between player + speed and tile 
+          // calculate overlap in y direction between player with the player speed.
           float yOverlap = calculate1DOverlap(playeryAndSpeed, tile.y, player.h, tile.h);
 
 

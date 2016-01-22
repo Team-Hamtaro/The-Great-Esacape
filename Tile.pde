@@ -68,7 +68,7 @@ class Magma {
 
   PImage magmaImg = loadImage("lava_tile.png");
   
-  ParticleSystem magmaFire = new ParticleSystem(0, 0);
+  ParticleSystem magmaFire = new ParticleSystem();
 
   // The init method can be called to set an tile to it's default state
   void init(float newX, float newY, float newWidth, float newHeight) {

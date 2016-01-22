@@ -9,7 +9,7 @@ class Credits {
   int timer = 0;
   boolean isInitialized = false;
 
-  ParticleSystem stars = new ParticleSystem(0, 0);
+  ParticleSystem stars = new ParticleSystem();
 
   void update() {
     timer ++;

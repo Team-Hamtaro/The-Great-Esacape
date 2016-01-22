@@ -2,13 +2,13 @@ class Effecten {
 
   int lavaBurstCheck = 0;
 
-  ParticleSystem lavaBurst = new ParticleSystem(0, 0);
-  ParticleSystem walkDust = new ParticleSystem(0, 0);
-  ParticleSystem shoeSmoke = new ParticleSystem(0, 0);
-  ParticleSystem deadEffect = new ParticleSystem(0, 0);
-  ParticleSystem jumpEffect = new ParticleSystem(0, 0);
-  ParticleSystem dartsEffect = new ParticleSystem(0, 0);
-  ParticleSystem firework = new ParticleSystem(0, 0);
+  ParticleSystem lavaBurst = new ParticleSystem();
+  ParticleSystem walkDust = new ParticleSystem();
+  ParticleSystem shoeSmoke = new ParticleSystem();
+  ParticleSystem deadEffect = new ParticleSystem();
+  ParticleSystem jumpEffect = new ParticleSystem();
+  ParticleSystem dartsEffect = new ParticleSystem();
+  ParticleSystem firework = new ParticleSystem();
 
   void init() {
     particleDeclare();

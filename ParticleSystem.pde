@@ -17,7 +17,7 @@ class Particle {
     this.y = y;
     this.framesToLive = framesToLive;
 
-    // determine coordinate offsets if quad
+    // Berekend de hoeken (grote) van de particle.
     qx = -random(1.0); 
     qy = -random(1.0);
     qx1 = random(1.0); 
@@ -43,22 +43,22 @@ class Particle {
     translate(x, y);
     pushMatrix();              
     fill(drawColor);
-    float ps2 = this.size/2;
-    quad(qx*ps2, qy*ps2, 
-    qx1*ps2, qy1*ps2, 
-    qx2*ps2, qy2*ps2, 
-    qx3*ps2, qy3*ps2);
+    float verdubbel = this.size/2;
+    quad(qx*verdubbel, qy*verdubbel, 
+    qx1*verdubbel, qy1*verdubbel, 
+    qx2*verdubbel, qy2*verdubbel, 
+    qx3*verdubbel, qy3*verdubbel);
 
     popMatrix();
     popMatrix();
   }
 }
 
-// Particle system to manage emission of particles
+// Particle system voor het aanmaken van de particle's
 class ParticleSystem {
   
   //lijst met particle's
-  ArrayList<Particle> particles;
+  ArrayList<Particle> particlesList;
 
   float  x, y;
 
@@ -71,7 +71,6 @@ class ParticleSystem {
   // start grote en eind grote
   float birthSize, deathSize;
 
-  // frames dat het particle bestaad
   int framesToLive;
 
   // start richting van de particle's
@@ -86,11 +85,9 @@ class ParticleSystem {
   // particle's richting de y positie
   float gravity;
 
-  // Create new particle system, emitter at (x,y)
-  ParticleSystem(float x, float y) {
-    this.x = x;
-    this.y = y;  
-    particles = new ArrayList<Particle>();
+  // Create new particle system
+  ParticleSystem() {
+    particlesList = new ArrayList<Particle>();
   }
 
 
@@ -108,18 +105,18 @@ class ParticleSystem {
       particle.vx = random(startVx-spreadFactor/2, startVx+spreadFactor/2);
       particle.vy = random(startVy-spreadFactor/2, startVy+spreadFactor/2);
       particle.speed = random(minSpeed, maxSpeed);
-      particles.add(particle);
+      particlesList.add(particle);
     }
   }
 
   // update de richting, grote en kleur van alle particles
   void update() {
-    for (int i=0; i<particles.size (); i++) {
-      Particle particle = particles.get(i);
+    for (int i=0; i<particlesList.size (); i++) {
+      Particle particle = particlesList.get(i);
       particle.vy += gravity;
       particle.update();
       if (particle.framesToLive == 0)
-        particles.remove(particle);
+        particlesList.remove(particle);
     }
   }
 
@@ -130,7 +127,7 @@ class ParticleSystem {
     if (blendMode == "add") blendMode(ADD);
 
 
-    for (Particle particle : particles) {
+    for (Particle particle : particlesList) {
       //Zorgt ervoor dat de particle's groter of kleiner worden als de particle langer bestaad. 
       particle.size = lerp(deathSize, birthSize, (float)particle.framesToLive/(float)framesToLive);
       //Zorgt voor een vloeiende overgang tussen de birthcoller and deathcolor.

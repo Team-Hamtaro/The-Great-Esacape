@@ -110,8 +110,7 @@ class Player extends Tile {
   void draw() {
     update();
   }
-
-  /*This function update's al particle effects*/
+// This function will check if he needs to emit particle's
   void updateParticles () {
     if ((((vxLastFrame > 0) && (vx < 0)) ||((vxLastFrame < 0))
       && (vx > 0)) && canJump) {

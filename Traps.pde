@@ -17,8 +17,8 @@ class Saw {
   final float RADIUS = 32;
   final float LAVA_BURST_START_Y = 110;
 
-  ParticleSystem sawSpark = new ParticleSystem(0, 0);
-  ParticleSystem lavaBurst = new ParticleSystem(0, 0);
+  ParticleSystem sawSpark = new ParticleSystem();
+  ParticleSystem lavaBurst = new ParticleSystem();
   
   int countFrames = 0; //Count frames to create a particle the 5th frame
 
@@ -138,8 +138,8 @@ class Rock {
   final float RADIUS = 32;
   final float LAVA_BURST_START_Y = 140;
 
-  ParticleSystem smallRocks = new ParticleSystem(0, 0);
-  ParticleSystem lavaBurst = new ParticleSystem(0, 0);
+  ParticleSystem smallRocks = new ParticleSystem();
+  ParticleSystem lavaBurst = new ParticleSystem();
     
   PImage rockImg = loadImage("rock_normal.png");
 
